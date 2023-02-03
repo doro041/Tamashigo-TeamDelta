@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, Button, Image, ProgressBar } from 'react-native';
+import { View, Text, SafeAreaView, Button, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CircleButton from './CircleButton';
 import { StyleSheet } from 'react-native';
-import { addSyntheticTrailingComment } from 'typescript';
+import { Appbar } from 'react-native-paper';
+import { Platform } from 'react-native';
 
+const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 const styles = StyleSheet.create({
   levelContainer: {
     backgroundColor: 'black',
@@ -40,39 +42,44 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color : 'white',
   },
-  });
+});
 
 const Home = () => {
+
+
   const navigation = useNavigation(); 
   const [level, setLevel] = useState(1);
   const [experience, setExperience] = useState(0); 
-  return ( 
+  const _goBack = () => console.log('Went back');
+
+  const _handleSearch = () => console.log('Searching');
+
+  const _handleMore = () => console.log('Shown more');
+
+  return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Image
-        source={require('../assets/APP.png')}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          width: '100%',
-          height: '100%',
-          alignSelf: 'center',
-          margin: 20,
-        }}
-      />
-   <View>
-  
+      <Appbar.Header>
+        <Appbar.BackAction onPress={_goBack} />
+        <Appbar.Content title="Home" />
+        <Appbar.Action icon="magnify" onPress={_handleSearch} />
+        <Appbar.Action icon="dots-vertical" onPress={_handleMore} />
+        <Appbar.BackAction onPress={() => {}} />
+      </Appbar.Header>
+      <View>
   </View>
  <View>
 
      
 
 <View style={{ backgroundColor: 'white', padding: 10, borderRadius: 5, width:200, height:50,alignItems: 'flex-start',marginTop:10 }}>
-<Text style={styles.levelText }>XP: {experience}</Text>
+
+<Text style={{ fontSize: 30 }}>xp: {experience} ❤️</Text>
+
+
 </View>
         <View style={styles.levelContainer}>
         <Text style ={styles.text}>Level: {level}</Text>
+       
 </View>
 <Button
   style={{
@@ -120,6 +127,7 @@ const Home = () => {
       
     </SafeAreaView>
   );
-};
+        };
 
 export default Home;
+
