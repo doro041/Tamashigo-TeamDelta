@@ -8,7 +8,7 @@ import { Platform } from 'react-native';
 import { Animated } from 'react-native';
 
 
-const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
+
 const styles = StyleSheet.create({
   levelContainer: {
     backgroundColor: 'black',
@@ -54,21 +54,9 @@ const Home  = ({ route })=>
   const navigation = useNavigation(); 
   const [level, setLevel] = useState(1);
   const [experience, setExperience] = useState(0); 
-  const _goBack = () => console.log('Went back');
-
-  const _handleSearch = () => console.log('Searching');
-
-  const _handleMore = () => console.log('Shown more');
-
+  
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={_goBack} />
-        <Appbar.Content title="Home" />
-        <Appbar.Action icon="magnify" onPress={_handleSearch} />
-        <Appbar.Action icon="dots-vertical" onPress={_handleMore} />
-        <Appbar.BackAction onPress={() => {}} />
-      </Appbar.Header>
       <View>
   </View>
  <View>
@@ -136,4 +124,3 @@ const Home  = ({ route })=>
         };
 
 export default Home;
-
