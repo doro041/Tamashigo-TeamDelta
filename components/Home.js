@@ -46,8 +46,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const Home = () => {
+const Home  = ({ route })=> 
+  
 
+{
+  const { name } = route.params;
   const navigation = useNavigation(); 
   const [level, setLevel] = useState(1);
   const [experience, setExperience] = useState(0); 
@@ -69,7 +72,9 @@ const Home = () => {
       <View>
   </View>
  <View>
-
+ <View>
+      <Text>{`Welcome, ${name}!`}</Text>
+    </View>
      
 
 <View style={{ backgroundColor: 'white', padding: 10, borderRadius: 5, width:200, height:50,alignItems: 'flex-start',marginTop:10 }}>
