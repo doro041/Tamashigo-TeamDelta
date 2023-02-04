@@ -5,6 +5,8 @@ import CircleButton from './CircleButton';
 import { StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { Platform } from 'react-native';
+import { Animated } from 'react-native';
+
 
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 const styles = StyleSheet.create({
@@ -45,7 +47,6 @@ const styles = StyleSheet.create({
 });
 
 const Home = () => {
-
 
   const navigation = useNavigation(); 
   const [level, setLevel] = useState(1);
@@ -111,9 +112,9 @@ const Home = () => {
  
         <Image
          
-          source={require('../images/bee-transformed.png')} 
+          source={require('../components/Egg.png')} 
           style={{ 
-            width: 250,
+            width: 500,
             height: 500,
             alignSelf: 'center',
             margin: 20
