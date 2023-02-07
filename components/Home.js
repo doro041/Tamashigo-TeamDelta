@@ -56,7 +56,7 @@ const Home  = ({ route })=>
   const [experience, setExperience] = useState(0); 
   
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 ,backgroundColor: '#CEB0FF'}}> 
       <View>
   </View>
  <View>
@@ -105,11 +105,12 @@ const Home  = ({ route })=>
  
         <Image
          
-          source={require('../components/Egg.png')} 
+          source={require('../components/WORK.png')} 
           style={{ 
             width: 500,
-            height: 500,
+            height: 300,
             alignSelf: 'center',
+           
             margin: 20
           }}
         />
