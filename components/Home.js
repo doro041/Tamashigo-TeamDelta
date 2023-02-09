@@ -3,8 +3,7 @@ import { View, Text, SafeAreaView, Button, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CircleButton from './CircleButton';
 import { StyleSheet } from 'react-native';
-import { Center } from 'native-base';
-import { Svg, SvgXml} from 'react-native-svg';
+import Footer from './Footer';
  
 const styles = StyleSheet.create({
   container: {
@@ -44,9 +43,12 @@ const Home = ({ route }) => {
     <Image source={require('../components/LOGO1.png')} style={{height:100, width:100, justifyContent: 'flex-start',marginTop:10}} />
   </View>
 <Text style={styles.text}>{`Welcome, ${name}!`}</Text>
-  <CircleButton onPress={() => navigation.navigate('Todo')} size={50} color="#000" />
-   </SafeAreaView>
 
+<View style={{position:'absolute',bottom:0,left:0,right:0}}>
+  
+  <Footer/>
+  </View>
+   </SafeAreaView>
 
   );
 };
