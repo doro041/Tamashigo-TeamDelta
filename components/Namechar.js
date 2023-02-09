@@ -32,11 +32,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 20,
+    justifyContent: 'center',
+
   },
   text: {
     fontSize: 80,
     fontFamily: 'Gideon Roman',
     marginBottom: 20,
+    
   },
   input: {
     width: '100%',
