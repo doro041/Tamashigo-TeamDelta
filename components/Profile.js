@@ -1,73 +1,22 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, TextInput } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+
 
 const Profile = () => {
-    const [name, setName] = useState('');
+  const [level, setLevel] = useState(1);
     const navigation = useNavigation();
-    
-    const onPress = () => {
-        navigation.navigate('Home', { name });
-    };
-    
-    return (
-        <View style={styles.container}>
-        <Text style={styles.text}>Pick a name for your character:</Text>
-        <TextInput
-            value={name}
-            onChangeText={text => setName(text)}
-            style={styles.input}
-        />
-        <TouchableOpacity style={styles.arrowButton} onPress={onPress}>
-            <View style={styles.arrow} />
-        </TouchableOpacity>
-        </View>
-    );
-    };
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#E9F5DD', 
-        flex: 1,
-        alignItems: 'center',
-        padding: 20,
-        justifyContent: 'center',
 
-    },
-    text: {
-        fontSize: 80,
-        fontFamily: 'Gideon Roman',
-        marginBottom: 20,
+  return (
+    <View style={{ flex: 1, absolute:0 ,alignItems: 'center', justifyContent: 'center' }}>
+       <Text style={{fontSize:40,fontFamily: 'Gideon Roman'}}> Level:</Text>
+  <Text style={{fontSize:100,fontFamily: 'Gideon Roman'}}>{level}</Text>
+</View>
 
-    },
-    input: {
-        width: '100%',
-        height: 80,
-        borderRadius: 20,
-        backgroundColor: 'gray',
-        padding: 10,
-        marginBottom: 20,
-    },
-    arrowButton: {
-        width: 40,
-
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: '#333',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    arrow: {
-        width: 0,
-        height: 0,
-        borderTopWidth: 8,
-        borderTopColor: '#fff',
-        borderRightWidth: 8,
-        borderRightColor: 'transparent',
-        borderLeftWidth: 8,
-        borderLeftColor: 'transparent',
-    },
-});
-
+      
+  );
+};
 export default Profile;
+

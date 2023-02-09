@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, SafeAreaView, Button, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import CircleButton from './CircleButton';
 import { StyleSheet } from 'react-native';
 import Footer from './Footer';
 import XPProgressBar from './progressbar';
+import { TouchableOpacity } from 'react-native';
  
 const styles = StyleSheet.create({
   container: {
@@ -35,12 +35,17 @@ const Home = ({ route }) => {
         
         <Image source={require('../components/WORK.png')} style={styles.image} />
       </View>
-     
-      <View style={{ alignSelf: 'flex-end', position: 'absolute', top: 0, right: 0,marginTop:20,marginRight:20}}>
+   
+      <TouchableOpacity
+      onPress={() => navigation.navigate('Profile')}
+      style={{ alignSelf: 'flex-end', position: 'absolute', top: 0, right: 0, marginTop: 20, marginRight: 20 }}
+    >
       <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="black" class="bi bi-list" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-</svg>
-  </View>
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+      </svg>
+    </TouchableOpacity>
+    
+
       <View style={{ alignSelf: 'flex-start', position: 'absolute', top: 0, left: 0 }}>
     <Image source={require('../components/LOGO1.png')} style={{height:100, width:100, justifyContent: 'flex-start',marginTop:10}} />
   </View>
