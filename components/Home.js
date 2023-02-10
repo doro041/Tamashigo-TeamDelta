@@ -5,6 +5,8 @@ import { StyleSheet } from 'react-native';
 import Footer from './Footer';
 import XPProgressBar from './progressbar';
 import { TouchableOpacity } from 'react-native';
+import Profile from './Profile';
+import CircleButton from './CircleButton';
 
  
 const styles = StyleSheet.create({
@@ -38,7 +40,7 @@ const Home = ({ route }) => {
         
         <Image source={require('../components/WORK.png')} style={styles.image} />
       </View>
-   
+     
       <TouchableOpacity
       onPress={() => navigation.navigate('Profile')}
       style={{ alignSelf: 'flex-end', position: 'absolute', top: 0, right: 0, marginTop: 20, marginRight: 20 }}
@@ -48,15 +50,21 @@ const Home = ({ route }) => {
       </svg>
     </TouchableOpacity>
     
+    
 
-      <View style={{ alignSelf: 'flex-start', position: 'absolute', top: 0, left: 0 }}>
+      <View style={{ alignSelf: 'flex-start', position: 'absolute', top: 0, left: 0,right:0,bottom:0 }}>
     <Image source={require('../components/LOGO1.png')} style={{height:100, width:100, justifyContent: 'flex-start',marginTop:10}} />
+    
   </View>
+  
+
 <Text style={styles.text}>{`Welcome, ${name}!`}</Text>
 
-<View style={{position:'absolute',bottom:0,left:0,right:0}}>
+
+<View style={{position:'absolute',bottom:0,left:0,right:0,}}>
 
   <Footer/>
+  
   </View>
    </SafeAreaView>
 

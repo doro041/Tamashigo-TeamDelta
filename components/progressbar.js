@@ -1,26 +1,38 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, Animated, TouchableOpacity, StyleSheet } from 'react-native';
 
-const XPProgressBar = ({ currentXP, totalXP }) => {
-  // Calculate the percentage of XP completed
-  // and use that to set the width of the progress bar
-  // (e.g. 50% complete = 50% width)
-  // Note: we use a template string to set the width
- 
+const ProgressBar = () => {
+  const [progress, setProgress] = useState(new Animated.Value(0));
 
-  const percentComplete = (currentXP / totalXP) * 100;
+  const updateProgress = () => {
+    Animated.timing(progress, {
+      toValue: 100,
+      duration: 1000,
+    }).start();
+  };
+
+  const getColor = () => {
+    if (progress._value < 33) {
+      return 'red';
+    } else if (progress._value < 66) {
+      return 'yellow';
+    } else {
+      return 'green';
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <View style={[styles.xpBar, { width: `${percentComplete}%` }]} />
-      <Text style={styles.xpText}>{`${percentComplete}%`}</Text>
+      <Animated.View
+        style={[styles.progress, { width: progress.interpolate({ inputRange: [0, 100], outputRange: ['0%', '100%'] }) }, { backgroundColor: getColor() }]}
+      />
+     
     </View>
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
-  container: {
+ container: {
     height: 40,
     backgroundColor: 'black',
     borderRadius: 20,
@@ -35,19 +47,15 @@ const styles = StyleSheet.create({
 
 
   },
-  xpBar: {
+  
+
+  progress: {
     height: '100%',
     backgroundColor: 'green',
     borderRadius: 30,
-    width: '50%'
+    width: '50%',
+  },
 
-  },
-  xpText: {
-    width: '100%',
-    textAlign: 'center',
-    fontSize: 16,
-    color: 'white',
-  },
 });
 
-export default XPProgressBar;
+export default ProgressBar;

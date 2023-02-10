@@ -19,7 +19,6 @@ const StackNavigator = () => {
          <Stack.Screen name="Home" component={Home} />
          <Stack.Screen name ="Profile" component={Profile} />
          <Stack.Screen name="Settings" component={Settings} />
-         
          <Stack.Screen name="Todo" component={Todo} />
        
 
