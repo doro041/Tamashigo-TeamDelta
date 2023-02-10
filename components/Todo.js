@@ -76,6 +76,7 @@ export default class App extends React.Component{
     {
       return (
         <View style = {[styles.fill, styles.AppContainer]}>
+       
           <View style = {styles.HeaderContainer}>
             <View style={styles.counters}>
                <Text>Tasks Count:</Text>
@@ -89,7 +90,7 @@ export default class App extends React.Component{
           <View style = {[styles.inputContainer]}>
             <TextInput
               style={styles.input}
-              placeholder="Enter TODO Please"
+              placeholder="Enter Habit Please"
               keyboardType = "alphanumeric"
               value = {this.state.text}
               onChangeText={(text) => this.setState({text})}
@@ -110,7 +111,9 @@ export default class App extends React.Component{
                />
             ))}
           </ScrollView>
+     
         </View>
+    
       );
     }
 }
@@ -118,7 +121,7 @@ export default class App extends React.Component{
 const styles = StyleSheet.create({
   AppContainer: {
     paddingTop: 45,
-    backgroundColor: "#pink",
+    backgroundColor: "#F5FCFF",
   },
   HeaderContainer: {
     flexDirection: 'row', 
@@ -130,13 +133,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#BFB9FA",
   },
   fill: {
-    flex: 1
+    flex: 1,
+    backgroundColor: "#F5FCFF",
   },
   inputContainer: {
     flexDirection: 'row', 
     justifyContent: "space-around",
     alignItems: "center",
-    paddingVertical: 10
+    paddingVertical: 10,
+    
   },
   counters: {
     flexDirection: "row",
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
   count: {
     fontWeight: "bold",
     marginHorizontal: 5,
-    color: "#55bcf6",
+    color: "black",
 
   },
   input: {
@@ -158,10 +163,11 @@ const styles = StyleSheet.create({
   button: {
     height: 40,
    padding: 20,
-    borderRadius: 10
+    borderRadius: 10,
+    backgroundColor: "#BFB9FA",
   },
   item: {
-    backgroundColor: '#fff',
+    backgroundColor: '#F5FCFF',
     padding: 5,
     borderRadius: 20,
     flexDirection: 'row',
@@ -178,9 +184,10 @@ const styles = StyleSheet.create({
   circular:{
     height: 40,
     padding: 10,
-    borderColor: '#55bcf6',
-    borderWidth: 2,
-    borderRadius: 5 
+    borderRadius: 10,
+    backgroundColor: "#black",
+
+   
   },
   text: {
     maxWidth: "80%",
