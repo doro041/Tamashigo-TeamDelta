@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 import Footer from './Footer';
 import XPProgressBar from './progressbar';
 import { TouchableOpacity } from 'react-native';
+
  
 const styles = StyleSheet.create({
   container: {
@@ -27,10 +28,12 @@ const styles = StyleSheet.create({
 const Home = ({ route }) => {
   const { name } = route.params;
   const navigation = useNavigation();
-  
+  const [isDarkMode, setIsDarkMode] = useState(() => false);
   return (
     <SafeAreaView style={styles.container}>
      <View >
+   
+  
      <XPProgressBar/>
         
         <Image source={require('../components/WORK.png')} style={styles.image} />
