@@ -2,6 +2,12 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
 const XPProgressBar = ({ currentXP, totalXP }) => {
+  // Calculate the percentage of XP completed
+  // and use that to set the width of the progress bar
+  // (e.g. 50% complete = 50% width)
+  // Note: we use a template string to set the width
+ 
+
   const percentComplete = (currentXP / totalXP) * 100;
 
   return (
@@ -12,6 +18,7 @@ const XPProgressBar = ({ currentXP, totalXP }) => {
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     height: 40,

@@ -41,6 +41,7 @@ const Profile = () => {
       alignItems: 'center',
       backgroundColor: '#CEB0FF'
     }}>
+     
 
        <Text style={{fontSize:40,fontFamily: 'Gideon Roman'}}> Level:</Text>
   <Text style={{fontSize:100,fontFamily: 'Gideon Roman'}}>{level}</Text>
