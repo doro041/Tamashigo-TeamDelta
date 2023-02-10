@@ -3,6 +3,7 @@ import { TouchableOpacity, StyleSheet, Text, View, Animated } from 'react-native
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import ProgressBar from './ProgressBar';
+import Namechar from './Namechar';
 
 
 
@@ -47,7 +48,7 @@ const Profile = () => {
   <Text style={{fontSize:100,fontFamily: 'Gideon Roman'}}>{level}</Text>
   
   <ProgressBar style={{ width: 50, height: 50, resizeMode:'contain '}} />
-  <Text style={styles.text}>{`Welcome, ${name}!`}</Text>
+   
 
 </View>
 
