@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, Switch, Modal, StyleSheet } from 'react-native';
+import { View, Text, Switch, Modal, StyleSheet,Picker,TextInput  } from 'react-native';
 
 function Settings({ navigation }) {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(false);
   const [petName, setPetName] = useState('Pet');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedTime, setSelectedTime] = useState('8:00 AM');
 
   return (
     <View style={styles.container}>
@@ -25,7 +26,11 @@ function Settings({ navigation }) {
       </View>
       <View style={styles.setting}>
         <Text style={styles.settingText}>Pet Name</Text>
-        <Text>{petName}</Text>
+        <TextInput
+        style={styles.input}
+        value={petName}
+        onChangeText={setPetName}
+      />
       </View>
       <View style={styles.setting}>
         <Text style={styles.settingText}>Restart</Text>
@@ -45,7 +50,16 @@ function Settings({ navigation }) {
       >
         <View style={styles.modalContainer}>
           <Text>Select Times</Text>
-          {/* Add logic to select times */}
+          <Picker
+            selectedValue={selectedTime}
+            onValueChange={(itemValue) => setSelectedTime(itemValue)}
+          >
+            <Picker.Item label="Afternoon 15:00" value="15:00 PM" />
+            <Picker.Item label="Evening 18:00" value="18:00 PM" />
+            <Picker.Item label="Night 20:00" value="20:00 PM" />
+            
+            </Picker>
+
         </View>
       </Modal>
     </View>
@@ -57,15 +71,26 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+
+
   setting: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginVertical: 10,
+    padding: 20
   },
   settingText: {
     fontSize: 18,
   },
+
+  input: {
+    borderWidth: 1,
+    borderColor: 'black',
+    padding: 10,
+    width: 200
+
+  },
+
   modalContainer: {
     flex: 1,
     alignItems: 'center',
