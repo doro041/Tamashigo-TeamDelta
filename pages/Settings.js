@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Switch, Modal, StyleSheet,Picker,TextInput  } from 'react-native';
 
-function Settings({ navigation }) {
+function Settings() {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(false);
   const [petName, setPetName] = useState('Pet');
