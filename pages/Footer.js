@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import CircleButton from './CircleButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-web';
 

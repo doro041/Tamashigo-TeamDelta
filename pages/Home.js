@@ -3,7 +3,7 @@ import { View, Text, SafeAreaView, Button, Image,TouchableOpacity,StyleSheet} fr
 import { useNavigation } from '@react-navigation/native';
 
 import Footer from './Footer';
-import XPProgressBar from './progressbar';
+
 
 
 
@@ -47,11 +47,7 @@ function Home () {
 
 
 
-      <View style={{ alignSelf: 'flex-start', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
-        <Image source={require('../components/LOGO1.png')} style={{ height: 100, width: 100, justifyContent: 'flex-start', marginTop: 10 }} />
-
-      </View>
-
+      
 
 
 
