@@ -13,19 +13,22 @@ const BeginningPage = () => {
       
       
      
-      <Image source={require('../assets/logo1.png')} style={{width:200,height:300}}/>
+      <Image source={require('../assets/logo1.png')} style={{width:200,height:300,resizeMode: 'contain'}}/>
       <Text style={styles.title}>Welcome to Tamashigo</Text>
-      <Text style={styles.subtitle}>Where fun meets productivity</Text>
+      <Text style={styles.subtitle}>Where productivity meets fun!</Text>
+     
     </ImageBackground>
    
-    <View style={styles.buttonContainer}>
-      <Button style={styles.button1} title="Login" onPress={() => console.log('Login pressed')} />
+   
+      <View style={styles.buttonContainer}>
+        <Button style={styles.button}title="Log In" onPress={() => navigation.navigate('Login')} />
 
-<Button style={styles.button2}title="Sign Up" onPress={() => console.log('Sign Up pressed')} />
+       <Button style={styles.button}title="Sign Up" onPress={() => navigation.navigate('SignUp')} />
       
        
       </View>
-    </View>
+  </View>
+
   );
 };
 
@@ -40,64 +43,42 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
       color: 'black',
-      margin: '10%',
+      marginBottom: '20%',
       marginLeft: '10%',
-      fontStyle: 'italic'
+      marginTop: '40%',
+      alignContent: 'center',
+      
 
     },
   
   subtitle:{
-    fontSize: 18,
+    fontSize: 20,
     fontWeight:'bold',
-    marginBottom: 20,
-    marginLeft: '20%',
+    marginBottom: '30%',
+    marginLeft: '10%',
+    alignContent: 'center',
     fontStyle: 'italic'
     
 
   },
-
-  button1 : {
-    backgroundColor: 'white',
-      color: 'black',
-      width: "75%",
-      borderRadius: 25,
-      textAlign: 'center',
-      fontWeight: 'bold',
-      marginLeft: '20%',
-      padding: "2%",
-      fontSize:  27,
-      marginTop: '70%',
-      justifyContent: 'flex-end',
-    },
-
-  button2:{
-    backgroundColor: '#3A59FF',
-    color: 'white',
-    width: "75%",
-    borderRadius: 25,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    marginLeft: '11%',
-    padding: "2%",
-    fontSize:  27,
-    marginTop: '10%'
-  },
-
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '50%',
-    color: 'black',
-
-    
-
+    marginTop: '20%',
   },
+  button: {
+    width: '48%',
+    buttonRadius: 40,
+  },
+
   
       
       background: {
         flex:1,
         width: '100%',
-        height: '60%'
+        height: '60%',
+        alignContent : 'flex-start',
       },
     });
 
