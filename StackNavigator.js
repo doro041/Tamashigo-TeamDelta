@@ -16,6 +16,7 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Group>
         <Stack.Screen name = "Beginning" component={BeginningPage} />
+        <Stack.Screen name = "Login" component={Login} />
         <Stack.Screen name="Character Name" component={Namechar} />
         
        
