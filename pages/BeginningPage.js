@@ -1,34 +1,30 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button,Image, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
 
-
-const BeginningPage = () => {
+const BeginningPage = ({ navigation }) => {
   return (
+   
     <View style={styles.container}>
-      
       <ImageBackground source={require('../assets/Bg.png')} style={styles.background}>
-      
-       
-     
-      
-      
-     
-      <Image source={require('../assets/logo1.png')} style={{width:200,height:300,resizeMode: 'contain'}}/>
-      <Text style={styles.title}>Welcome to Tamashigo</Text>
-      <Text style={styles.subtitle}>Where productivity meets fun!</Text>
-     
-    </ImageBackground>
-   
-   
+        <Image source={require('../assets/logo1.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
+        <Text style={styles.title}>Welcome to Tamashigo</Text>
+        <Text style={styles.subtitle}>Where productivity meets fun!</Text>
+      </ImageBackground>
       <View style={styles.buttonContainer}>
-        <Button style={styles.button}title="Log In" onPress={() => navigation.navigate('Login')} />
-
-       <Button style={styles.button}title="Sign Up" onPress={() => navigation.navigate('SignUp')} />
-      
-       
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: 'black' }]}
+          onPress={() => navigation.navigate('Login')}
+        >
+          <Text style={styles.buttonText}>Log In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1, color: 'black',fontSize: 20, fontWeight: 'bold' }]}
+          onPress={() => navigation.navigate('SignUp')}
+        >
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
-  </View>
-
+    </View>
   );
 };
 
@@ -37,29 +33,23 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-   
   },
-  title:  {
+  title: {
     fontSize: 30,
     fontWeight: 'bold',
-      color: 'black',
-      marginBottom: '20%',
-      marginLeft: '10%',
-      marginTop: '40%',
-      alignContent: 'center',
-      
-
-    },
-  
-  subtitle:{
+    color: 'black',
+    marginBottom: '20%',
+    marginLeft: '10%',
+    marginTop: '40%',
+    alignContent: 'center',
+  },
+  subtitle: {
     fontSize: 20,
-    fontWeight:'bold',
+    fontWeight: 'bold',
     marginBottom: '30%',
     marginLeft: '10%',
     alignContent: 'center',
     fontStyle: 'italic'
-    
-
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -69,21 +59,22 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '48%',
-    buttonRadius: 40,
+    borderRadius: 40,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    
   },
-
-  
-      
-      background: {
-        flex:1,
-        width: '100%',
-        height: '60%',
-        alignContent : 'flex-start',
-      },
-    });
-
-
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  background: {
+    flex: 1,
+    width: '100%',
+    height: '60%',
+    alignItems: 'center',
+  },
+});
 
 export default BeginningPage;
-
-
