@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
+import LevelUp from '../LevelUp';
 
 const BeginningPage = ({ navigation }) => {
   return (
    
     <View style={styles.container}>
+     
       <ImageBackground source={require('../assets/Bg.png')} style={styles.background}>
         <Image source={require('../assets/logo1.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
         <Text style={styles.title}>Welcome to Tamashigo</Text>
@@ -15,6 +17,7 @@ const BeginningPage = ({ navigation }) => {
           style={[styles.button, { backgroundColor: 'black' }]}
           onPress={() => navigation.navigate('Login')}
         >
+         
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -54,8 +57,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '50%',
-    marginTop: '20%',
+    width: '40%',
+    marginBottom: '30%',
+
   },
   button: {
     width: '48%',
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    
+
   },
   buttonText: {
     color: 'white',
