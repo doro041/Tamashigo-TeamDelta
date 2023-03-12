@@ -4,9 +4,9 @@ import LevelUp from '../LevelUp';
 
 const BeginningPage = ({ navigation }) => {
   return (
-   
+
     <View style={styles.container}>
-     
+
       <ImageBackground source={require('../assets/Bg.png')} style={styles.background}>
         <Image source={require('../assets/logo1.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
         <Text style={styles.title}>Welcome to Tamashigo</Text>
@@ -17,11 +17,11 @@ const BeginningPage = ({ navigation }) => {
           style={[styles.button, { backgroundColor: 'black' }]}
           onPress={() => navigation.navigate('Login')}
         >
-         
+
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1, color: 'black',fontSize: 20, fontWeight: 'bold' }]}
+          style={[styles.button, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1, color: 'black', fontSize: 20, fontWeight: 'bold' }]}
           onPress={() => navigation.navigate('SignUp')}
         >
           <Text style={styles.buttonText}>Sign Up</Text>
