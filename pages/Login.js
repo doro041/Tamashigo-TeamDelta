@@ -39,7 +39,7 @@ const Login = ({ navigation }) => {
         <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => navigation.navigate('Namechar')}>
+        <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => navigation.navigate('NameChar')}>
           <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
       
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   icon: {
     padding: 10,
     marginTop:10,
-    
+
 
     },
 

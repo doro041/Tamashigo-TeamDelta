@@ -1,27 +1,46 @@
-import react from 'react';
-import {View, Text, ImageBackground, ScrollView, TextInput} from 'react-native';
+import React from 'react';
+import {View, Text, ImageBackground, ScrollView, TextInput,Image,StyleSheet} from 'react-native';
 
-export default function Dashboard({ navigation }) {
+
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import {useNavigation} from '@react-navigation/native';
+
+
+const Home = () => {
+    const navigation = useNavigation();
+
     return (
-      <Background>
-       
-        <Header>Let’s start</Header>
-        <Paragraph>
-          Your amazing app starts here. Open you favorite code editor and start
-          editing this project.
-        </Paragraph>
-        <Button
-          mode="outlined"
-          onPress={() =>
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'StartScreen' }],
-            })
-          }
-        >
-          Logout
-        </Button>
-      </Background>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Header>
+          
+      <Text style={styles.text}>Welcome {name}!</Text>
+      </Header>
+            <ImageBackground source={require('../assets/NameChar.png')} style={{width: '100%', height: '100%'}}>
+                <Image source={require('../assets/Panda.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
+               
+                   
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                  
+                </View>
+            </ImageBackground>
+            <Footer/>
+
+        </View>
+
     )
   }
+
+  export default Home;
+
+  const styles = StyleSheet.create({
+    text: {
+        fontSize: 20,
+        fontFamily: 'Raleway',
+        color: 'black',
+        alignContent: 'center',
+        },
+       
+    });
+
   

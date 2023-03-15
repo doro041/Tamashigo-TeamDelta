@@ -42,7 +42,7 @@ const SignUp = ({ navigation }) => {
       <Text> Already have an account?</Text>  <Text style={styles.SignInText}>Sign In.</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => navigation.navigate('Namechar')}>
+        <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => navigation.navigate('NameChar')}>
           <Text style={styles.buttonText}>SIGN UP</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, { backgroundColor: '#4267B2' }]}>

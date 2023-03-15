@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import Namechar from "./pages/Namechar";
+import NameChar from "./pages/NameChar";
 import SignUp from "./pages/SignUp";
 import ForgotPass from "./pages/ForgotPass";
 import BeginningPage from './pages/BeginningPage';
@@ -21,14 +21,14 @@ const StackNavigator = () => {
         <Stack.Screen name="TermsandConditions" component={TermsandConditions} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ForgotPass" component={ForgotPass} />
-        <Stack.Screen name="Namechar" component={Namechar} />
+        <Stack.Screen name="NameChar" component={NameChar} />
+        <Stack.Screen name="Home" component={Home} />
        
       </Stack.Group>
-            <Stack.Screen name="Home" component={Home} />
-      <Stack.Group>
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
     
-      </Stack.Group>
-     
+    </Stack.Group>
+
     </Stack.Navigator>
   );
 };
