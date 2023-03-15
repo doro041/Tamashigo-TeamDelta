@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Text, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { NavigationContainer } from '@react-navigation/native';
+
 
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
+  const handleSignUp= () => {
     console.log(`Name: ${name} Email: ${email} Password: ${password}`);
   };
 
@@ -51,12 +51,12 @@ const SignUp = ({ navigation }) => {
         <TouchableOpacity style={[styles.button, { backgroundColor: '#DB4437' }]}>
           <Icon name="google" size={25} color="white" style={styles.icon} />
         </TouchableOpacity>
+      
+  
+
       </View>
       <View>
-      <TouchableOpacity onPress={() => navigation.navigate('TermsandConditions')}>
-  <Text style={{ color: 'blue' }}>I agree to the Terms and Conditions</Text>
-</TouchableOpacity>
-
+     
       </View>
     </View>
   );

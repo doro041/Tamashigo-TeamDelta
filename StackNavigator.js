@@ -21,7 +21,7 @@ const StackNavigator = () => {
         <Stack.Screen name="TermsandConditions" component={TermsandConditions} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ForgotPass" component={ForgotPass} />
-        <Stack.Screen name="NameChar" component={Namechar} />
+        <Stack.Screen name="Namechar" component={Namechar} />
       </Stack.Group>
 
       <Stack.Group>

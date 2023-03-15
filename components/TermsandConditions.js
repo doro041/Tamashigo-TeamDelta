@@ -62,6 +62,7 @@ const TermsAndConditions = () => {
         <Text style={styles.text}>
         We may terminate your access to the app at any time without notice to you. If you wish to terminate your account, you may do so by contacting us at
         </Text>
+        <Text style= {{fontSize:10, marginBottom: 10,fontWeight: 'bold'}}>Copyright : Tamashigo 2023</Text>
         </View>
         
     );
@@ -71,8 +72,10 @@ const TermsAndConditions = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,
     paddingHorizontal: 20,
     paddingVertical: 30,
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,

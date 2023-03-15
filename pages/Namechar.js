@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, TextInput } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, TextInput,ImageBackground,Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-
+import Header from '../components/Header';
 const Namechar = () => {
   const [name, setName] = useState('');
   const navigation = useNavigation();
@@ -13,60 +13,76 @@ const Namechar = () => {
 
   return (
     <View style={styles.container}>
+      <Header/>
+      <ImageBackground source={require('../assets/NameChar.png')} style={styles.background}>
+     
+     
+    
+   
       <Text style={styles.text}>Pick a name for your character:</Text>
       <TextInput
         value={name}
         onChangeText={text => setName(text)}
         style={styles.input}
       />
-      <TouchableOpacity style={styles.arrowButton} onPress={onPress}>
-        <View style={styles.arrow} />
+     
+      <TouchableOpacity style={styles.imageButton} onPress={onPress}>
+      <Image source={require('../assets/Panda.png')} style={{ margin: '10%', width: 200, height: 300,justifyContent:'center' }} />
       </TouchableOpacity>
+      
+      </ImageBackground>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#E9F5DD',
     flex: 1,
     alignItems: 'center',
     padding: 20,
     justifyContent: 'center',
+    ImageBackground: '../assets/NameChar.png'
+
+
 
   },
+  background: {
+    flex: 1,
+    width: '100%',
+    height:'100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    },
   text: {
-    fontSize: 80,
-    fontFamily: 'Gideon Roman',
+    fontSize: 40,
+    fontFamily: 'Raleway',
+    fontWeight: 'bold',
     marginBottom: 20,
+    alignSelf: 'center',
+
     
   },
   input: {
-    width: '100%',
+    width: '80%',
     height: 80,
     borderRadius: 20,
-    backgroundColor: 'gray',
+    backgroundColor: 'white',
     padding: 10,
     marginBottom: 20,
+    fontSize: 20,
+    
+
   },
-  arrowButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#333',
+  imageButton: {
+    position: 'absolute',
+    bottom: 0,
+    width: '40%',
+    height: 'auto',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: 20,
   },
-  arrow: {
-    width: 0,
-    height: 0,
-    borderTopWidth: 8,
-    borderTopColor: '#fff',
-    borderRightWidth: 8,
-    borderRightColor: 'transparent',
-    borderLeftWidth: 8,
-    borderLeftColor: 'transparent',
-  },
+  
 });
 
 export default Namechar;
