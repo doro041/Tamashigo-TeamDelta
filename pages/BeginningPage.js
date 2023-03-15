@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
-import LevelUp from '../LevelUp';
+
 
 const BeginningPage = ({ navigation }) => {
   return (

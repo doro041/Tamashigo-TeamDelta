@@ -1,10 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import Home from "./pages/Home";
-import Todo from "./pages/Todo";
+
 import Namechar from "./pages/Namechar";
-import Profile from "./pages/Profile";
-import Settings from "./pages/Settings";
+import SignUp from "./pages/SignUp";
+import ForgotPass from "./pages/ForgotPass";
 import BeginningPage from './pages/BeginningPage';
 import Login from './pages/Login';
 
@@ -17,6 +16,8 @@ const StackNavigator = () => {
       <Stack.Group>
         <Stack.Screen name = "Beginning" component={BeginningPage} />
         <Stack.Screen name = "Login" component={Login} />
+        <Stack.Screen name = "SignUp" component={SignUp} />
+        <Stack.Screen name = "ForgotPass" component={ForgotPass} />
         <Stack.Screen name="Character Name" component={Namechar} />
         
        
