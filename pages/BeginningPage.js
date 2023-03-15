@@ -18,14 +18,14 @@ const BeginningPage = ({ navigation }) => {
           onPress={() => navigation.navigate('Login')}
         >
          
-          <Text style={styles.buttonText}>Log In</Text>
+          <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1, color: 'black',fontSize: 20, fontWeight: 'bold' }]}
           onPress={() => navigation.navigate('SignUp')}
         >
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
+          <Text style={[styles.buttonText, { color: 'black' }]}>SIGN UP</Text>
+</TouchableOpacity>
       </View>
     </View>
   );
