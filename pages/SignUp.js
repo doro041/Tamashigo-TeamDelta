@@ -52,6 +52,12 @@ const SignUp = ({ navigation }) => {
           <Icon name="google" size={25} color="white" style={styles.icon} />
         </TouchableOpacity>
       </View>
+      <View>
+      <TouchableOpacity onPress={() => navigation.navigate('TermsandConditions')}>
+  <Text style={{ color: 'blue' }}>I agree to the Terms and Conditions</Text>
+</TouchableOpacity>
+
+      </View>
     </View>
   );
 };
