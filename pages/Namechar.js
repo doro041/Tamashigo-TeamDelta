@@ -3,6 +3,9 @@ import { TouchableOpacity, StyleSheet, Text, View, TextInput,ImageBackground,Ima
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
+
+
 const Namechar = () => {
   const [name, setName] = useState('');
   const navigation = useNavigation();
@@ -26,11 +29,12 @@ const Namechar = () => {
         style={styles.input}
       />
      
-      <TouchableOpacity style={styles.imageButton} onPress={onPress}>
+      <TouchableOpacity style={styles.imageButton}  onPress={() => navigation.navigate('Home')}>
       <Image source={require('../assets/Panda.png')} style={{ margin: '10%', width: 200, height: 300,justifyContent:'center' }} />
       </TouchableOpacity>
       
       </ImageBackground>
+      <Footer/>
     </View>
   );
 };

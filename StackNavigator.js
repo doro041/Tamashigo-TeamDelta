@@ -22,10 +22,11 @@ const StackNavigator = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ForgotPass" component={ForgotPass} />
         <Stack.Screen name="Namechar" component={Namechar} />
+       
       </Stack.Group>
-
+            <Stack.Screen name="Home" component={Home} />
       <Stack.Group>
-        <Stack.Screen name="Home" component={Home} />
+    
       </Stack.Group>
      
     </Stack.Navigator>
