@@ -1,21 +1,34 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 const Footer = () => {
+  const navigation = useNavigation(); // obtain the navigation object
+
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <Icon name="home" size={30} color="black" />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.iconContainer}> 
+      <TouchableOpacity>
+      <Icon name="timer" size={30} color="black" />
+        </TouchableOpacity>
+       
       </View>
       <View style={styles.iconContainer}>
-        <Icon name="timer" size={30} color="black" />
+      <TouchableOpacity onPress={() => navigation.navigate('Calendar')}>
+      <Icon name="calendar" size={30} color="black" />
+        </TouchableOpacity>
       </View>
       <View style={styles.iconContainer}>
-        <Icon name="calendar" size={30} color="black" />
-      </View>
-      <View style={styles.iconContainer}>
-        <Icon name="cart" size={30} color="black" />
+      <TouchableOpacity>
+      <Icon name="cart" size={30} color="black" />
+        </TouchableOpacity>
       </View>
     </View>
   );

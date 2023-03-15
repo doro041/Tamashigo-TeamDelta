@@ -7,6 +7,8 @@ import ForgotPass from "./pages/ForgotPass";
 import BeginningPage from './pages/BeginningPage';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import VerticalCalendar from './pages/CalendarView';
+
 import TermsandConditions from './components/TermsandConditions';
 
 
@@ -23,6 +25,8 @@ const StackNavigator = () => {
         <Stack.Screen name="ForgotPass" component={ForgotPass} />
         <Stack.Screen name="NameChar" component={NameChar} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Calendar" component={VerticalCalendar} />
+
        
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
