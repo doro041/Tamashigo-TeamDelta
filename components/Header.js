@@ -14,17 +14,21 @@ const Header = ({ title, onSettingsPress }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    height: 60,
-    paddingHorizontal: 20,
-  },
+    container: {
+        position: 'absolute',
+        top: 0,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        height: 60,
+        paddingHorizontal: 20,
+        width: '100%',
+        zIndex: 1,
+      },
   iconContainer: {
     marginRight: 10,
     color : 'black',
-    
+
   },
   title: {
     fontSize: 20,
