@@ -16,7 +16,7 @@ const SignUp = ({ navigation }) => {
     <View style={styles.container}>
       <ImageBackground source={require('../assets/PartOfLogo.png')} style={styles.background}>
         <Image source={require('../assets/PandaHead.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
-        <Text style={styles.title}>Create acount</Text>
+        <Text style={styles.title}>Create account</Text>
       </ImageBackground>
       <TextInput
           style={styles.input}
@@ -38,8 +38,8 @@ const SignUp = ({ navigation }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation.navigate('ForgotPass')}>
-        <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+      <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation.navigate('Login')}>
+      <Text> Already have an account?</Text>  <Text style={styles.SignInText}>Sign In.</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => navigation.navigate('Namechar')}>
@@ -105,14 +105,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop:20,
   },
-  forgotPassword: {
+  SignInText: {
     alignSelf: 'flex-end',
     marginRight: '10%',
     marginBottom: '20%',
 
   },
-  forgotPasswordText: {
-    color: 'blue',
+  SignInText: {
+    color: 'black',
     fontWeight: 'bold',
     },  
   icon: {

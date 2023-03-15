@@ -32,7 +32,9 @@ const Login = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-      />
+      /> <TouchableOpacity  onPress={() => navigation.navigate('SignUp')}>
+      <Text> No account?</Text>  <Text style={styles.SignUpText}>Sign up.</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation.navigate('ForgotPass')}>
         <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
       </TouchableOpacity>
@@ -48,7 +50,7 @@ const Login = ({ navigation }) => {
           <Icon name="google" size={25} color="white" style={styles.icon} />
         </TouchableOpacity>
       
-
+ 
         
       </View>
      
@@ -115,10 +117,15 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontWeight: 'bold',
     },  
+    SignUpText: {
+        color: 'black',
+        fontWeight: 'bold',
+        },
+
   icon: {
     padding: 10,
     marginTop:10,
-    
+
 
     },
 
