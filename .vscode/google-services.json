@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "58719964063",
+    "project_id": "teamdelta-cfe4c",
+    "storage_bucket": "teamdelta-cfe4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58719964063:android:f18dfb240744b984e3cbaa",
+        "android_client_info": {
+          "package_name": "tamashigo.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58719964063-2tf4infnjhq2fu72lm6jr9i3atl1hlqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhG2kD5rOjYgmWV53GYhcglR3CWBNRfik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58719964063-2tf4infnjhq2fu72lm6jr9i3atl1hlqe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

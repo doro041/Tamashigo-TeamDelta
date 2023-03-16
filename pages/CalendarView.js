@@ -85,12 +85,14 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
   },
   date: {
-    fontSize: 20,
+    fontSize: 40,
     fontWeight: 'bold',
   },
   day: {
     fontSize: 16,
     marginTop: 5,
+    fontWeight:'bold',
+    
   },
   task: {
     fontSize: 14,

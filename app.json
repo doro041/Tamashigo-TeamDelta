@@ -1,7 +1,16 @@
 {
   "expo": {
     "slug": "rn",
-    "name": "rn"
+    "name": "rn",
+    "android": {
+      "googleServicesFile": "./google-services.json"
+    },
+    "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+    "plugins": [
+      "@react-native-firebase/app"
+    ]
   },
   "name": "rn"
 }
