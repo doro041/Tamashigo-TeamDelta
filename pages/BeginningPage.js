@@ -26,6 +26,13 @@ const BeginningPage = ({ navigation }) => {
         >
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: 'black', borderColor: 'black', borderWidth: 1, color: 'black', fontSize: 20, fontWeight: 'bold' }]}
+          onPress={() => navigation.navigate('ShortBreak')}
+        >
+          <Text style={styles.buttonText}>ShortBreak</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

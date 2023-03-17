@@ -1,13 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ImageBackground, Pressable } from 'react-native';
 import Footer from '../components/Footer';
 
-const timer = () => {
-
-    return (
-        {}
-    )
-}
 
 const skip = () => {
     return (
@@ -16,42 +10,88 @@ const skip = () => {
 }
 
 const ShortBreak = ({ navigation }) => {
+    const [currentMinute, setCurrentMinute] = useState(5);
+    const [currentSeconds, setCurrentSecond] = useState(0);
+    var timing = currentMinute + ":" + currentSeconds;
+
+    const countdown = () => {
+        setCurrentSecond(59);
+        setCurrentMinute(currentMinute => currentMinute - 1);
+        setInterval(() => {
+            setCurrentSecond(currentSeconds => currentSeconds - 1);
+            if (currentSeconds == 0) {
+                if (currentMinute != 0) {
+                    setCurrentSecond(59);
+                    setCurrentMinute(currentMinute => currentMinute - 1);
+                }
+                else {
+                    clearInterval()
+                }
+            }
+        }, 1000);
+        return (
+            <Text>Time's up!</Text>
+        )
+    }
+    const [backgroundStyle, setBackgroundStyle] = useState(require('../assets/backgroundShortBreak.svg'));
+    const [resumeStyle, setResumeStyle] = useState();
+    const focus = () => {
+        setBackgroundStyle(require('../assets/backgroundFocus.svg'));
+        setCurrentMinute(25);
+        setCurrentSecond(0);
+    }
+    const shortBreak = () => {
+        setBackgroundStyle(require('../assets/backgroundShortBreak.svg'));
+        setCurrentMinute(5);
+        setCurrentSecond(0);
+    }
+    const longBreak = () => {
+        setBackgroundStyle(require('../assets/backgroundLongBreak.svg'));
+        setCurrentMinute(15);
+        setCurrentSecond(0);
+    }
     return (
 
         <View style={styles.container}>
-
-            <ImageBackground style={styles.background}>
-
+            <ImageBackground style={styles.background} source={backgroundStyle}>
                 <View style={styles.buttonContainer}>
-                    <Image
-                        style={styles.shortBreak}
-                        source={require('../assets/shortBreak.svg')}
-                    />
-                    <Text key={"textTime"} adjustsFontSizeToFit={true} style={styles.time}>00:00:10</Text>
+                    <View style={styles.shortBreak}>
+                        <Pressable style={styles.breakIcon} onPress={focus}>
+                            <Image
+                                style={styles.breakIcon}
+                                source={require('../assets/focus.svg')}
+                            />
+                        </Pressable>
+                        <Pressable style={styles.breakIcon} onPress={shortBreak}>
+                            <Image
+                                style={styles.breakIcon}
+                                source={require('../assets/shortBreak.svg')}
+                            />
+                        </Pressable>
+                        <Pressable style={styles.breakIcon} onPress={longBreak}>
+                            <Image
+                                style={styles.breakIcon}
+                                source={require('../assets/longBreak.svg')}
+                            />
+                        </Pressable>
+                    </View>
+                    <Text key={"textTime"} adjustsFontSizeToFit={true} style={styles.time}>{timing}</Text>
                     <Image
                         style={styles.panda}
                         source={require('../assets/pandaLvl3.svg')}
                     />
-                    <View style={styles.pomodoroButton}>
-                        <Pressable onPress={timer()} style={styles.resumePress}>
-                            <Image
-                                style={styles.resumeLogo}
-                                source={require('../assets/pomodoroResume.svg')}
-                            />
-                        </Pressable>
-                        <Pressable onPress={skip()} style={styles.skipPress}>
-                            <Image
-                                style={styles.skipLogo}
-                                source={require('../assets/skipButton.svg')}
-                            />
-                        </Pressable>
-                    </View>
+                    <Pressable onPress={() => countdown()} style={styles.resumePress}>
+                        <Image
+                            style={styles.resumeLogo}
+                            source={require('../assets/pomodoroResume.svg')}
+                        />
+                    </Pressable>
                     <Footer></Footer>
                 </View>
 
-            </ImageBackground>
+            </ImageBackground >
 
-        </View>
+        </View >
     );
 };
 
@@ -64,7 +104,6 @@ const styles = StyleSheet.create({
 
     background: {
         flex: 1,
-        backgroundColor: '#7CCE7C',
         width: '100%',
         height: '100%',
     },
@@ -74,6 +113,11 @@ const styles = StyleSheet.create({
     },
 
     shortBreak: {
+        flex: 0.5,
+        flexDirection: 'row',
+    },
+
+    breakIcon: {
         flex: 0.5,
         resizeMode: 'center',
     },
@@ -94,15 +138,9 @@ const styles = StyleSheet.create({
         resizeMode: 'center',
     },
 
-    pomodoroButton: {
-        flex: 1,
-        flexDirection: "row",
-        width: '100%',
-        height: '100%',
-    },
 
     resumePress: {
-        flex: 0.5,
+        flex: 1,
     },
 
     resumeLogo: {
@@ -110,14 +148,7 @@ const styles = StyleSheet.create({
         resizeMode: 'center',
     },
 
-    skipPress: {
-        flex: 0.5,
-    },
 
-    skipLogo: {
-        flex: 0.5,
-        resizeMode: 'center',
-    },
 
 
 });
