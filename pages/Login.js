@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Text, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import auth from '@react-native-firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    console.log(`Email: ${email} Password: ${password}`);
-  };
+  async function handleLogin() {
+    try {
+      const userCredential = await auth().signInWithEmailAndPassword(email, password);
+      console.log('User logged in successfully!');
+      // Navigate to the new page
+      navigation.navigate('Home');
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <View style={styles.container}>

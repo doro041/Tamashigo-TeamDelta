@@ -1,16 +1,36 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Text, TouchableOpacity, Image, ImageBackground } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ImageBackground,
+  Image,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import auth from '@react-native-firebase/auth';
 
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignUp= () => {
-    console.log(`Name: ${name} Email: ${email} Password: ${password}`);
-  };
+  async function handleSignUp() {
+    try {
+      const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+      console.log('User signed up successfully!');
+      // Optionally, update the user's display name with the entered name
+      await userCredential.user.updateProfile({
+        displayName: name,
+      });
+      // Navigate to the new page
+      navigation.navigate('Namechar');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
 
   return (
     <View style={styles.container}>
@@ -42,9 +62,10 @@ const SignUp = ({ navigation }) => {
       <Text> Already have an account?</Text>  <Text style={styles.SignInText}>Sign In.</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => navigation.navigate('NameChar')}>
-          <Text style={styles.buttonText}>SIGN UP</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => handleSignUp()}>
+  <Text style={styles.buttonText}>SIGN UP</Text>
+</TouchableOpacity>
+
         <TouchableOpacity style={[styles.button, { backgroundColor: '#4267B2' }]}>
           <Icon name="facebook" size={25} color="white" style={styles.icon} />
         </TouchableOpacity>
