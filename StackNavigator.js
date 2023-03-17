@@ -7,7 +7,7 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import BeginningPage from './pages/BeginningPage';
 import Login from './pages/Login';
-import ShortBreak from './pages/ShortBreak'
+import Pomodoro from './pages/Pomodoro'
 
 
 const Stack = createStackNavigator(); // Create a StackNavigator
@@ -19,7 +19,7 @@ const StackNavigator = () => {
         <Stack.Screen name="Beginning" component={BeginningPage} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Character Name" component={Namechar} />
-        <Stack.Screen name="ShortBreak" component={ShortBreak} />
+        <Stack.Screen name="Pomodoro" component={Pomodoro} />
 
 
 

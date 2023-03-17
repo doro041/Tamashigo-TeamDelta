@@ -29,9 +29,9 @@ const BeginningPage = ({ navigation }) => {
 
         <TouchableOpacity
           style={[styles.button, { backgroundColor: 'black', borderColor: 'black', borderWidth: 1, color: 'black', fontSize: 20, fontWeight: 'bold' }]}
-          onPress={() => navigation.navigate('ShortBreak')}
+          onPress={() => navigation.navigate('Pomodoro')}
         >
-          <Text style={styles.buttonText}>ShortBreak</Text>
+          <Text style={styles.buttonText}>Pomodoro</Text>
         </TouchableOpacity>
       </View>
     </View>
