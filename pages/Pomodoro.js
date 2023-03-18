@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ImageBackground, Pressable } from 'react-native';
 import Footer from '../components/Footer';
 
@@ -6,27 +6,25 @@ import Footer from '../components/Footer';
 const Pomodoro = ({ navigation }) => {
     const [currentMinute, setCurrentMinute] = useState(5);
     const [currentSeconds, setCurrentSecond] = useState(0);
+    const [start, setStart] = useState(false)
+
     var timing = currentMinute + ":" + currentSeconds;
 
-    const countdown = () => {
-        setCurrentSecond(59);
-        setCurrentMinute(currentMinute => currentMinute - 1);
-        setInterval(() => {
-            setCurrentSecond(currentSeconds => currentSeconds - 1);
-            if (currentSeconds == 0) {
-                if (currentMinute != 0) {
+    useEffect(() => {
+        if (start) {
+            const interval = setInterval(() => {
+                setCurrentSecond(currentSeconds - 1);
+                if (currentSeconds === 0) {
                     setCurrentSecond(59);
-                    setCurrentMinute(currentMinute => currentMinute - 1);
+                    setCurrentMinute(currentMinute - 1);
                 }
-                else {
-                    clearInterval()
-                }
-            }
-        }, 1000);
-        return (
-            <Text>Time's up!</Text>
-        )
-    }
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [currentSeconds, currentMinute, start])
+    const startCount = () => {
+        setStart(true);
+    };
 
     const [backgroundStyle, setBackgroundStyle] = useState(require('../assets/backgroundShortBreak.svg'));
     const [shortBreakStyle, setShortBreakStyle] = useState(styles.currentOption);
@@ -39,6 +37,7 @@ const Pomodoro = ({ navigation }) => {
         setLongBreakStyle(styles.breakIcon);
         setCurrentMinute(25);
         setCurrentSecond(0);
+        setStart(false);
     }
     const pomodoro = () => {
         setBackgroundStyle(require('../assets/backgroundShortBreak.svg'));
@@ -47,6 +46,7 @@ const Pomodoro = ({ navigation }) => {
         setLongBreakStyle(styles.breakIcon);
         setCurrentMinute(5);
         setCurrentSecond(0);
+        setStart(false);
     }
     const longBreak = () => {
         setBackgroundStyle(require('../assets/backgroundLongBreak.svg'));
@@ -55,6 +55,7 @@ const Pomodoro = ({ navigation }) => {
         setFocusStyle(styles.breakIcon);
         setCurrentMinute(15);
         setCurrentSecond(0);
+        setStart(false);
     }
     return (
 
@@ -86,7 +87,7 @@ const Pomodoro = ({ navigation }) => {
                         style={styles.panda}
                         source={require('../assets/pandaLvl3.svg')}
                     />
-                    <Pressable onPress={() => countdown()} style={styles.resumePress}>
+                    <Pressable onPress={() => startCount()} style={styles.resumePress}>
                         <Image
                             style={styles.resumeLogo}
                             source={require('../assets/pomodoroResume.svg')}

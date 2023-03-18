@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
-import LevelUp from '../LevelUp';
+
 
 const BeginningPage = ({ navigation }) => {
   return (
@@ -18,7 +18,7 @@ const BeginningPage = ({ navigation }) => {
           onPress={() => navigation.navigate('Login')}
         >
 
-          <Text style={styles.buttonText}>Log In</Text>
+          <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1, color: 'black', fontSize: 20, fontWeight: 'bold' }]}

@@ -1,13 +1,17 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from "./pages/Home";
-import Todo from "./pages/Todo";
-import Namechar from "./pages/Namechar";
-import Profile from "./pages/Profile";
-import Settings from "./pages/Settings";
+
+import NameChar from "./pages/NameChar";
+import SignUp from "./pages/SignUp";
+import ForgotPass from "./pages/ForgotPass";
 import BeginningPage from './pages/BeginningPage';
 import Login from './pages/Login';
+import Home from './pages/Home';
+import VerticalCalendar from './pages/CalendarView';
 import Pomodoro from './pages/Pomodoro'
+
+import TermsandConditions from './components/TermsandConditions';
+
 
 
 const Stack = createStackNavigator(); // Create a StackNavigator
@@ -17,16 +21,23 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Group>
         <Stack.Screen name="Beginning" component={BeginningPage} />
+        <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="TermsandConditions" component={TermsandConditions} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Character Name" component={Namechar} />
+        <Stack.Screen name="ForgotPass" component={ForgotPass} />
+        <Stack.Screen name="NameChar" component={NameChar} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Calendar" component={VerticalCalendar} />
         <Stack.Screen name="Pomodoro" component={Pomodoro} />
 
 
+      </Stack.Group>
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
 
       </Stack.Group>
+
     </Stack.Navigator>
   );
 };
-
 
 export default StackNavigator;
