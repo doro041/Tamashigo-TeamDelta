@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Text, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Namechar from './Namechar';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -14,7 +15,7 @@ const Login = ({ navigation }) => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('User logged in successfully!');
       // Navigate to the new page
-      navigation.navigate('Namechar');
+      navigation.navigate('NameChar');
     } catch (error) {
       console.log(error);
     }
@@ -25,7 +26,7 @@ const Login = ({ navigation }) => {
       <ImageBackground source={require('../assets/PartOfLogo.png')} style={styles.background}>
         <Image source={require('../assets/PandaHead.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
         <Text style={styles.title}>Welcome Back.</Text>
-        <Text style={styles.title}>Login</Text>
+        <Text style={styles.subtitle}>Login</Text>
       </ImageBackground>
 
     
@@ -41,29 +42,34 @@ const Login = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-      /> <TouchableOpacity  onPress={() => navigation.navigate('SignUp')}>
-      <Text> No account?</Text>  <Text style={styles.SignUpText}>Sign up.</Text>
-      </TouchableOpacity>
+      /> 
       <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation.navigate('ForgotPass')}>
         <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
-      <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => handleLogin(email, password)}>
-  <Text style={styles.buttonText}>LOGIN</Text>
-</TouchableOpacity>
+    
+  <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => handleLogin(email, password)}>
+    <Text style={styles.buttonText}>LOGIN</Text>
+  </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, { backgroundColor: '#4267B2' }]}>
-          <Icon name="facebook" size={25} color="white" style={styles.icon} />
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#DB4437' }]}>
-          <Icon name="google" size={25} color="white" style={styles.icon} />
-        </TouchableOpacity>
-      
+  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 30, height: 30 }]}>
+    <Icon name="facebook" size={25} color="white" style={styles.icon} />
+  </TouchableOpacity>
+  
+  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 30, height: 30 }]}>
+    <Icon name="google" size={25} color="white" style={styles.icon} />
+  </TouchableOpacity>
+  
+</View>
+
+<TouchableOpacity  onPress={() => navigation.navigate('SignUp')}>
+      <Text> No account?</Text>  <Text style={styles.SignUpText}>Sign up.</Text>
+      </TouchableOpacity>
  
         
       </View>
      
-    </View>
+
   );
 };
 
@@ -80,6 +86,15 @@ const styles = StyleSheet.create({
     marginBottom: '10%',
    
     marginTop: '10%',
+    alignContent: 'center',
+  },
+
+  subtitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: '10%',
+    
     alignContent: 'center',
   },
   buttonContainer: {
