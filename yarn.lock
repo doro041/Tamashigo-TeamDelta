@@ -5850,7 +5850,7 @@
   "resolved" "https://registry.npmjs.org/expo-updates-interface/-/expo-updates-interface-0.9.1.tgz"
   "version" "0.9.1"
 
-"expo@*", "expo@^48.0.0":
+"expo@*", "expo@~48.0.6":
   "integrity" "sha512-4sPW+HWm03z72FKIG9IddwEhF9+RlAUsTh8pnsoZjZbXALVikmV3QjD4zp/Dkt9YuiCAnJN1VBaT2AlhbYk2Rg=="
   "resolved" "https://registry.npmjs.org/expo/-/expo-48.0.7.tgz"
   "version" "48.0.7"

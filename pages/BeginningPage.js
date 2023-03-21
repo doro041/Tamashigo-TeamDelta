@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     marginBottom: '20%',
-    marginLeft: '10%',
     marginTop: '40%',
     alignContent: 'center',
   },
@@ -50,14 +49,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: '30%',
-    marginLeft: '10%',
     alignContent: 'center',
     fontStyle: 'italic'
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '40%',
+    width: '80%',
     marginBottom: '30%',
 
   },

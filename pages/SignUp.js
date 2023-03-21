@@ -8,17 +8,20 @@ import {
   ImageBackground,
   Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import auth from '@react-native-firebase/auth';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+
 
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  async function handleSignUp() {
+  async function handleSignUp(email, password, name) {
     try {
-      const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log('User signed up successfully!');
       // Optionally, update the user's display name with the entered name
       await userCredential.user.updateProfile({
@@ -28,8 +31,10 @@ const SignUp = ({ navigation }) => {
       navigation.navigate('Namechar');
     } catch (error) {
       console.log(error);
+      alert.alert(error.message);
     }
   }
+  
   
 
   return (

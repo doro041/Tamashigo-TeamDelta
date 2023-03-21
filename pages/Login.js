@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Text, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import auth from '@react-native-firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { NavigationContainer } from '@react-navigation/native';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  async function handleLogin() {
+  async function handleLogin(email, password) {
     try {
-      const userCredential = await auth().signInWithEmailAndPassword(email, password);
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('User logged in successfully!');
       // Navigate to the new page
-      navigation.navigate('Home');
+      navigation.navigate('Namechar');
     } catch (error) {
       console.log(error);
     }
   }
-
+  
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../assets/PartOfLogo.png')} style={styles.background}>
@@ -47,10 +48,10 @@ const Login = ({ navigation }) => {
         <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => navigation.navigate('NameChar')}>
-          <Text style={styles.buttonText}>LOGIN</Text>
-        </TouchableOpacity>
-      
+      <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => handleLogin(email, password)}>
+  <Text style={styles.buttonText}>LOGIN</Text>
+</TouchableOpacity>
+
       <TouchableOpacity style={[styles.button, { backgroundColor: '#4267B2' }]}>
           <Icon name="facebook" size={25} color="white" style={styles.icon} />
         </TouchableOpacity>

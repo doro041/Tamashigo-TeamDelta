@@ -1,29 +1,14 @@
 {
   "expo": {
     "android": {
-      "googleServicesFile": "./google-services.json",
-      "package": "com.doro14.rn"
+      "googleServicesFile": "./google-services.json"
     },
     "ios": {
-      "googleServicesFile": "./GoogleService-Info.plist",
-      "bundleIdentifier": "com.doro14.rn"
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "plugins": [
       "@react-native-firebase/app",
-      "@react-native-firebase/perf",
-      "@react-native-firebase/crashlytics"
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "df0574de-c861-4451-ba66-725c38af0e8a"
-      }
-    },
-    "owner": "doro14",
-    "name": "rn"
-  },
-  "build": {
-    "ios": {
-      "useFrameworks": "static"
-    }
+      "@react-native-firebase/auth"
+    ]
   }
 }
