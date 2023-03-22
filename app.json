@@ -1,7 +1,8 @@
 {
   "expo": {
     "android": {
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "package": "com.doro14.rn"
     },
     "ios": {
       "googleServicesFile": "./GoogleService-Info.plist"

@@ -1,17 +1,27 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
-const Header = ({ title, onSettingsPress }) => {
+
+const Header = ({ title, onSettingsPress = () => {} }) => {
+  const navigation = useNavigation(); // obtain the navigation object
+
+  const handleSettingsPress = () => {
+    onSettingsPress();
+    navigation.navigate('Profile');
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onSettingsPress} style={styles.iconContainer}>
+      <TouchableOpacity onPress={handleSettingsPress} style={styles.iconContainer}>
         <Icon name="settings-outline" size={24} color="black" />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
     container: {
@@ -34,6 +44,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'black',
   },
+
+
 });
 
 export default Header;

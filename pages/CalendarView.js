@@ -22,22 +22,30 @@ const months = [
   
 ];
 
-const generateDays = () => {
+const generateDays = (numDays) => {
+  const numDaysToDisplay = Math.min(numDays, 7); // limit the number of days to display to 7 or less
   let result = [];
-  for (let i = 0; i < years.length; i++) {
+  let count = 0;
+  for (let i = 0; i < years.length && count < numDaysToDisplay; i++) {
     const year = years[i];
-    for (let j = 0; j < months.length; j++) {
+    for (let j = 0; j < months.length && count < numDaysToDisplay; j++) {
       const month = months[j];
       const daysInMonth = month.days;
-      for (let k = 1; k <= daysInMonth; k++) {
+      for (let k = 1; k <= daysInMonth && count < numDaysToDisplay; k++) {
         const date = k.toString();
         const day = new Date(year, j, k).toLocaleDateString('en-US', { weekday: 'short' });
-        result.push({ date, day, tasks: [] });
+        if (count < 7) {
+          result.push({ date, day, tasks: [] });
+        } else if (count === 7) {
+          result.push({ message: 'Purchase premium to get more.' });
+        }
+        count++;
       }
     }
   }
   return result;
 };
+
 
 const CalendarItem = ({ date, day, tasks }) => {
   return (
@@ -52,21 +60,31 @@ const CalendarItem = ({ date, day, tasks }) => {
 };
 
 const VerticalCalendar = () => {
-  const days = generateDays();
+  const days = generateDays(7); // display up to 10 days
 
   return (
     <ScrollView>
       <Header />
       <FlatList
         data={days}
-        renderItem={({ item }) => (
-          <CalendarItem
-            date={item.date}
-            day={item.day}
-            tasks={item.tasks}
-          />
-        )}
-        keyExtractor={item => item.date}
+        renderItem={({ item }) => {
+          if (item.message) {
+            return (
+              <View style={styles.messageContainer}>
+                <Text style={styles.message}>{item.message}</Text>
+              </View>
+            );
+          } else {
+            return (
+              <CalendarItem
+                date={item.date}
+                day={item.day}
+                tasks={item.tasks}
+              />
+            );
+          }
+        }}
+        keyExtractor={(item, index) => item.date || index.toString()}
         style={styles.calendarList}
       />
       <Footer />
@@ -98,6 +116,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 5,
   },
+  messageContainer: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  message: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
+
 
 export default VerticalCalendar;
