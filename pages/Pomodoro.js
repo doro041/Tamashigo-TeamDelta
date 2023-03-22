@@ -5,7 +5,7 @@ import TaskManagement from '../components/TaskManagement';
 
 
 const Pomodoro = () => {
-    const [currentMinute, setCurrentMinute] = useState(1);
+    const [currentMinute, setCurrentMinute] = useState(5);
     const [currentSeconds, setCurrentSecond] = useState(0);
     const [start, setStart] = useState(false)
 

@@ -1,9 +1,8 @@
+import { Wrap } from 'native-base';
 import React, { useState } from 'react';
 import { Pressable, Modal, FlatList } from 'react-native';
 import { StyleSheet, View, Text } from 'react-native';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-
-//USE FLATLIST
 
 const TaskManagement = () => {
     const [taskVisible, setTaskVisible] = useState(false);
@@ -25,62 +24,61 @@ const TaskManagement = () => {
     return (
         <View style={styles.container}>
             <View style={styles.taskContent}>
-                <Modal transparent={true} visible={taskVisible}>
+                <Modal animationType="slide" transparent={true} visible={taskVisible}>
                     <View style={styles.task}>
                         <ScrollView>
-                            <Pressable onPress={() => setTaskChoiceVisible(true)} style={styles.mainBar}>
+                            <Pressable onPress={() => setTaskChoiceVisible(true)}>
                                 <FlatList data={TASKARRAY} keyExtractor={(item, index) => index.toString()}
                                     renderItem={(taskArray) => {
                                         return (
                                             <View style={styles.listItem}>
                                                 <Text>{taskArray.item}</Text>
                                             </View>
-                                        );
+                                        );//need to add a delete button
                                     }} />
                                 <Text>Add Tasks</Text>
                             </Pressable>
                         </ScrollView>
-                        <TouchableOpacity onPress={() => setTaskVisible(!taskVisible)}>Cancel</TouchableOpacity>
+                        <TouchableOpacity onPress={() => setTaskVisible(!taskVisible)} style={{ paddingTop: 15, }}>Cancel</TouchableOpacity>
                     </View>
                 </Modal>
-                <Modal transparent={true} visible={taskChoiceVisible}>
+                <Modal animationType="slide" transparent={true} visible={taskChoiceVisible}>
                     <View style={styles.taskChoice}>
                         <View style={styles.taskOption}>
-                            <View style={styles.textTask}>
-                                <Text>Task</Text>
-                                <Text>Priority</Text>
-                                <Text>Category</Text>
-                                <Text>Timer</Text>
-                            </View>
                             <View>
-                                <TextInput placeholder='Name your Task!' onChangeText={text => setName(text)}></TextInput>
+                                <Text>Task</Text>
+                                <TextInput placeholder='Name your Task!' onChangeText={text => setName(text)}
+                                    style={styles.button}></TextInput>
                                 <View style={styles.priority}>
-                                    <TouchableOpacity onPress={() => setPriority("Small")}>Small</TouchableOpacity>
-                                    <TouchableOpacity onPress={() => setPriority("Medium")}>Medium</TouchableOpacity>
-                                    <TouchableOpacity onPress={() => setPriority("High")}>High</TouchableOpacity>
+                                    <Text>Priority</Text>
+                                    <Pressable onPress={() => setPriority("Small")} style={styles.button}>Small</Pressable>
+                                    <Pressable onPress={() => setPriority("Medium")} style={styles.button}>Medium</Pressable>
+                                    <Pressable onPress={() => setPriority("High")} style={styles.button}>High</Pressable>
                                 </View>
                                 <View style={styles.category}>
-                                    <TouchableOpacity onPress={() => setCategory("Productivity")}>Productivity</TouchableOpacity>
-                                    <TouchableOpacity onPress={() => setCategory("Health")}>Health</TouchableOpacity>
-                                    <TouchableOpacity onPress={() => setCategory("Finance")}>Finance</TouchableOpacity>
-                                    <TouchableOpacity onPress={() => setCategory("Hobbies")}>Hobbies</TouchableOpacity>
+                                    <Pressable onPress={() => setCategory("Productivity")}>Productivity</Pressable>
+                                    <Pressable onPress={() => setCategory("Health")} >Health</Pressable>
+                                    <Pressable onPress={() => setCategory("Finance")} >Finance</Pressable>
+                                    <Pressable onPress={() => setCategory("Hobbies")} >Hobbies</Pressable>
+                                    <Text>Category</Text>
                                 </View>
                                 <View style={styles.time}>
-                                    <TouchableOpacity onPress={() => setTime("ShortBreak")}>Short Break</TouchableOpacity>
-                                    <TouchableOpacity onPress={() => setCategory("LongBreak")}>Long Break</TouchableOpacity>
-                                    <TouchableOpacity onPress={() => setCategory("Focus")}>Focus</TouchableOpacity>
+                                    <Text style={{ paddingRight: 5, }}>Timer</Text>
+                                    <Pressable onPress={() => setTime("ShortBreak")} style={styles.button}>Short Break</Pressable>
+                                    <Pressable onPress={() => setCategory("LongBreak")} style={styles.button}>Long Break</Pressable>
+                                    <Pressable onPress={() => setCategory("Focus")} style={styles.button}>Focus</Pressable>
                                 </View>
                             </View>
                         </View>
                         <View style={styles.option}>
-                            <TouchableOpacity onPress={() => setTaskChoiceVisible(!taskChoiceVisible)}>Cancel</TouchableOpacity>
-                            <TouchableOpacity onPress={addTask}>Save</TouchableOpacity>
+                            <TouchableOpacity onPress={() => setTaskChoiceVisible(!taskChoiceVisible)} style={{ paddingRight: 10 }}>Cancel</TouchableOpacity>
+                            <TouchableOpacity onPress={addTask} style={{ paddingLeft: 10 }}>Save</TouchableOpacity>
                         </View>
                     </View>
 
                 </Modal>
                 <Pressable onPress={() => setTaskVisible(true)} style={styles.mainBar}>
-                    <Text style={styles.mainBar}> Tasks</Text>
+                    <Text> Tasks</Text>
                 </Pressable>
             </View >
         </View >
@@ -90,17 +88,20 @@ const TaskManagement = () => {
 const styles = StyleSheet.create({
     container: {
         position: "absolute",
-        bottom: 1,
-        left: '50%',
-        right: '50%',
+        bottom: '10%',
+        right: '0%',
         padding: 20,
-        width: "30%",
+        borderColor: "black",
+        backgroundColor: "white",
+        borderRadius: "50%",
     },
 
     mainBar: {
         borderRadius: 20,
-        borderColor: "black",
-        backgroundColor: "white",
+        width: 'auto',
+        height: 'auto',
+        margin: 'auto',
+
     },
 
     taskContent: {
@@ -115,6 +116,17 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
+        padding: 25,
+        borderRadius: 20,
+    },
+
+    listItem: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        flex: 1,
+        justifyContent: "space-evenly",
     },
 
     taskChoice: {
@@ -123,37 +135,51 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 35,
         alignItems: 'center',
-        shadowColor: '#000',
+        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
+        grid: 1,
     },
 
     taskOption: {
         flex: 5,
+        margin: "auto",
         flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+
+    button: {
+        padding: 4,
+        borderColor: 'black',
+        borderWidth: 1,
+        margin: 'auto',
     },
 
     priority: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        padding: 5,
     },
 
     category: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
+        flexWrap: "wrap-reverse",
+        padding: 5,
     },
 
     time: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
+        flexWrap: "wrap-reverse",
+        padding: 5,
     },
 
     option: {
