@@ -24,14 +24,7 @@ const BeginningPage = ({ navigation }) => {
           style={[styles.button, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1, color: 'black', fontSize: 20, fontWeight: 'bold' }]}
           onPress={() => navigation.navigate('SignUp')}
         >
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: 'black', borderColor: 'black', borderWidth: 1, color: 'black', fontSize: 20, fontWeight: 'bold' }]}
-          onPress={() => navigation.navigate('Pomodoro')}
-        >
-          <Text style={styles.buttonText}>Pomodoro</Text>
+          <Text style={[styles.buttonText, { color: 'black' }]}>SIGN UP</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -49,7 +42,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     marginBottom: '20%',
-    marginLeft: '10%',
     marginTop: '40%',
     alignContent: 'center',
   },
@@ -57,14 +49,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: '30%',
-    marginLeft: '10%',
     alignContent: 'center',
     fontStyle: 'italic'
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '40%',
+    width: '80%',
     marginBottom: '30%',
 
   },

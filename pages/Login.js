@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Text, TouchableOpacity, Image, ImageBackground } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import auth from '@react-native-firebase/auth';
-import { NavigationContainer } from '@react-navigation/native';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -10,21 +10,42 @@ const Login = ({ navigation }) => {
 
   async function handleLogin() {
     try {
-      const userCredential = await auth().signInWithEmailAndPassword(email, password);
+      const auth = getAuth();
+
+      // Check if the user is already logged in
+      const user = auth.currentUser;
+      if (user) {
+        console.log('User is already logged in');
+        navigation.navigate('NameChar');
+        return;
+      }
+
+      // Check if authentication credentials are stored in AsyncStorage
+      const authToken = await AsyncStorage.getItem('authToken');
+      if (!authToken) {
+        console.log('No saved authentication credentials found');
+        return;
+      }
+
+      // Use the saved authentication credentials to log in the user
+      const credential = firebase.auth.AuthCredential.fromJWT(authToken);
+      const userCredential = await signInWithCredential(auth, credential);
       console.log('User logged in successfully!');
+
       // Navigate to the new page
-      navigation.navigate('Home');
+      navigation.navigate('NameChar');
     } catch (error) {
       console.log(error);
     }
   }
+
 
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../assets/PartOfLogo.png')} style={styles.background}>
         <Image source={require('../assets/PandaHead.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
         <Text style={styles.title}>Welcome Back.</Text>
-        <Text style={styles.title}>Login</Text>
+        <Text style={styles.subtitle}>Login</Text>
       </ImageBackground>
 
 
@@ -79,6 +100,15 @@ const styles = StyleSheet.create({
     marginBottom: '10%',
 
     marginTop: '10%',
+    alignContent: 'center',
+  },
+
+  subtitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: '10%',
+
     alignContent: 'center',
   },
   buttonContainer: {

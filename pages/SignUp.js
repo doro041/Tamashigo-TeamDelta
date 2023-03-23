@@ -8,28 +8,31 @@ import {
   ImageBackground,
   Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import auth from '@react-native-firebase/auth';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+
 
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  async function handleSignUp() {
+  async function handleSignUp(email, password, name) {
     try {
-      const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log('User signed up successfully!');
-      // Optionally, update the user's display name with the entered name
-      await userCredential.user.updateProfile({
-        displayName: name,
-      });
+      
       // Navigate to the new page
-      navigation.navigate('Namechar');
+      navigation.navigate('NameChar');
     } catch (error) {
       console.log(error);
+      alert(error.message);
+
     }
   }
+  
   
 
   return (
@@ -58,24 +61,25 @@ const SignUp = ({ navigation }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation.navigate('Login')}>
-      <Text> Already have an account?</Text>  <Text style={styles.SignInText}>Sign In.</Text>
-      </TouchableOpacity>
+      
       <View style={styles.buttonContainer}>
       <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => handleSignUp()}>
   <Text style={styles.buttonText}>SIGN UP</Text>
 </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#4267B2' }]}>
-          <Icon name="facebook" size={25} color="white" style={styles.icon} />
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#DB4437' }]}>
-          <Icon name="google" size={25} color="white" style={styles.icon} />
-        </TouchableOpacity>
-      
+<TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 30, height: 30 }]}>
+  <Icon name="facebook" size={25} color="white" style={styles.icon} />
+</TouchableOpacity>
+<TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 30, height: 30 }]}>
+  <Icon name="google" size={25} color="white" style={styles.icon} />
+</TouchableOpacity>
+
   
 
       </View>
+      <TouchableOpacity style={styles.alreadyacc} onPress={() => navigation.navigate('Login')}>
+      <Text> Already have an account?</Text>  <Text style={styles.SignInText}>Sign In.</Text>
+      </TouchableOpacity>
       <View>
      
       </View>
@@ -112,6 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'black',
   },
+
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
@@ -152,5 +157,17 @@ const styles = StyleSheet.create({
       height: '60%',
       alignItems: 'center',
     },
+   alreadyacc: {
+    marginTop: '10%',
+    marginBottom: '50%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+
+  },
+  
+
+
 });
 export default SignUp;

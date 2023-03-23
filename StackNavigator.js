@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import VerticalCalendar from './pages/CalendarView';
 import Pomodoro from './pages/Pomodoro'
+import Profile from './pages/Profile';
 
 import TermsandConditions from './components/TermsandConditions';
 
@@ -29,6 +30,7 @@ const StackNavigator = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Calendar" component={VerticalCalendar} />
         <Stack.Screen name="Pomodoro" component={Pomodoro} />
+        <Stack.Screen name="Profile" component={Profile} />
 
 
       </Stack.Group>

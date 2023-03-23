@@ -1,4 +1,4 @@
-package com.rn;
+package com.doro14.rn;
 
 import android.os.Build;
 import android.os.Bundle;

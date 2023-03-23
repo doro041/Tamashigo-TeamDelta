@@ -1,4 +1,4 @@
-package com.rn;
+package com.doro14.rn;
 
 import android.app.Application;
 import android.content.res.Configuration;
