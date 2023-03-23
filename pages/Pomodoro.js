@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ImageBackground, Pressable, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, ImageBackground, Pressable, ScrollView, Alert } from 'react-native';
 import Footer from '../components/Footer';
 import TaskManagement from '../components/TaskManagement';
 
 
 const Pomodoro = () => {
-    const [currentMinute, setCurrentMinute] = useState(5);
+    const [currentMinute, setCurrentMinute] = useState(1);
     const [currentSeconds, setCurrentSecond] = useState(0);
-    const [start, setStart] = useState(false)
+    const [start, setStart] = useState(false);
 
     useEffect(() => {
         if (start) {
@@ -20,10 +20,14 @@ const Pomodoro = () => {
                     } else {
                         setStart(false);
                         clearInterval(interval);
+                        alert("Time'up !");
+                        shortBreak();
                     }
                 }
             }, 1000);
-            return () => clearInterval(interval);
+            return () => {
+                clearInterval(interval);
+            }
         }
     }, [currentSeconds, currentMinute, start]);
 
@@ -50,7 +54,7 @@ const Pomodoro = () => {
         setCurrentMinute(25);
         setCurrentSecond(0);
     }
-    const pomodoro = () => {
+    const shortBreak = () => {
         setStart(false);
         setBackgroundStyle(require('../assets/backgroundShortBreak.svg'));
         setShortBreakStyle(styles.currentOption);
@@ -80,7 +84,7 @@ const Pomodoro = () => {
                                 source={require('../assets/focus.svg')}
                             />
                         </Pressable>
-                        <Pressable style={shortBreakStyle} onPress={pomodoro}>
+                        <Pressable style={shortBreakStyle} onPress={shortBreak}>
                             <Image
                                 style={styles.breakIcon}
                                 source={require('../assets/shortBreak.svg')}
@@ -104,7 +108,6 @@ const Pomodoro = () => {
                             source={require('../assets/pomodoroResume.svg')}
                         />
                     </Pressable>
-                    <TaskManagement></TaskManagement>
                 </View>
                 <Footer></Footer>
             </ImageBackground >
