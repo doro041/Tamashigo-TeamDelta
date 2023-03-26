@@ -42,25 +42,26 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     marginBottom: '20%',
-    marginTop: '40%',
+    marginTop: '10%',
     alignContent: 'center',
   },
   subtitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: '30%',
+    marginBottom: '20%',
     alignContent: 'center',
     fontStyle: 'italic'
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '80%',
+    width: '70%',
     marginBottom: '30%',
 
   },
   button: {
-    width: '48%',
+    width: '30%',
+    
     borderRadius: 40,
     paddingVertical: 10,
     alignItems: 'center',

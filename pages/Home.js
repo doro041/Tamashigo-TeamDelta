@@ -4,6 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Feather} from 'react-native-vector-icons';
+
+
 
 const Home = () => {
   const navigation = useNavigation();
@@ -28,6 +32,14 @@ const Home = () => {
           <View style={styles.character}>
             <Image source={require('../assets/Panda.png')} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
           </View>
+          <View>
+  <TouchableOpacity onPress={() => navigation.navigate('Todo')}>
+    <View style={styles.button}> 
+    <Feather name="plus" size={24} color="#4A8AE7" />
+    </View>
+  </TouchableOpacity>
+</View>
+
           <View style={styles.balloon}>
             <Text style={styles.text}>Hi,my name is {name}!</Text>
           </View>
@@ -72,6 +84,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button: {
+   
+      width: 60,
+      height: 60,
+      backgroundColor: '#FFF',
+      borderRadius: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderColor: '#C0C0C0',
+      borderWidth: 1,
+      alignSelf: 'center',
+      
+  
+    }
+  
 });
 
 export default Home;

@@ -78,7 +78,7 @@ const SignUp = ({ navigation }) => {
 
       </View>
       <TouchableOpacity style={styles.alreadyacc} onPress={() => navigation.navigate('Login')}>
-      <Text> Already have an account?</Text>  <Text style={styles.SignInText}>Sign In.</Text>
+      <Text>Already have an account?</Text><Text style={styles.SignInText}>Sign In.</Text>
       </TouchableOpacity>
       <View>
      

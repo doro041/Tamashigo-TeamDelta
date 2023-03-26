@@ -1,15 +1,24 @@
 {
   "expo": {
     "android": {
-      "googleServicesFile": "./google-services.json",
       "package": "com.doro14.rn"
     },
     "ios": {
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "bundleIdentifier": "com.doro14.rn"
     },
     "plugins": [
       "@react-native-firebase/app",
       "@react-native-firebase/auth"
-    ]
-  }
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "d5ef0300-a80f-486f-b181-a41b3f2d28da"
+      }
+    },
+    "slug": "rn",
+    "name": "rn",
+    "sdkVersion": "48.0.0",
+    "entryPoint": ".vscode/exponentIndex.js"
+  },
+  "name": "rn"
 }

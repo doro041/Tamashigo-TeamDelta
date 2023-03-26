@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 
-const NameChar = () => {
+ const NameChar = () => {
   const [name, setName] = useState('');
   const navigation = useNavigation();
 

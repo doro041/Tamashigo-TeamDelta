@@ -82,7 +82,7 @@ const Login = ({ navigation }) => {
 </View>
 
 <TouchableOpacity  onPress={() => navigation.navigate('SignUp')}>
-      <Text> No account?</Text>  <Text style={styles.SignUpText}>Sign up.</Text>
+      <Text> No account?</Text><Text style={styles.SignUpText}>Sign up.</Text>
       </TouchableOpacity>
  
         
