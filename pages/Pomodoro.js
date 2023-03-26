@@ -39,13 +39,13 @@ const Pomodoro = () => {
         }
     };
 
-    const [backgroundStyle, setBackgroundStyle] = useState(require('../assets/backgroundShortBreak.png'));
+    const [backgroundStyle, setBackgroundStyle] = useState(require('../assets/pomodoro/backgroundShortBreak.png'));
     const [shortBreakStyle, setShortBreakStyle] = useState(styles.currentOption);
     const [focusStyle, setFocusStyle] = useState(styles.breakIcon);
     const [longBreakStyle, setLongBreakStyle] = useState(styles.breakIcon);
     const focus = () => {
         setStart(false);
-        setBackgroundStyle(require('../assets/backgroundFocus.png'));
+        setBackgroundStyle(require('../assets/pomodoro/backgroundFocus.png'));
         setFocusStyle(styles.currentOption);
         setShortBreakStyle(styles.breakIcon);
         setLongBreakStyle(styles.breakIcon);
@@ -54,7 +54,7 @@ const Pomodoro = () => {
     }
     const shortBreak = () => {
         setStart(false);
-        setBackgroundStyle(require('../assets/backgroundShortBreak.png'));
+        setBackgroundStyle(require('../assets/pomodoro/backgroundShortBreak.png'));
         setShortBreakStyle(styles.currentOption);
         setFocusStyle(styles.breakIcon);
         setLongBreakStyle(styles.breakIcon);
@@ -63,7 +63,7 @@ const Pomodoro = () => {
     }
     const longBreak = () => {
         setStart(false);
-        setBackgroundStyle(require('../assets/backgroundLongBreak.png'));
+        setBackgroundStyle(require('../assets/pomodoro/backgroundLongBreak.png'));
         setLongBreakStyle(styles.currentOption);
         setShortBreakStyle(styles.breakIcon);
         setFocusStyle(styles.breakIcon);
@@ -79,19 +79,19 @@ const Pomodoro = () => {
                         <Pressable style={focusStyle} onPress={focus}>
                             <Image
                                 style={styles.breakIcon}
-                                source={require('../assets/focus.png')}
+                                source={require('../assets/pomodoro/focus.png')}
                             />
                         </Pressable>
                         <Pressable style={shortBreakStyle} onPress={shortBreak}>
                             <Image
                                 style={styles.breakIcon}
-                                source={require('../assets/shortBreak.png')}
+                                source={require('../assets/pomodoro/shortBreak.png')}
                             />
                         </Pressable>
                         <Pressable style={longBreakStyle} onPress={longBreak}>
                             <Image
                                 style={styles.breakIcon}
-                                source={require('../assets/longBreak.png')}
+                                source={require('../assets/pomodoro/longBreak.png')}
                             />
                         </Pressable>
                     </View>
@@ -103,7 +103,7 @@ const Pomodoro = () => {
                     <Pressable onPress={() => startCount()} style={styles.resumePress}>
                         <Image
                             style={styles.resumeLogo}
-                            source={require('../assets/pomodoroResume.png')}
+                            source={require('../assets/pomodoro/resume.png')}
                         />
                     </Pressable>
                 </View>
