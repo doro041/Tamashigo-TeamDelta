@@ -15,7 +15,7 @@ const Footer = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.iconContainer}> 
-      <TouchableOpacity>
+      <TouchableOpacity  onPress={() => navigation.navigate('Pomodoro')}>
       <Icon name="timer" size={30} color="black" />
         </TouchableOpacity>
        

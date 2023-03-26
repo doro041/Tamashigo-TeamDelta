@@ -5,17 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="623fea36-566a-44c0-a12d-b0ed5cb4c285" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/React-Native 2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/React-Native 2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/backgroundFocus.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/backgroundLongBreak.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/backgroundShortBreak.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/focus.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/longBreak.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/pandaLvl3.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/pomodoroResume.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/shortBreak.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/skipButton.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/TaskManagement.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/emailValidate.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/emailValidate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StackNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/StackNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/BeginningPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/BeginningPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/CalendarView.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/CalendarView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/NameChar.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/NameChar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/SignUp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/Pomodoro.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Pomodoro.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
