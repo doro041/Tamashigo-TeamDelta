@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ImageBackground, Pressable, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, ImageBackground, Pressable } from 'react-native';
 import Footer from '../components/Footer';
-import TaskManagement from '../components/TaskManagement';
-
 
 const Pomodoro = () => {
-    const [currentMinute, setCurrentMinute] = useState(1);
+    const [currentMinute, setCurrentMinute] = useState(5);
     const [currentSeconds, setCurrentSecond] = useState(0);
     const [start, setStart] = useState(false);
 
@@ -41,13 +39,13 @@ const Pomodoro = () => {
         }
     };
 
-    const [backgroundStyle, setBackgroundStyle] = useState(require('../assets/backgroundShortBreak.svg'));
+    const [backgroundStyle, setBackgroundStyle] = useState(require('../assets/backgroundShortBreak.png'));
     const [shortBreakStyle, setShortBreakStyle] = useState(styles.currentOption);
     const [focusStyle, setFocusStyle] = useState(styles.breakIcon);
     const [longBreakStyle, setLongBreakStyle] = useState(styles.breakIcon);
     const focus = () => {
         setStart(false);
-        setBackgroundStyle(require('../assets/backgroundFocus.svg'));
+        setBackgroundStyle(require('../assets/backgroundFocus.png'));
         setFocusStyle(styles.currentOption);
         setShortBreakStyle(styles.breakIcon);
         setLongBreakStyle(styles.breakIcon);
@@ -56,7 +54,7 @@ const Pomodoro = () => {
     }
     const shortBreak = () => {
         setStart(false);
-        setBackgroundStyle(require('../assets/backgroundShortBreak.svg'));
+        setBackgroundStyle(require('../assets/backgroundShortBreak.png'));
         setShortBreakStyle(styles.currentOption);
         setFocusStyle(styles.breakIcon);
         setLongBreakStyle(styles.breakIcon);
@@ -65,7 +63,7 @@ const Pomodoro = () => {
     }
     const longBreak = () => {
         setStart(false);
-        setBackgroundStyle(require('../assets/backgroundLongBreak.svg'));
+        setBackgroundStyle(require('../assets/backgroundLongBreak.png'));
         setLongBreakStyle(styles.currentOption);
         setShortBreakStyle(styles.breakIcon);
         setFocusStyle(styles.breakIcon);
@@ -81,31 +79,31 @@ const Pomodoro = () => {
                         <Pressable style={focusStyle} onPress={focus}>
                             <Image
                                 style={styles.breakIcon}
-                                source={require('../assets/focus.svg')}
+                                source={require('../assets/focus.png')}
                             />
                         </Pressable>
                         <Pressable style={shortBreakStyle} onPress={shortBreak}>
                             <Image
                                 style={styles.breakIcon}
-                                source={require('../assets/shortBreak.svg')}
+                                source={require('../assets/shortBreak.png')}
                             />
                         </Pressable>
                         <Pressable style={longBreakStyle} onPress={longBreak}>
                             <Image
                                 style={styles.breakIcon}
-                                source={require('../assets/longBreak.svg')}
+                                source={require('../assets/longBreak.png')}
                             />
                         </Pressable>
                     </View>
                     <Text key={"textTime"} adjustsFontSizeToFit={true} style={styles.time}>{timing}</Text>
                     <Image
                         style={styles.panda}
-                        source={require('../assets/pandaLvl3.svg')}
+                        source={require('../assets/pandaLvl3.png')}
                     />
                     <Pressable onPress={() => startCount()} style={styles.resumePress}>
                         <Image
                             style={styles.resumeLogo}
-                            source={require('../assets/pomodoroResume.svg')}
+                            source={require('../assets/pomodoroResume.png')}
                         />
                     </Pressable>
                 </View>
@@ -147,7 +145,7 @@ const styles = StyleSheet.create({
 
     breakIcon: {
         flex: 0.5,
-        resizeMode: "stretch",
+        resizeMode: "center",
     },
 
     time: {

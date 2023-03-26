@@ -1,4 +1,4 @@
-import { Wrap } from 'native-base';
+
 import React, { useState } from 'react';
 import { Pressable, Modal, FlatList } from 'react-native';
 import { StyleSheet, View, Text } from 'react-native';
