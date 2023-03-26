@@ -26,12 +26,7 @@ const BeginningPage = ({ navigation }) => {
         >
           <Text style={[styles.buttonText, { color: 'black' }]}>SIGN UP</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1, color: 'black', fontSize: 20, fontWeight: 'bold' }]}
-          onPress={() => navigation.navigate('Pomodoro')}
-        >
-          <Text style={[styles.buttonText, { color: 'black' }]}>pom</Text>
-        </TouchableOpacity>
+
       </View>
     </View>
   );
