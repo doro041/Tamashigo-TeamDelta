@@ -9,32 +9,44 @@ import {
   Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
-
+import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
 
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  async function handleSignUp(email, password, name) {
+  async function handleSignUp() {
     try {
       const auth = getAuth();
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log('User signed up successfully!');
-      
-      // Navigate to the new page
-      navigation.navigate('NameChar');
+      const actionCodeSettings = {
+        url: 'localhost',
+        // This must be true.
+        handleCodeInApp: true,
+        iOS: {
+          bundleId: 'localhost'
+        },
+        android: {
+          packageName: 'localhost',
+          installApp: true,
+          minimumVersion: '12'
+        },
+        dynamicLinkDomain: 'localhost'
+      };
+
+      sendSignInLinkToEmail(auth, email, actionCodeSettings)
+        .then(() => {
+          window.localStorage.setItem("emailForSignIn", email);
+          // Redirect the user to a page that says "Check your email to sign in"
+          navigation.navigate('Namechar');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (error) {
       console.log(error);
       alert(error.message);
-
     }
   }
-  
-  
-
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../assets/PartOfLogo.png')} style={styles.background}>
@@ -54,14 +66,7 @@ const SignUp = ({ navigation }) => {
         value={email}
         onChangeText={setEmail}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      
+    
       <View style={styles.buttonContainer}>
       <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => handleSignUp()}>
   <Text style={styles.buttonText}>SIGN UP</Text>

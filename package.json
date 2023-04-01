@@ -50,6 +50,7 @@
     "react-native-screens": "~3.20.0",
     "react-native-select-dropdown": "^3.3.2",
     "react-native-svg": "13.4.0",
+    "react-native-tts": "^4.1.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.18.12",
     "vite": "^3.0.9"

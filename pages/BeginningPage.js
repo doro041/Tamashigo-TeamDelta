@@ -1,8 +1,29 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
+import {useState, useEffect} from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground,Animated  } from 'react-native';
 
 
 const BeginningPage = ({ navigation }) => {
+  const [eggOpacity, setEggOpacity] = useState(new Animated.Value(1));
+  const [pandaOpacity, setPandaOpacity] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.sequence([
+      Animated.timing(eggOpacity, {
+        toValue: 0,
+        duration: 10000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(pandaOpacity, {
+        toValue: 1,
+        duration: 10000,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
+
+  
   return (
    
     <View style={styles.container}>
@@ -11,6 +32,9 @@ const BeginningPage = ({ navigation }) => {
         <Image source={require('../assets/logo1.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
         <Text style={styles.title}>Welcome to Tamashigo</Text>
         <Text style={styles.subtitle}>Where productivity meets fun!</Text>
+
+        <Animated.Image source={require('../assets/egg.png')} style={[styles.egg, { opacity: eggOpacity }]} />
+        <Animated.Image source={require('../assets/Panda.png')} style={[styles.panda, { opacity: pandaOpacity }]} />
       </ImageBackground>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -77,6 +101,20 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '60%',
     alignItems: 'center',
+  },
+  egg: {
+    width: 200,
+    height: 200,
+    position: 'absolute',
+    top: 100,
+    left: 100,
+  },
+  panda: {
+    width: 200,
+    height: 200,
+    position: 'absolute',
+    top: 100,
+    left: 100,
   },
 });
 

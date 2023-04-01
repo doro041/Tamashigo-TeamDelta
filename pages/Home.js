@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState,useEffect } from 'react';
 import { View, Text, ImageBackground, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -9,9 +10,21 @@ import { Feather} from 'react-native-vector-icons';
 
 
 
+
 const Home = () => {
   const navigation = useNavigation();
+  const [taskPrompt, setTaskPrompt] = useState('');
+  const taskPrompts = ["Don't forget to take a break!", "Remember to drink water!", "Stretch your legs!", "Take a deep breath!", "Look away from the screen!", "Stand up and walk around!"];
+  const taskPromptFrequency = 5000; // in milliseconds
   const name = "Bo"; // just for demo purpose
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * taskPrompts.length);
+      setTaskPrompt(taskPrompts[randomIndex]);
+    }, taskPromptFrequency);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>
@@ -33,15 +46,19 @@ const Home = () => {
             <Image source={require('../assets/Panda.png')} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
           </View>
           <View>
+       
   <TouchableOpacity onPress={() => navigation.navigate('Todo')}>
     <View style={styles.button}> 
+
     <Feather name="plus" size={24} color="#4A8AE7" />
     </View>
   </TouchableOpacity>
 </View>
 
           <View style={styles.balloon}>
+          <Text style={styles.text}>{taskPrompt}</Text>
             <Text style={styles.text}>Hi,my name is {name}!</Text>
+            
           </View>
         </ImageBackground>
       </View>
@@ -53,7 +70,6 @@ const Home = () => {
 const styles = StyleSheet.create({
   text: {
     fontSize: 20,
-    fontFamily: 'Raleway',
     color: 'black',
     alignContent: 'center',
   },

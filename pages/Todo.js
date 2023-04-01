@@ -35,14 +35,19 @@ const Todo = ({navigation}) => {
     {
         id: '2',
         label: 'Med',
-        value: <Octicons name="tasklist" size={24} color="black" />
+        value: <Octicons name="primitive-dot" size={24} color="black" />
     },
     {
         id: '3',
         label: 'High',
         value: <FontAwesome name="exclamation-circle" size={24} color="black" />
-    }
+    },
+    {   id: '4',
+        label: 'Urgent',
+        value: <MaterialIcons name="priority-high" size={24} color="black" />
+}
 ]);
+
 
 const selectedCategoryColors = { // dictactes the colour of each task based on the category assigned to it
   'Productivity': '#F35907',
