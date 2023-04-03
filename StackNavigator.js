@@ -11,6 +11,8 @@ import VerticalCalendar from './pages/CalendarView';
 import Profile from './pages/Profile';
 import Pomodoro  from './pages/Pomodoro'
 import Todo from './pages/Todo';
+import EggHatchAnimation from './pages/EggHatchAnimation';
+
 
 
 import TermsandConditions from './components/TermsandConditions';
@@ -22,6 +24,7 @@ const StackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Group>
+      <Stack.Screen name="EggHatchAnimation" component={EggHatchAnimation} />
         <Stack.Screen name="Beginning" component={BeginningPage} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="TermsandConditions" component={TermsandConditions} />

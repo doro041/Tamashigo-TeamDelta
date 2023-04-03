@@ -14,7 +14,7 @@ import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-
+  
   async function handleSignUp() {
     try {
       const auth = getAuth();
@@ -68,7 +68,7 @@ const SignUp = ({ navigation }) => {
       />
     
       <View style={styles.buttonContainer}>
-      <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => handleSignUp()}>
+      <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => navigation.navigate('Home')}>
   <Text style={styles.buttonText}>SIGN UP</Text>
 </TouchableOpacity>
 

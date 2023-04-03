@@ -4,23 +4,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground,Animat
 
 
 const BeginningPage = ({ navigation }) => {
-  const [eggOpacity, setEggOpacity] = useState(new Animated.Value(1));
-  const [pandaOpacity, setPandaOpacity] = useState(new Animated.Value(0));
-
-  useEffect(() => {
-    Animated.sequence([
-      Animated.timing(eggOpacity, {
-        toValue: 0,
-        duration: 10000,
-        useNativeDriver: true,
-      }),
-      Animated.timing(pandaOpacity, {
-        toValue: 1,
-        duration: 10000,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, []);
+  
+ 
 
 
   
@@ -33,8 +18,7 @@ const BeginningPage = ({ navigation }) => {
         <Text style={styles.title}>Welcome to Tamashigo</Text>
         <Text style={styles.subtitle}>Where productivity meets fun!</Text>
 
-        <Animated.Image source={require('../assets/egg.png')} style={[styles.egg, { opacity: eggOpacity }]} />
-        <Animated.Image source={require('../assets/Panda.png')} style={[styles.panda, { opacity: pandaOpacity }]} />
+      
       </ImageBackground>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -102,20 +86,7 @@ const styles = StyleSheet.create({
     height: '60%',
     alignItems: 'center',
   },
-  egg: {
-    width: 200,
-    height: 200,
-    position: 'absolute',
-    top: 100,
-    left: 100,
-  },
-  panda: {
-    width: 200,
-    height: 200,
-    position: 'absolute',
-    top: 100,
-    left: 100,
-  },
+  
 });
 
 export default BeginningPage;
