@@ -3,16 +3,16 @@
 
 Tamashigo is a cross-platform mobile app designed to help university students manage their workload in a fun and engaging way. The app operates as a gamified to-do list, allowing users to input their tasks and the time frames in which they wish to complete them. Tamashigo uses a Tamagotchi-like character that grows and evolves as the user completes tasks, making productivity more rewarding and enjoyable. With Tamashigo, students can easily keep track of their to-do lists, manage their time more effectively, and stay on top of their responsibilities. The app also offers customization options, intuitive task management features, and data visualizations to help students stay motivated and productive.
 ## Installation and Compilation
-1. Install Node.js: Tamashigo requires Node.js to run. You can download and install it from the official Node.js website, if using Windows or install through the terminal.
+* Install Node.js: Tamashigo requires Node.js to run. You can download and install it from the official Node.js website, if using Windows or install through the terminal.
 
 
-2.Install Expo: Expo is a toolchain that streamlines the development process for React Native apps, including Tamashigo. To install Expo, run the following command in your terminal: ```npm install -g expo-cli```
+* Install Expo: Expo is a toolchain that streamlines the development process for React Native apps, including Tamashigo. To install Expo, run the following command in your terminal: `npm install -g expo-cli`
         
-3. Clone the repository: Clone the Tamashigo repository to your local machine using Git. You can use the following command to clone the repository:``` git clone https://github.com/<username>/tamashigo.git```
+* Clone the repository: Clone the Tamashigo repository to your local machine using Git. You can use the following command to clone the repository:` git clone https://github.com/<username>/tamashigo.git`
 
-4.Install dependencies: Navigate to the cloned repository directory in your terminal and run the following command to install the app's dependencies:```npm install```
-5.Start the app by running the following command to start the app:``` expo start```
-6.Run the app on a device or emulator: You can run the app on your iOS or Android device or emulator using the Expo developer tools. 
+* Install dependencies: Navigate to the cloned repository directory in your terminal and run the following command to install the app's dependencies:`npm install`
+* Start the app by running the following command to start the app:` expo start`
+* Run the app on a device or emulator: You can run the app on your iOS or Android device or emulator using the Expo developer tools. 
 
 
 
