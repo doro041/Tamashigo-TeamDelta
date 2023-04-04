@@ -24,6 +24,10 @@ const Settings = () => {
                     <Image source={require('../assets/premiumEgg.png')} style={{ flex: 1, resizeMode: "center" }}></Image>
                     <Text>Go to Premium!</Text>
                 </Pressable>
+                <Pressable>
+                    <Image source={require('../assets/cryPanda.png')} style={{ flex: 1.5, resizeMode: "center" }}></Image>
+                    <Text>Delete It?</Text>
+                </Pressable>
             </View>
             <View style={styles.section}>
                 <Text>Notification</Text>
