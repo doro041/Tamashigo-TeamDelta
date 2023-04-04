@@ -7,10 +7,9 @@ Tamashigo is a cross-platform mobile app designed to help university students ma
 
 
 2.Install Expo: Expo is a toolchain that streamlines the development process for React Native apps, including Tamashigo. To install Expo, run the following command in your terminal:
-        ```npm install -g expo-cli```
+```npm install -g expo-cli```
         
-3. Clone the repository: Clone the Tamashigo repository to your local machine using Git. You can use the following command to clone the repository:
-    
+3. Clone the repository: Clone the Tamashigo repository to your local machine using Git. You can use the following command to clone the repository  
 ``` git clone https://github.com/<username>/tamashigo.git```
 4.Install dependencies: Navigate to the cloned repository directory in your terminal and run the following command to install the app's dependencies:
 ```npm install```
