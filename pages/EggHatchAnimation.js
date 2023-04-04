@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Image, StyleSheet, ImageBackground, TouchableOpacity, Text } from 'react-native';
 
-
 const EggHatchAnimation = ({ navigation }) => {
   const handlePress = () => {
     console.log('Pressed');

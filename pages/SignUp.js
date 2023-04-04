@@ -19,20 +19,21 @@ const SignUp = ({ navigation }) => {
     try {
       const auth = getAuth();
       const actionCodeSettings = {
-        url: 'localhost',
+        url: 'https://example.com/verify-email',
         // This must be true.
         handleCodeInApp: true,
         iOS: {
-          bundleId: 'localhost'
+          bundleId: 'com.example.myapp',
         },
         android: {
-          packageName: 'localhost',
+          packageName: 'com.example.myapp',
           installApp: true,
-          minimumVersion: '12'
+          minimumVersion: '12',
         },
-        dynamicLinkDomain: 'localhost'
+        dynamicLinkDomain: 'example.com',
       };
-
+ 
+  
       sendSignInLinkToEmail(auth, email, actionCodeSettings)
         .then(() => {
           window.localStorage.setItem("emailForSignIn", email);
@@ -47,6 +48,7 @@ const SignUp = ({ navigation }) => {
       alert(error.message);
     }
   }
+  
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../assets/PartOfLogo.png')} style={styles.background}>
@@ -68,7 +70,7 @@ const SignUp = ({ navigation }) => {
       />
     
       <View style={styles.buttonContainer}>
-      <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() =>handleSignUp() }>
   <Text style={styles.buttonText}>SIGN UP</Text>
 </TouchableOpacity>
 
