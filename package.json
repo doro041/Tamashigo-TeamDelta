@@ -17,6 +17,7 @@
     "@react-native-firebase/crashlytics": "^17.3.2",
     "@react-native-firebase/firestore": "^17.3.2",
     "@react-native-firebase/perf": "^17.3.2",
+    "@react-native-picker/picker": "^2.4.9",
     "@react-navigation/native": "^6.0.16",
     "@react-navigation/stack": "^6.3.7",
     "@types/react": "~18.0.27",

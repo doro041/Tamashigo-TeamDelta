@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Modal, Image, Pressable, TouchableOpacity, Switch } from 'react-native';
 import Footer from '../components/Footer.js'
 import Slider from '@react-native-community/slider';
-
+import { Picker } from '@react-native-picker/picker';
 
 const Settings = () => {
     const [helpVisible, setHelpVisible] = useState(false);
     const [notifIsEnabled, setNotifIsEnabled] = useState(false);
     const notifSwitch = () => setNotifIsEnabled(previousState => !previousState);
     const [sliderValue, setSliderValue] = useState(15);
-    const [shortBreakValue, setShortBreakValue] = useState(5);
+    const [selectedShortBreak, setSelectedShortBreak] = useState();
+    const [selectedLongBreak, setSelectedLongBreak] = useState();
+    const [selectedFocus, setSelectedFocus] = useState();
     return (
 
         <View style={styles.container}>
@@ -27,7 +29,7 @@ const Settings = () => {
                 <Text>Notification</Text>
                 <Switch onValueChange={notifSwitch} value={notifIsEnabled} />
             </View>
-            <View style={styles.section}>
+            {/*<View style={styles.section}>
                 <Text>Sound</Text>
                 <Image source={require('../assets/mute.png')} style={{ flex: 0.1, resizeMode: "center" }} />
                 <Slider
@@ -41,9 +43,47 @@ const Settings = () => {
                     style={{ flex: 0.5 }}
                 />
                 <Image source={require('../assets/soundOn.png')} style={{ flex: 0.1, resizeMode: "center" }} />
-            </View>
+    </View>*/}
             <View style={styles.section}>
                 <Text>Pomodoro Timing</Text>
+                <View style={{ alignItems: 'center', flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                    <View>
+                        <Text>Short Break</Text>
+                        <Picker
+                            selectedValue={selectedShortBreak}
+                            onValueChange={(itemValue, itemIndex) =>
+                                setSelectedShortBreak(itemValue)
+                            }>
+                            <Picker.Item label="3" value="3 min" />
+                            <Picker.Item label="5" value="5 min" />
+                            <Picker.Item label="7" value="7 min" />
+                        </Picker>
+                    </View>
+                    <View>
+                        <Text>Long Break</Text>
+                        <Picker
+                            selectedValue={selectedLongBreak}
+                            onValueChange={(itemValue, itemIndex) =>
+                                setSelectedLongBreak(itemValue)
+                            }>
+                            <Picker.Item label="10" value="10 min" />
+                            <Picker.Item label="15" value="15 min" />
+                            <Picker.Item label="20" value="20 min" />
+                        </Picker>
+                    </View>
+                    <View>
+                        <Text>Focus</Text>
+                        <Picker
+                            selectedValue={selectedFocus}
+                            onValueChange={(itemValue, itemIndex) =>
+                                setSelectedFocus(itemValue)
+                            }>
+                            <Picker.Item label="25" value="25 min" />
+                            <Picker.Item label="35" value="35 min" />
+                            <Picker.Item label="45" value="45 min" />
+                        </Picker>
+                    </View>
+                </View>
             </View>
             <View style={styles.section}>
                 <Text>Helping Center</Text>
