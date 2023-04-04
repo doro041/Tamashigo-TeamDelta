@@ -4,7 +4,7 @@ import Footer from '../components/Footer.js'
 import Slider from '@react-native-community/slider';
 
 
-const Settings = ({ navigation }) => {
+const Settings = () => {
     const [helpVisible, setHelpVisible] = useState(false);
     const [notifIsEnabled, setNotifIsEnabled] = useState(false);
     const notifSwitch = () => setNotifIsEnabled(previousState => !previousState);

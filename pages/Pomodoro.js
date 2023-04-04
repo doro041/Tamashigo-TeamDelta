@@ -98,7 +98,7 @@ const Pomodoro = () => {
                     <Text key={"textTime"} adjustsFontSizeToFit={true} style={styles.time}>{timing}</Text>
                     <Image
                         style={styles.panda}
-                        source={require('../assets/pandaLvl3.png')}
+                        source={require('../assets/pandaLvl2.png')}
                     />
                     <Pressable onPress={() => startCount()} style={styles.resumePress}>
                         <Image
