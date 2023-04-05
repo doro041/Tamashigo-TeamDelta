@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Modal, Image, Pressable, TouchableOpacity, Switch } from 'react-native';
-import Footer from '../components/Footer.js'
-import Slider from '@react-native-community/slider';
+import Footer from '../components/Footer.js';
 import { Picker } from '@react-native-picker/picker';
+import LevelUpAnimation from '../components/LevelUpAnimation.js';
 
 const Settings = () => {
     const [helpVisible, setHelpVisible] = useState(false);
@@ -32,22 +32,8 @@ const Settings = () => {
             <View style={styles.section}>
                 <Text>Notification</Text>
                 <Switch onValueChange={notifSwitch} value={notifIsEnabled} />
+                <LevelUpAnimation isMounted={true}></LevelUpAnimation>
             </View>
-            {/*<View style={styles.section}>
-                <Text>Sound</Text>
-                <Image source={require('../assets/mute.png')} style={{ flex: 0.1, resizeMode: "center" }} />
-                <Slider
-                    maximumValue={25}
-                    minimumValue={0}
-                    minimumTrackTintColor="#307ecc"
-                    maximumTrackTintColor="#000000"
-                    step={1}
-                    value={sliderValue}
-                    onValueChange={(sliderValue) => setSliderValue(sliderValue)}
-                    style={{ flex: 0.5 }}
-                />
-                <Image source={require('../assets/soundOn.png')} style={{ flex: 0.1, resizeMode: "center" }} />
-    </View>*/}
             <View style={styles.section}>
                 <Text>Pomodoro Timing</Text>
                 <View style={{ alignItems: 'center', flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }}>

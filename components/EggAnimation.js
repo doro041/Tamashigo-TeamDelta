@@ -73,7 +73,6 @@ const EggAnimation = () => {
         opening();
         fadeOut();
         pandaScaling();
-
     }, []);
 
     return (
@@ -136,8 +135,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 2,
     },
-
-
 });
 
 export default EggAnimation;
