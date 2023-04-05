@@ -1,5 +1,5 @@
 import { React, useRef, useEffect } from 'react';
-import { StyleSheet, View, Image, Animated, Text } from 'react-native';
+import { StyleSheet, View, Image, Animated, } from 'react-native';
 
 function LevelUpAnimation({ isMounted }) {
     const fadeInAnim = useRef(new Animated.Value(0)).current;
@@ -50,7 +50,7 @@ function LevelUpAnimation({ isMounted }) {
                     <Image source={require('../assets/Panda.png')} style={[styles.image]} />
                 </Animated.View>
                 <Animated.View style={[{ flex: 1, opacity: interpolateFadeIn, }, styles.pandaLvl2,]}>
-                    <Image source={require('../assets/pandaLvl2.png')} style={[styles.image,]} />
+                    <Image source={require('../assets/pandaLvl2.png')} style={[styles.image]} />
                 </Animated.View>
             </Animated.View>
         </View>

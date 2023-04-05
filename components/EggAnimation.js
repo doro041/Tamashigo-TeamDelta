@@ -1,7 +1,7 @@
 import { React, useRef, useEffect } from 'react';
 import { StyleSheet, View, Image, Animated } from 'react-native';
 
-const EggAnimation = () => {
+const EggAnimation = ({ isMounted }) => {
     const shakeAnim = useRef(new Animated.Value(0)).current;
     const openAnim = useRef(new Animated.Value(0)).current;
     const scaleAnim = useRef(new Animated.Value(0)).current;
@@ -69,10 +69,12 @@ const EggAnimation = () => {
     });
 
     useEffect(() => {
-        shaking();
-        opening();
-        fadeOut();
-        pandaScaling();
+        if (isMounted) {
+            shaking();
+            opening();
+            fadeOut();
+            pandaScaling();
+        }
     }, []);
 
     return (
