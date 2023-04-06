@@ -7,13 +7,23 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  SafeAreaView,
+  Platform,
+  Dimensions,
+  StatusBar
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   
   async function handleSignUp() {
     try {
@@ -50,10 +60,11 @@ const SignUp = ({ navigation }) => {
   }
   
   return (
-    <View style={styles.container}>
-      <ImageBackground source={require('../assets/PartOfLogo.png')} style={styles.background}>
-        <Image source={require('../assets/PandaHead.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
-        <Text style={styles.title}>Create account</Text>
+    <SafeAreaView style={styles.container}>
+      <ImageBackground source={require('../assets/icon12.png')} style={styles.background} resizeMode='cover'>
+      <Image source={require('../assets/PandaHead.png')} style={{ width: windowWidth * 0.5, height: windowHeight * 0.3, resizeMode: 'contain' }} />
+<Text style={[styles.title, { marginTop: '50%' }]}>Create account</Text>
+
       </ImageBackground>
       <TextInput
           style={styles.input}
@@ -70,27 +81,26 @@ const SignUp = ({ navigation }) => {
       />
     
       <View style={styles.buttonContainer}>
-      <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() =>handleSignUp() }>
-  <Text style={styles.buttonText}>SIGN UP</Text>
-</TouchableOpacity>
+      <View style={styles.buttonContainer}>
+  <TouchableOpacity style={[styles.button, { marginRight: windowWidth * 0.02 }]} onPress={() => navigation.navigate('Home') }>
+    <Text style={styles.buttonText}>SIGN UP</Text>
+  </TouchableOpacity>
 
-<TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 30, height: 30 }]}>
-  <Icon name="facebook" size={25} color="white" style={styles.icon} />
-</TouchableOpacity>
-<TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 30, height: 30 }]}>
-  <Icon name="google" size={25} color="white" style={styles.icon} />
-</TouchableOpacity>
+  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: windowWidth * 0.05, height: windowWidth * 0.05 }]}>
+    <Icon name="facebook" size={windowWidth * 0.5} color="white" style={styles.icon} />
+  </TouchableOpacity>
 
-  
+  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: windowWidth * 0.05, height: windowWidth * 0.05 }]}>
+    <Icon name="google" size={windowWidth * 0.5} color="white" style={styles.icon} />
+  </TouchableOpacity>
+</View>
 
       </View>
+
       <TouchableOpacity style={styles.alreadyacc} onPress={() => navigation.navigate('Login')}>
-      <Text>Already have an account?</Text><Text style={styles.SignInText}>Sign In.</Text>
+        <Text>Already have an account?</Text><Text style={styles.SignInText}>Sign In.</Text>
       </TouchableOpacity>
-      <View>
-     
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -99,35 +109,44 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  
   title: {
-    fontSize: 30,
+    fontSize: windowWidth * 0.06,
     fontWeight: 'bold',
     color: 'black',
-    marginBottom: '10%',
-   
-    marginTop: '10%',
-    alignContent: 'center',
+    marginBottom: windowHeight * 0.05,
+    marginTop: windowHeight * 0.05,
+    textAlign: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     width: '80%',
-    marginBottom: '30%',
+    marginBottom: windowHeight * 0.1,
   },
+  //  d
   button: {
-    width: '30%',
+    width: windowWidth * 0.3,
     borderRadius: 40,
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'black',
   },
+  
 
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: windowWidth * 0.05,
   },
   background: {
     flex: 1,
@@ -137,44 +156,28 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '80%',
-    height: 50,
+    height: windowHeight * 0.05,
     borderRadius: 25,
     backgroundColor: 'grey',
     paddingLeft: 20,
-    marginBottom: 20,
-    marginTop:20,
+    marginBottom: windowHeight * 0.01,
+  marginTop: windowHeight * 0.30, // adjust this value as needed
   },
-  SignInText: {
-    alignSelf: 'flex-end',
-    marginRight: '10%',
-    marginBottom: '20%',
 
+  alreadyacc: {
+    marginTop: windowHeight * 0.1,
+    marginBottom: windowHeight * 0.1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   SignInText: {
     color: 'black',
     fontWeight: 'bold',
-    },  
+  },  
   icon: {
-    padding: 10,
-
-    },
-    background: {
-      flex: 1,
-      width: '100%',
-      height: '60%',
-      alignItems: 'center',
-    },
-   alreadyacc: {
-    marginTop: '10%',
-    marginBottom: '50%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-
+    padding: windowWidth * 0.01,
   },
-  
-
-
 });
+
 export default SignUp;

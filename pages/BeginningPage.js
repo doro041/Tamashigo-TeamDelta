@@ -46,18 +46,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 30,
+    fontSize: 48,
     fontWeight: 'bold',
     color: 'black',
-    marginBottom: '20%',
     marginTop: '10%',
-    alignContent: 'center',
+    textAlign: 'center',
   },
   subtitle: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: '20%',
-    alignContent: 'center',
+    marginTop: '5%',
+    textAlign: 'center',
+    color: '#555555',
     fontStyle: 'italic'
   },
   buttonContainer: {
@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
 
   },
   button: {
-    width: '30%',
-    
-    borderRadius: 40,
-    paddingVertical: 10,
+    width: '40%',
+    borderRadius: 50,
+  
+    paddingVertical: 20,
     alignItems: 'center',
     justifyContent: 'center',
 
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 20,
   },
   background: {
     flex: 1,
