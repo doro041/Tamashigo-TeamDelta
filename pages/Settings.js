@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Modal, Image, Pressable, TouchableOpacity, Switch } from 'react-native';
 import Footer from '../components/Footer.js';
 import { Picker } from '@react-native-picker/picker';
+import LevelUpAnimation from '../components/LevelUpAnimation.js';
 import HappyFaceAnimation from '../components/HappyFaceAnimation.js';
 
 const Settings = () => {
     const [helpVisible, setHelpVisible] = useState(false);
     const [notifIsEnabled, setNotifIsEnabled] = useState(false);
     const notifSwitch = () => setNotifIsEnabled(previousState => !previousState);
-    const [sliderValue, setSliderValue] = useState(15);
     const [selectedShortBreak, setSelectedShortBreak] = useState();
     const [selectedLongBreak, setSelectedLongBreak] = useState();
     const [selectedFocus, setSelectedFocus] = useState();
@@ -32,7 +32,7 @@ const Settings = () => {
             <View style={styles.section}>
                 <Text>Notification</Text>
                 <Switch onValueChange={notifSwitch} value={notifIsEnabled} />
-                <HappyFaceAnimation isMounted={true}></HappyFaceAnimation>
+                <LevelUpAnimation isMounted={true}></LevelUpAnimation>
             </View>
             <View style={styles.section}>
                 <Text>Pomodoro Timing</Text>
