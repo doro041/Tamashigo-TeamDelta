@@ -1,8 +1,7 @@
-import React from 'react';
-import { useState,useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ImageBackground, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -17,6 +16,10 @@ const Home = () => {
   const taskPrompts = ["Don't forget to take a break!", "Remember to drink water!", "Stretch your legs!", "Take a deep breath!", "Look away from the screen!", "Stand up and walk around!"];
   const taskPromptFrequency = 5000; // in milliseconds
   const name = "Bo"; // just for demo purpose
+  const [taskItems, setTaskItems] = useState([]);
+  const [deadlines, setDeadlines] = useState([]);
+  const [valueList, setValueList] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,10 +29,62 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
+  
+    const loadData = async () => {
+      try {
+        const storedTaskItems = await AsyncStorage.getItem("taskItems");
+        const storedValueList = await AsyncStorage.getItem("valueList");
+        const storedCategoriesList = await AsyncStorage.getItem("categoriesList");
+        const storedDeadlines = await AsyncStorage.getItem("deadlines");
+    
+        let parsedTaskItems = [];
+        let parsedValueList = [];
+        let parsedCategoriesList = [];
+        let parsedDeadlines = [];
+    
+        if (storedTaskItems) {
+          parsedTaskItems = JSON.parse(storedTaskItems);
+        }
+    
+        if (storedValueList) {
+          parsedValueList = JSON.parse(storedValueList);
+        } else {
+          console.warn('No value list found');}
+    
+        if (storedCategoriesList) {
+          parsedCategoriesList = JSON.parse(storedCategoriesList);
+        }
+    
+        if (storedDeadlines) {
+          parsedDeadlines = JSON.parse(storedDeadlines).map(dateString => new Date(dateString));
+        }
+        console.log('Loaded data:', parsedTaskItems, parsedValueList, parsedCategoriesList, parsedDeadlines)
+        setDeadlines(parsedDeadlines);
+        setTaskItems(parsedTaskItems);
+        setValueList(parsedValueList);
+        setCategoriesList(parsedCategoriesList);
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
+
+    useEffect(() => {
+      loadData();
+    }, []);
+
+
+
+
+
+
+
+
+
   return (
     <View style={{ flex: 1 }}>
       <Header>
         <Text style={styles.text}>Welcome {name}!</Text>
+        
       </Header>
       <View style={styles.container}>
        
@@ -53,6 +108,7 @@ const Home = () => {
     <Feather name="plus" size={24} color="#4A8AE7" />
     </View>
   </TouchableOpacity>
+ 
 </View>
 
           <View style={styles.balloon}>
@@ -62,7 +118,12 @@ const Home = () => {
           </View>
         </ImageBackground>
       </View>
-      <Footer />
+      <Footer
+       taskItems={taskItems}
+       deadlines={deadlines}
+       valueList={valueList}
+       categoriesList={categoriesList}
+      />
     </View>
   )
 }

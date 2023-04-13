@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import NameChar from "./pages/NameChar";
+import NameChar from "./pages/Namechar";
 import SignUp from "./pages/SignUp";
 import ForgotPass from "./pages/ForgotPass";
 import BeginningPage from './pages/BeginningPage';

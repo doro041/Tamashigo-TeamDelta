@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, Text, FlatList, ScrollView, StyleSheet } from 'react-native';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
 
 
-const years = [2021, 2022, 2023]; // You can add more years to this array
+
+const years = [2023]; // You can add more years to this array
 
 const months = [
   { name: 'January', days: 31 },
@@ -23,10 +22,20 @@ const months = [
   
 ];
 
-const generateDays = (numDays) => {
+const generateDays = (numDays, tasks, taskDates, priorities, categories) => {
   const numDaysToDisplay = Math.min(numDays, 7); // limit the number of days to display to 7 or less
   let result = [];
   let count = 0;
+
+  const taskDatesMap = taskDates.reduce((map, date, index) => {
+    const dateString = date.toLocaleDateString();
+    if (!map[dateString]) {
+      map[dateString] = [];
+    }
+    map[dateString].push(tasks[index]);
+    return map;
+  }, {});
+
   for (let i = 0; i < years.length && count < numDaysToDisplay; i++) {
     const year = years[i];
     for (let j = 0; j < months.length && count < numDaysToDisplay; j++) {
@@ -35,12 +44,30 @@ const generateDays = (numDays) => {
       for (let k = 1; k <= daysInMonth && count < numDaysToDisplay; k++) {
         const date = k.toString();
         const day = new Date(year, j, k).toLocaleDateString('en-US', { weekday: 'short' });
+        const dateString = new Date(year, j, k).toLocaleDateString();
+        const tasksForDate = taskDatesMap[dateString] || [];
+
+        let filteredTasks = tasks.filter((_, idx) => {
+          const taskDate = new Date(taskDates[idx]);
+          return (
+            taskDate.getFullYear() === year &&
+            taskDate.getMonth() === j &&
+            taskDate.getDate() === k
+          );
+        }).map((task, idx) => ({
+          title: task,
+          priority: priorities[idx],
+          category: categories[idx],
+        }));
+    
         if (count < 7) {
-          result.push({ date, day, tasks: [] });
+          result.push({ date, day, tasks: filteredTasks });
         } else if (count === 7) {
           result.push({ message: 'Purchase premium to get more.' });
         }
         count++;
+
+        
       }
     }
   }
@@ -48,24 +75,37 @@ const generateDays = (numDays) => {
 };
 
 
+
+
 const CalendarItem = ({ date, day, tasks }) => {
   return (
     <View style={styles.calendarItem}>
-      <Text style={styles.date}>{date}</Text>
-      <Text style={styles.day}>{day}</Text>
-      {tasks.map(task => (
-        <Text key={task} style={styles.task}>{task}</Text>
-      ))}
+      <View style={styles.dateContainer}>
+        <Text style={styles.date}>{date}</Text>
+        <Text style={styles.day}>{day}</Text>
+      </View>
+      <ScrollView style={styles.tasksContainer}>
+        {tasks.map((task, index) => (
+          <View key={index} style={styles.taskContainer}>
+            <Text style={styles.taskTitle}>
+              {task.title}, Priority: {task.priority}, Category: {task.category}
+            </Text>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 };
 
-const VerticalCalendar = () => {
-  const days = generateDays(7); // display up to 10 days
+
+
+const VerticalCalendar = ({ route }) => {
+  const { tasks, taskDates, priorities, categories } = route.params;
+  const days = generateDays(7, tasks, taskDates, priorities, categories); // display up to 7 days
+
 
   return (
     <ScrollView>
-      <Header />
       <FlatList
         data={days}
         renderItem={({ item }) => {
@@ -88,20 +128,22 @@ const VerticalCalendar = () => {
         keyExtractor={(item, index) => item.date || index.toString()}
         style={styles.calendarList}
       />
-      <Footer />
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  calendarList: {
-    paddingVertical: 10,
-  },
   calendarItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
     height: 100,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+  },
+  dateContainer: {
+    alignItems: 'center',
+    marginRight: 10,
   },
   date: {
     fontSize: 40,
@@ -109,26 +151,24 @@ const styles = StyleSheet.create({
   },
   day: {
     fontSize: 16,
-    marginTop: 5,
-    fontWeight:'bold',
-    
-  },
-  task: {
-    fontSize: 14,
-    marginTop: 5,
-  },
-  messageContainer: {
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  message: {
-    fontSize: 16,
     fontWeight: 'bold',
-    textAlign: 'center',
+  },
+  tasksContainer: {
+    flexGrow: 1,
+  },
+  taskContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ddd',
+    borderRadius: 5,
+    padding: 5,
+    marginVertical: 5,
+    marginRight: 5,
+  },
+  taskTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 
