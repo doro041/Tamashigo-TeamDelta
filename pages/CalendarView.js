@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ScrollView, StyleSheet } from 'react-native';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import TaskItem from './TaskItem';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 
+const selectedCategoryColors = {
+  'Productivity': '#dce4ef',
+  'Health': '#94bfa2',
+  'Finances': '#fad980',
+  'Hobbies': '#f9dede',
+};
 
+const priorities = ['Low', 'Medium', 'High', 'Critical'];
+
+const priorityValues = [
+  {index: 0, label: priorities[0], value: <MaterialCommunityIcons name="snail" size={24} color="black" />},
+  {index: 1, label: priorities[1], value: <Feather name="alert-circle" size={24} color="black" />},
+  {index: 2, label: priorities[2], value: <FontAwesome name="exclamation-triangle" size={24} color="black" />},
+  {index: 3, label: priorities[3], value: <Feather name="zap" size={24} color="black" />},
+];
 
 const years = [2023]; // You can add more years to this array
+
+
 
 const months = [
   { name: 'January', days: 31 },
@@ -47,18 +69,24 @@ const generateDays = (numDays, tasks, taskDates, priorities, categories) => {
         const dateString = new Date(year, j, k).toLocaleDateString();
         const tasksForDate = taskDatesMap[dateString] || [];
 
-        let filteredTasks = tasks.filter((_, idx) => {
-          const taskDate = new Date(taskDates[idx]);
-          return (
-            taskDate.getFullYear() === year &&
-            taskDate.getMonth() === j &&
-            taskDate.getDate() === k
-          );
-        }).map((task, idx) => ({
-          title: task,
-          priority: priorities[idx],
-          category: categories[idx],
-        }));
+        let filteredTasks = tasks
+  .map((task, idx) => {
+    const taskDate = new Date(taskDates[idx]);
+    if (
+      taskDate.getFullYear() === year &&
+      taskDate.getMonth() === j &&
+      taskDate.getDate() === k
+    ) {
+      return {
+        title: task,
+        priority: priorities[idx],
+        category: categories[idx],
+      };
+    }
+    return null;
+  })
+  .filter(task => task !== null);
+
     
         if (count < 7) {
           result.push({ date, day, tasks: filteredTasks });
@@ -86,11 +114,14 @@ const CalendarItem = ({ date, day, tasks }) => {
       </View>
       <ScrollView style={styles.tasksContainer}>
         {tasks.map((task, index) => (
-          <View key={index} style={styles.taskContainer}>
-            <Text style={styles.taskTitle}>
-              {task.title}, Priority: {task.priority}, Category: {task.category}
-            </Text>
-          </View>
+          console.log("Tasks to TaskItem Vertical Calendar: ", task.title + " " + task.priority + " " + task.category) ||
+          <TaskItem
+            key={index}
+            task={task.title}
+            priorityIcon={priorityValues[task.priority].value}
+            categoryColor={selectedCategoryColors[task.category]}
+            // Add any other necessary props required by your Task component
+          />
         ))}
       </ScrollView>
     </View>
@@ -100,12 +131,16 @@ const CalendarItem = ({ date, day, tasks }) => {
 
 
 const VerticalCalendar = ({ route }) => {
+  
   const { tasks, taskDates, priorities, categories } = route.params;
+  console.log("Vertical Calendar: ", tasks, taskDates, priorities, categories)
   const days = generateDays(7, tasks, taskDates, priorities, categories); // display up to 7 days
+
 
 
   return (
     <ScrollView>
+            <Header />
       <FlatList
         data={days}
         renderItem={({ item }) => {
@@ -117,6 +152,7 @@ const VerticalCalendar = ({ route }) => {
             );
           } else {
             return (
+              
               <CalendarItem
                 date={item.date}
                 day={item.day}
@@ -128,6 +164,13 @@ const VerticalCalendar = ({ route }) => {
         keyExtractor={(item, index) => item.date || index.toString()}
         style={styles.calendarList}
       />
+     <Footer
+        taskItems={tasks}
+        deadlines={taskDates}
+        valueList={priorities}
+        categoriesList={categories}
+      />
+
     </ScrollView>
   );
 };

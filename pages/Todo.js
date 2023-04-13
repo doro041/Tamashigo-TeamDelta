@@ -144,16 +144,9 @@ const handleAddTask = async () => {
 
   try {
     await AsyncStorage.setItem('deadlines', JSON.stringify(newDeadlines.map(date => date.toISOString())));
-    console.log('Saved deadlines:', JSON.stringify(newDeadlines.map(date => date.toISOString())));
-
     await AsyncStorage.setItem('taskItems', JSON.stringify(newTaskItems));
-    console.log('Saved task Items:', JSON.stringify(newTaskItems));
-
     await AsyncStorage.setItem('valueList', JSON.stringify(newValueList));
-    console.log('Saved valueList:', JSON.stringify(newValueList));
-
     await AsyncStorage.setItem('categoriesList', JSON.stringify(newCategoriesList));
-    console.log('Saved categoriesList:', JSON.stringify(newCategoriesList));
   } catch (error) {
     console.error('Error saving data:', error);
   }
@@ -330,20 +323,7 @@ const getFilteredTasks = () => {
 
         
         </View>
-        <Button
-  title="Go to Vertical Calendar"
-  
-  onPress={() =>
-    console.log('taskItems:', taskItems, 'deadlines:', deadlines, 'valueList:', valueList, 'categoriesList:', categoriesList)>
-    navigation.navigate('Calendar', {
-      
-      tasks: taskItems,
-      taskDates: deadlines,
-      priorities: valueList,
-      categories: categoriesList,
-    })
-  }
-/>
+       
 
 <TouchableOpacity style={styles.exitWrapper} onPress={() => {
   setTask("");

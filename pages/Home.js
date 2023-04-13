@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ImageBackground, Image, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather} from 'react-native-vector-icons';
-
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 
 
@@ -27,9 +26,15 @@ const Home = () => {
       setTaskPrompt(taskPrompts[randomIndex]);
     }, taskPromptFrequency);
     return () => clearInterval(interval);
-  }, []);
-
+  }, [taskPrompts, taskPromptFrequency]); // <-- dependencies
   
+  useFocusEffect(
+    React.useCallback(() => {
+      loadData(); }, [])
+      ); // <-- empty dependency array
+  
+
+
     const loadData = async () => {
       try {
         const storedTaskItems = await AsyncStorage.getItem("taskItems");
@@ -67,11 +72,7 @@ const Home = () => {
         console.error('Error loading data:', error);
       }
     };
-
-    useEffect(() => {
-      loadData();
-    }, []);
-
+   
 
 
 
@@ -118,7 +119,9 @@ const Home = () => {
           </View>
         </ImageBackground>
       </View>
+      
       <Footer
+      
        taskItems={taskItems}
        deadlines={deadlines}
        valueList={valueList}
