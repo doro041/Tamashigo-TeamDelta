@@ -72,12 +72,13 @@ Tamashigo was developed using a technology stack that includes React Native, Exp
 ## Contributing
 Current Contributors and Founders :
 
-   Doroteya Stoyanova - @doro041
-    Zahary Kwidzynski - @Deprimon
-    Margarita Radeva - @Margarita..
-    Julien Acker - @Catlover
-    Camille Vang - @Camille..
-    Kirsty Ross - @edward...
+* Doroteya Stoyanova - Project Manager, UI/UX Designer, Frontend Developer, Database,Ad Actor 
+* Camille Vang - UI Designer and Animator
+* Margarita Radeva - Algorithm Designer, Backend Developer, Content Creator,Ad Actor
+* Zahary Kwidzynsky - Algorithm Developer, Backend Developer, Business Logic Specialist, Camera Operator
+* Julien Acker - Quality Assurance Lead and Tester
+* Kirsty Ross - Report Writer and Editor
+
 
 Contributions are welcome! To contribute to Tamashigo, follow these steps:
 
