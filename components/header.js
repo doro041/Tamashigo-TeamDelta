@@ -9,7 +9,7 @@ const Header = ({ title, onSettingsPress = () => {} }) => {
 
   const handleSettingsPress = () => {
     onSettingsPress();
-    navigation.navigate('Profile');
+    navigation.navigate('Settings');
   };
 
   return (

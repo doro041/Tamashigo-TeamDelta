@@ -12,7 +12,7 @@ import Profile from './pages/Profile';
 import Pomodoro  from './pages/Pomodoro'
 import Todo from './pages/Todo';
 import EggHatchAnimation from './pages/EggHatchAnimation';
-
+import Settings from './pages/Settings';
 
 
 import TermsandConditions from './components/TermsandConditions';
@@ -36,7 +36,7 @@ const StackNavigator = () => {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Pomodoro" component={Pomodoro} />
         <Stack.Screen name="Todo" component={Todo} />
-
+        <Stack.Screen name="Settings" component={Settings} />
 
 
        

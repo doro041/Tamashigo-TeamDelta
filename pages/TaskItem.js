@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 
 const TaskItem = ({ task, taskDate, priorityIcon, categoryColor, onCompleteTask, children }) => {
   console.log("TaskItem: ", task, taskDate, priorityIcon, categoryColor, onCompleteTask, children)
@@ -14,8 +14,10 @@ const TaskItem = ({ task, taskDate, priorityIcon, categoryColor, onCompleteTask,
           <View style={styles.itemBottom}>
             <Text style={styles.taskDate}>
               {taskDate ? taskDate.toLocaleDateString() : ""}
-            </Text>           
+            </Text>  
+            <View style = {{marginTop: 10}}>         
             {children}
+            </View>  
             <Text style={styles.timer}>{priorityIcon}</Text>
           </View>
         </View>
@@ -26,7 +28,7 @@ const TaskItem = ({ task, taskDate, priorityIcon, categoryColor, onCompleteTask,
 
 const styles = StyleSheet.create({
   item: {
-    padding: 15,
+    padding: 8,
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginTop: -22,
   },
   itemText: {
     fontSize: 16,

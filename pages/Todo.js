@@ -270,7 +270,7 @@ const getFilteredTasks = () => {
   }}
 />
 
-        <SelectDropdown 
+<SelectDropdown
   defaultButtonText='Select a category'
   data={categories}
   onSelect={handleSelectCategory}
@@ -284,6 +284,15 @@ const getFilteredTasks = () => {
   }}
   renderDropdownIcon={() => (
     <MaterialIcons name='arrow-drop-down' size={24} color='#78B1C3' />
+  )}
+  renderCustomizedRowChild={(item, index) => (
+    <View style={{
+      backgroundColor: selectedCategoryColors[item],
+      padding: 10,
+      borderRadius: 10,
+    }}>
+      <Text style={{color: 'black', fontSize: 16}}>{item}</Text>
+    </View>
   )}
   dropdownStyle={{
     borderWidth: 1,
@@ -310,7 +319,8 @@ const getFilteredTasks = () => {
     textAlign: 'center',
     textTransform: 'capitalize',
   }}
-/>     
+/>
+
         
   
 

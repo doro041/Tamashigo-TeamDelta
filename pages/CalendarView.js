@@ -120,7 +120,7 @@ const CalendarItem = ({ date, day, tasks }) => {
             task={task.title}
             priorityIcon={priorityValues[task.priority].value}
             categoryColor={selectedCategoryColors[task.category]}
-            // Add any other necessary props required by your Task component
+
           />
         ))}
       </ScrollView>
@@ -131,55 +131,66 @@ const CalendarItem = ({ date, day, tasks }) => {
 
 
 const VerticalCalendar = ({ route }) => {
-  
   const { tasks, taskDates, priorities, categories } = route.params;
-  console.log("Vertical Calendar: ", tasks, taskDates, priorities, categories)
-  const days = generateDays(7, tasks, taskDates, priorities, categories); // display up to 7 days
-
-
+  const days = generateDays(7, tasks, taskDates, priorities, categories);
 
   return (
-    <ScrollView>
-            <Header />
-      <FlatList
-        data={days}
-        renderItem={({ item }) => {
-          if (item.message) {
-            return (
-              <View style={styles.messageContainer}>
-                <Text style={styles.message}>{item.message}</Text>
-              </View>
-            );
-          } else {
-            return (
-              
-              <CalendarItem
-                date={item.date}
-                day={item.day}
-                tasks={item.tasks}
-              />
-            );
-          }
-        }}
-        keyExtractor={(item, index) => item.date || index.toString()}
-        style={styles.calendarList}
-      />
-     <Footer
+    <View style={styles.container}>
+      <Header />
+      <ScrollView style={styles.calendarContainer}>
+        <FlatList
+          data={days}
+          renderItem={({ item }) => {
+            if (item.message) {
+              return (
+                <View style={styles.messageContainer}>
+                  <Text style={styles.message}>{item.message}</Text>
+                </View>
+              );
+            } else {
+              return (
+                <CalendarItem
+                  date={item.date}
+                  day={item.day}
+                  tasks={item.tasks}
+                />
+              );
+            }
+          }}
+          keyExtractor={(item, index) => item.date || index.toString()}
+          style={styles.calendarList}
+          scrollEnabled={false} // Disabling scroll for FlatList since ScrollView is handling it
+        />
+      </ScrollView>
+      <Footer
         taskItems={tasks}
         deadlines={taskDates}
         valueList={priorities}
         categoriesList={categories}
       />
-
-    </ScrollView>
+    </View>
   );
 };
 
+
+
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  calendarContainer: {
+    flex: 1,
+  },
+  calendarList: {
+    flexGrow: 1,
+    paddingBottom: 40, // Add padding to prevent days from being hidden behind the Footer
+    paddingTop: 40, // Add padding to prevent days from being hidden behind the Header
+  },
   calendarItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 100,
+    height: 200, // Maintain a fixed height for calendar items to ensure they fill the space
     paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
@@ -199,21 +210,20 @@ const styles = StyleSheet.create({
   tasksContainer: {
     flexGrow: 1,
   },
-  taskContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ddd',
-    borderRadius: 5,
-    padding: 5,
-    marginVertical: 5,
-    marginRight: 5,
+  messageContainer: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
-  taskTitle: {
+  message: {
     fontSize: 14,
     fontWeight: 'bold',
   },
+ 
 });
+
+
+
+
 
 
 export default VerticalCalendar;
