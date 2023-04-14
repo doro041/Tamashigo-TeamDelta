@@ -10,7 +10,7 @@ const ForgotPass = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../assets/PartOfLogo.png')} style={styles.background}>
+      <ImageBackground source={require('../assets/PartofLogo.png')} style={styles.background}>
         <Image source={require('../assets/PandaHead.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
       </ImageBackground>
       <View style={styles.content}>
