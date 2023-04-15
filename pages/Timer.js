@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: '#94bfa2',
+    marginTop: 20,
   },
   value: {
     fontSize: 14,
@@ -143,8 +144,8 @@ const Timer = ({ deadline }) => {
       )}
       <View style={styles.timerContainer}>
       {labels.map(([label, value]) => (
-  <View key={label}>
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+  <View style  key={label} >
+    <View style={{ flexDirection: 'row', alignItems: 'center', }}>
       <Text style={styles.value}>{`${Math.floor(value)}`.padStart(2, "0")}</Text>
       <Text style={styles.label}>{`${label} `}</Text>
     </View>

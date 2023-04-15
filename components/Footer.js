@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 
-const Footer = ({ taskItems, deadlines, valueList, categoriesList}) => {
+const Footer = ({taskItems, deadlines, valueList, categoriesList}) => {
 
   const navigation = useNavigation(); // obtain the navigation object
 
@@ -26,7 +26,6 @@ console.log('Footer received:', taskItems, deadlines, valueList, categoriesList)
       </View>
       <View style={styles.iconContainer}>
       <TouchableOpacity onPress={() => navigation.navigate('Calendar', {
-      
       tasks: taskItems,
       taskDates: deadlines,
       priorities: valueList,
@@ -36,8 +35,9 @@ console.log('Footer received:', taskItems, deadlines, valueList, categoriesList)
         </TouchableOpacity>
       </View>
       <View style={styles.iconContainer}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Shop')}>
       <Icon name="cart" size={30} color="black" />
+
         </TouchableOpacity>
       </View>
     </View>

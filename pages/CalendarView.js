@@ -23,7 +23,9 @@ const priorityValues = [
   {index: 3, label: priorities[3], value: <Feather name="zap" size={24} color="black" />},
 ];
 
-const years = [2023]; // You can add more years to this array
+const currentYear = new Date().getFullYear();
+const years = [currentYear];
+
 
 
 
@@ -45,9 +47,9 @@ const months = [
 ];
 
 const generateDays = (numDays, tasks, taskDates, priorities, categories) => {
-  const numDaysToDisplay = Math.min(numDays, 7); // limit the number of days to display to 7 or less
   let result = [];
   let count = 0;
+  const today = new Date(); // get the current date
 
   const taskDatesMap = taskDates.reduce((map, date, index) => {
     const dateString = date.toLocaleDateString();
@@ -58,49 +60,46 @@ const generateDays = (numDays, tasks, taskDates, priorities, categories) => {
     return map;
   }, {});
 
-  for (let i = 0; i < years.length && count < numDaysToDisplay; i++) {
-    const year = years[i];
-    for (let j = 0; j < months.length && count < numDaysToDisplay; j++) {
-      const month = months[j];
-      const daysInMonth = month.days;
-      for (let k = 1; k <= daysInMonth && count < numDaysToDisplay; k++) {
-        const date = k.toString();
-        const day = new Date(year, j, k).toLocaleDateString('en-US', { weekday: 'short' });
-        const dateString = new Date(year, j, k).toLocaleDateString();
-        const tasksForDate = taskDatesMap[dateString] || [];
+  for (let i = today.getMonth(); i < today.getMonth() + 1 && count < numDays; i++) {
+    const year = today.getFullYear();
+    const month = months[i];
+    const daysInMonth = month.days;
 
-        let filteredTasks = tasks
-  .map((task, idx) => {
-    const taskDate = new Date(taskDates[idx]);
-    if (
-      taskDate.getFullYear() === year &&
-      taskDate.getMonth() === j &&
-      taskDate.getDate() === k
-    ) {
-      return {
-        title: task,
-        priority: priorities[idx],
-        category: categories[idx],
-      };
-    }
-    return null;
-  })
-  .filter(task => task !== null);
+    for (let k = today.getDate(); k <= daysInMonth && count < numDays; k++) {
+      const date = k.toString();
+      const day = new Date(year, i, k).toLocaleDateString('en-GB', { weekday: 'short' });
+      const dateString = new Date(year, i, k).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' });
+      const tasksForDate = taskDatesMap[dateString] || [];
 
-    
-        if (count < 7) {
-          result.push({ date, day, tasks: filteredTasks });
-        } else if (count === 7) {
-          result.push({ message: 'Purchase premium to get more.' });
-        }
-        count++;
+      let filteredTasks = tasks
+        .map((task, idx) => {
+          const taskDate = new Date(taskDates[idx]);
+          if (
+            taskDate.getFullYear() === year &&
+            taskDate.getMonth() === i &&
+            taskDate.getDate() === k
+          ) {
+            return {
+              title: task,
+              priority: priorities[idx],
+              category: categories[idx],
+            };
+          }
+          return null;
+        })
+        .filter(task => task !== null);
 
-        
+      if ((count < numDays) && count < 7) {
+        result.push({ date, day, tasks: filteredTasks });
+      } else if (count >= 7) {
+        result.push({ message: 'Purchase premium to get more.' });
       }
+      count++;
     }
   }
   return result;
 };
+
 
 
 
@@ -131,8 +130,8 @@ const CalendarItem = ({ date, day, tasks }) => {
 
 
 const VerticalCalendar = ({ route }) => {
-  const { tasks, taskDates, priorities, categories } = route.params;
-  const days = generateDays(7, tasks, taskDates, priorities, categories);
+  const {tasks, taskDates, priorities, categories } = route.params;
+  const days = generateDays(14, tasks, taskDates, priorities, categories);
 
   return (
     <View style={styles.container}>

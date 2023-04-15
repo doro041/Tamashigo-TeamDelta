@@ -8,6 +8,14 @@ const MyCalendar = ({ setDeadline }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date().toISOString().slice(0,7));
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear().toString().substr(-2);
+    return `${day}/${month}/${year}`;
+  };
+
   const handleDayPress = (day) => {
     setSelectedDate(day.dateString);
     setDeadline(day.dateString);
@@ -86,7 +94,7 @@ const MyCalendar = ({ setDeadline }) => {
     alignItems: 'center',
   }}
 >
-  <Text style={styles.text}>You selected {selectedDate}</Text>
+  <Text style={styles.text}>You selected {formatDate(selectedDate)}</Text>
 </View>
           {Platform.OS === 'web' ? (
             <input type="time" onChange={handleTimeChange} />

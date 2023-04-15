@@ -13,7 +13,7 @@ const TaskItem = ({ task, taskDate, priorityIcon, categoryColor, onCompleteTask,
           </View>
           <View style={styles.itemBottom}>
             <Text style={styles.taskDate}>
-              {taskDate ? taskDate.toLocaleDateString() : ""}
+            {taskDate ? taskDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' }) : ""}
             </Text>  
             <View style = {{marginTop: 10}}>         
             {children}
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   itemContent: {
     flex: 1,
     marginLeft: 10,
+    marginRight: 10,
     flexDirection: 'column',
     justifyContent: 'space-between',
   },

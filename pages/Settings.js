@@ -5,7 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Footer from '../components/Footer';
 import { useState, useEffect } from 'react';
 
-const Settings = () => {
+
+const Settings = ({navigation}) => {
     const [taskItems, setTaskItems] = useState([]);
     const [deadlines, setDeadlines] = useState([]);
     const [valueList, setValueList] = useState([]);
@@ -87,7 +88,8 @@ const Settings = () => {
         <Feather name="chevron-right" size={24} color="black" />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.settingRow}>
+      <TouchableOpacity style={styles.settingRow}
+        onPress={() => navigation.navigate('About')}>
         <Text style={styles.settingText}>About</Text>
         <Feather name="chevron-right" size={24} color="black" />
       </TouchableOpacity>

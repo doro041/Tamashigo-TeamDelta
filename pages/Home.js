@@ -121,7 +121,6 @@ const Home = () => {
       </View>
       
       <Footer
-      
        taskItems={taskItems}
        deadlines={deadlines}
        valueList={valueList}
