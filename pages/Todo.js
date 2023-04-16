@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView , Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Modal, Button} from 'react-native';
+import { ScrollView , Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Modal, Alert} from 'react-native';
 import Timer from './Timer';
-import { Ionicons, Feather, FontAwesome, MaterialCommunityIcons, MaterialIcons, Entypo } from 'react-native-vector-icons';
+import {Feather, FontAwesome, MaterialCommunityIcons, MaterialIcons, Entypo } from 'react-native-vector-icons';
 import SelectDropdown from 'react-native-select-dropdown';
 import TaskItem from './TaskItem'; // Import the TaskItem component
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CalendarModal from './CalendarModal';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-
+import Coins from './Coins';
 
 const Todo = ({navigation}) => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -25,12 +25,13 @@ const Todo = ({navigation}) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [filteredTasks, setFilteredTasks] = useState(taskItems.map((_, index) => index)); // Create a new state for filtered tasks
+  const [completedTask, setCompletedTask] = useState(() => () => {});
   const handleSelectCategory = (item) => {
     setSelectedCategory(item);
   };
 
 
-  
+ 
 
   const filterTasks = (category) => {
     if (selectedCategory === category) {
@@ -44,10 +45,6 @@ const Todo = ({navigation}) => {
       setFilteredTasks(newFilteredTasks);
     }
   };
-  
- 
-  
-  
 
   const handleSelectPriority = (item) => {
     console.log(item)
@@ -137,6 +134,8 @@ const handleAddTask = async () => {
   setValueList(newValueList);
   setCategoriesList(newCategoriesList);
 
+
+  
   storeData('deadlines', newDeadlines);
   storeData('taskItems', newTaskItems);
   storeData('valueList', newValueList);
@@ -167,34 +166,50 @@ const getFilteredTasks = () => {
 
 
 
-  const completeTask = (index) => {
-    let itemsCopy = [...taskItems];
-    let deadlinesCopy = [...deadlines];
-    let setValueListCopy = [...valueList];
-    let setCategoriesListCopy = [...categoriesList];
-  
-    itemsCopy.splice(index, 1);
-    deadlinesCopy.splice(index, 1);
-    setValueListCopy.splice(index, 1);
-    setCategoriesListCopy.splice(index, 1);
-  
-    setTaskItems(itemsCopy);
-    setDeadlines(deadlinesCopy);
-    setValueList(setValueListCopy);
-    setCategoriesList(setCategoriesListCopy);
-  
-    storeData('taskItems', itemsCopy);
-    storeData('deadlines', deadlinesCopy);
-    storeData('valueList', setValueListCopy);
-    storeData('categoriesList', setCategoriesListCopy);
-  
-    filterTasks(selectedCategory);
-  };
-  
-  
+const confirmDeleteTask = (index) => {
+  Alert.alert(
+    'Delete Task',
+    'Are you sure you want to delete this task?',
+    [
+      {
+        text: 'No',
+        onPress: () => {},
+        style: 'cancel',
+      },
+      {
+        text: 'Yes',
+        onPress: () => {
+          let itemsCopy = [...taskItems];
+          let deadlinesCopy = [...deadlines];
+          let setValueListCopy = [...valueList];
+          let setCategoriesListCopy = [...categoriesList];
+        
+          itemsCopy.splice(index, 1);
+          deadlinesCopy.splice(index, 1);
+          setValueListCopy.splice(index, 1);
+          setCategoriesListCopy.splice(index, 1);
+          completedTask(index, categoriesList[index]);
+          setTaskItems(itemsCopy);
+          setDeadlines(deadlinesCopy);
+          setValueList(setValueListCopy);
+          setCategoriesList(setCategoriesListCopy);
+          
+          // Update coins based on the selected category of the new task
+          
+          
+          storeData('taskItems', itemsCopy);
+          storeData('deadlines', deadlinesCopy);
+          storeData('valueList', setValueListCopy);
+          storeData('categoriesList', setCategoriesListCopy);
+        
+          filterTasks(selectedCategory);
+        },
+      },
+    ],
+    { cancelable: false }
+  );
+};
 
-    
- 
   return (
    
     <View style={styles.container}>
@@ -210,7 +225,7 @@ const getFilteredTasks = () => {
           
         }}>
           <View style={styles.overlay}>
-
+          <Header />
           {/* <ScrollView> */}
         <View style={styles.modalContainer}>
         <View style={{flexDirection: 'row'}}>
@@ -352,12 +367,14 @@ const getFilteredTasks = () => {
         
       <View style = {styles.qualities}>
       </View>
-      <Header />
+      
       <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.tasksWrapper}>
         
         <Text style={styles.sectionTitle}>My Tasks</Text>
-        
+        <Coins taskItems={taskItems} setTaskItems={setTaskItems} setCompletedTask={setCompletedTask} />
+
+
         <View style={{flexDirection: 'row', marginVertical: 10}}>
         <TouchableOpacity onPress={() => filterTasks('Productivity')}>
           <Text style={{ backgroundColor: '#dce4ef', color: 'black', padding: 10, borderRadius: 10, borderWidth: 1, borderColor: '#abb7c7' }}>Productivity</Text>
@@ -385,7 +402,7 @@ const getFilteredTasks = () => {
       taskDate={deadlines[originalIndex]}
       priorityIcon={priorityValues[valueList[originalIndex]]?.value || null}
       categoryColor={selectedCategoryColors[categoriesList[originalIndex]]}
-      onCompleteTask={() => completeTask(originalIndex)}
+      onCompleteTask={() => confirmDeleteTask(originalIndex)}
     >
       <Timer deadline={deadlines[originalIndex]} />
     </TaskItem>
@@ -396,9 +413,7 @@ const getFilteredTasks = () => {
 
 
 
-</View>
-
-    
+</View>  
       </View>
       </ScrollView>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.writeTaskWrapper}>
@@ -418,8 +433,7 @@ const getFilteredTasks = () => {
         valueList={valueList}
         categoriesList={categoriesList}
       />
-
-
+  
     </View>
     
   );

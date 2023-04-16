@@ -105,27 +105,29 @@ const generateDays = (numDays, tasks, taskDates, priorities, categories) => {
 
 
 const CalendarItem = ({ date, day, tasks }) => {
+  const itemHeight = 100 + tasks.length * 60; // Calculate item height based on number of tasks
+
   return (
-    <View style={styles.calendarItem}>
+    <View style={[styles.calendarItem, { height: itemHeight }]}>
       <View style={styles.dateContainer}>
         <Text style={styles.date}>{date}</Text>
         <Text style={styles.day}>{day}</Text>
       </View>
-      <ScrollView style={styles.tasksContainer}>
+      <View style={styles.tasksContainer}>
         {tasks.map((task, index) => (
-          console.log("Tasks to TaskItem Vertical Calendar: ", task.title + " " + task.priority + " " + task.category) ||
           <TaskItem
             key={index}
             task={task.title}
             priorityIcon={priorityValues[task.priority].value}
             categoryColor={selectedCategoryColors[task.category]}
-
+            onCompleteTask={() => {}}
           />
         ))}
-      </ScrollView>
+      </View>
     </View>
   );
 };
+
 
 
 
@@ -189,7 +191,7 @@ const styles = StyleSheet.create({
   calendarItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 200, // Maintain a fixed height for calendar items to ensure they fill the space
+    height: 100, // Maintain a fixed height for calendar items to ensure they fill the space
     paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
@@ -207,10 +209,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   tasksContainer: {
-    flexGrow: 1,
-  },
+    flex: 1,
+    },
   messageContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal:20,
     paddingVertical: 10,
   },
   message: {

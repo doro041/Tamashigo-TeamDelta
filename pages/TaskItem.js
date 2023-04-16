@@ -4,8 +4,8 @@ import { TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 const TaskItem = ({ task, taskDate, priorityIcon, categoryColor, onCompleteTask, children }) => {
   console.log("TaskItem: ", task, taskDate, priorityIcon, categoryColor, onCompleteTask, children)
   return (
-    <TouchableOpacity key={task} onPress={onCompleteTask}>
-      <View style={[styles.item, { backgroundColor: '#e7f4e4' }]}>
+    <TouchableOpacity key={task} onPress={() => onCompleteTask(task, taskDate, priorityIcon, categoryColor)}>
+    <View style={[styles.item, { backgroundColor: '#e7f4e4' }]}>
         <View style={[styles.line, { borderLeftColor: categoryColor }]}/>
         <View style={styles.itemContent}>
           <View style={styles.itemTop}>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   itemContent: {
     flex: 1,
     marginLeft: 10,
-    marginRight: 10,
+    marginRight: 20,
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
