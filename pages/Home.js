@@ -19,7 +19,9 @@ const Home = () => {
   const [deadlines, setDeadlines] = useState([]);
   const [valueList, setValueList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
-
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [itemLocation, setItemLocation] = useState({});
+  
   useEffect(() => {
     const interval = setInterval(() => {
       const randomIndex = Math.floor(Math.random() * taskPrompts.length);
@@ -30,8 +32,61 @@ const Home = () => {
   
   useFocusEffect(
     React.useCallback(() => {
-      loadData(); }, [])
-      ); // <-- empty dependency array
+      loadData();
+      loadSelectedItem();
+    }, [])
+  );
+  
+  const loadSelectedItem = async () => {
+    try {
+      const storedSelectedItem = await AsyncStorage.getItem("selectedShopItem");
+  
+      if (storedSelectedItem) {
+        const parsedSelectedItem = JSON.parse(storedSelectedItem);
+        setSelectedItem(parsedSelectedItem);
+  
+        // Set itemLocation based on the item name
+        let location = {};
+        switch (parsedSelectedItem.name) {
+          case 'EyeMask':
+        location = { top: -280, left: 2, width: 150, height: 150 };
+        break;
+      case 'Halo':
+        location = { top: -350, left: 10, width: 150, height: 150 };
+        break;
+      case 'DevilEars':
+        location = { top: -320, left: 0, width: 150, height: 150 };
+        break;
+      case 'CowboyHat':
+        location = { top: -340, left: 0, width: 150, height: 150 };
+        break;
+      case 'baguette':
+        location = { top: -350, left: 35, width: 100, height: 100 };
+        break;
+      case 'hat':
+        location = { top: -400, left: -4, width: 120, height: 80 }
+        break;
+      case 'beret':
+        location = { top: -350, left: -45, width: 100, height: 100};
+        break;
+      case 'slime':
+        location = { top: -400, left: -2, width: 120, height: 80 };
+        break;
+      case 'sunglasses':
+        location = { top: -335, left: -5, width: 120};
+        break;
+
+          default:
+            break;
+        }
+        setItemLocation(location);
+      }
+    } catch (error) {
+      console.error("Error loading selected shop item:", error);
+    }
+  };
+  
+  
   
 
 
@@ -98,9 +153,19 @@ const Home = () => {
                 <Image source={require('../assets/coin.png')} style={{ width: 25, height: 30, resizeMode: 'contain', alignSelf: 'flex-start' }} />
                 <Text style={{ position: 'absolute', bottom: 0, right: 0 }}>1</Text>
             </View>
-          <View style={styles.character}>
-            <Image source={require('../assets/Panda.png')} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
-          </View>
+            <View style={styles.character}>
+            <View style={styles.pandaContainer}>
+
+  <Image source={require('../assets/Panda.png')} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
+  </View>
+  {selectedItem && (
+    <Image
+      style={[styles.itemImage, itemLocation]}
+      source={selectedItem.image}
+    />
+  )}
+</View>
+
           <View>
        
   <TouchableOpacity onPress={() => navigation.navigate('Todo')}>
@@ -148,6 +213,7 @@ const styles = StyleSheet.create({
     bottom:0,
     alignSelf: 'center',
     margin: 30,
+    bottom: -150,
 
   },
   balloon: {
@@ -174,8 +240,12 @@ const styles = StyleSheet.create({
       borderColor: '#C0C0C0',
       borderWidth: 1,
       alignSelf: 'center',
-      
-  
+    },
+    pandaContainer: {
+      position: 'absolute',
+      bottom: 150,
+      left: '50%',
+      transform: [{ translateX: -100 }], // This will center the image horizontally
     }
   
 });
