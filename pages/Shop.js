@@ -12,6 +12,7 @@ const Shop = () => {
   const [valueList, setValueList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
   const [numDays, setNumDays] = useState(7);
+  const [isPremium, setIsPremium] = useState(false); // the premium option
   const [itemLocation, setItemLocation] = useState({});
 
 
@@ -59,7 +60,7 @@ const Shop = () => {
   };
 
   const items = [
-    {id: 1, name: 'EyeMask', price: 30, image: require('../assets/EyeMask.png'), width: 100, height: 80},
+    {id: 1, name: 'EyeMask', price: 30, image: require('../assets/EyeMask.png'), width: 100, height: 100},
     {id: 2, name: 'Halo', price: 30, image: require('../assets/Halo.png'), width: 100, height: 100},
     {id: 3, name: 'DevilEars', price: 30, image: require('../assets/DevilEars.png'), width: 100, height: 100},
     {id: 4, name: 'CowboyHat', price: 50, image: require('../assets/CowboyHat.png'), width: 100, height: 100},
@@ -84,13 +85,13 @@ const Shop = () => {
         location = { top: -100, left: 122, width: 150, height: 150 };
         break;
       case 'DevilEars':
-        location = { top: -70, left: 108, width: 150, height: 150 };
+        location = { top: -125, left: 108, width: 150, height: 150 };
         break;
       case 'CowboyHat':
         location = { top: -110, left: 110, width: 150, height: 150 };
         break;
       case 'baguette':
-        location = { top: -80, left: 150, width: 150, height: 150 };
+        location = { top: 120, left: 0, width: 150, height: 150 };
         break;
       case 'hat':
         location = { top: -120, left: 105, width: 150, height: 100 }
@@ -108,14 +109,13 @@ const Shop = () => {
         break;
     }
     setItemLocation(location);
-
   };
 
-  const handleBuy = async () => {
-    try {
-      await AsyncStorage.setItem("selectedShopItem", JSON.stringify(selectedItem));
-    } catch (error) {
-      console.error("Error saving selected shop item:", error);
+  const handleBuy = () => {
+    if (selectedItem?.name === 'Premium') { // premium functionality
+      setIsPremium(true);
+    } else {
+      // TODO: Implement purchase logic for other items
     }
   };
   
