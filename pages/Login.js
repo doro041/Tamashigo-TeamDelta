@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity, ImageBackground, Image } from 'react-native';
-import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -11,7 +11,7 @@ const Login = ({ navigation }) => {
   async function handleLogin() {
     try {
       const auth = getAuth();
-  
+      
       // Check if the user is already logged in
       const user = auth.currentUser;
       if (user) {
@@ -19,20 +19,13 @@ const Login = ({ navigation }) => {
         navigation.navigate('NameChar');
         return;
       }
-  
-      // Check if authentication credentials are stored in AsyncStorage
-      const authToken = await AsyncStorage.getItem('authToken');
-      if (!authToken) {
-        console.log('No saved authentication credentials found');
-        return;
-      }
-  
-      // Use the saved authentication credentials to log in the user
-      const credential = firebase.auth.AuthCredential.fromJWT(authToken);
-      const userCredential = await signInWithCredential(auth, credential);
-      console.log('User logged in successfully!');
-  
+      
+      // Log in the user with Firebase authentication
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const loggedInUser = userCredential.user;
+      
       // Navigate to the new page
+      console.log('User logged in successfully');
       navigation.navigate('NameChar');
     } catch (error) {
       console.log(error);
@@ -42,48 +35,59 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../assets/PartofLogo.png')} style={styles.background}>
-        <Image source={require('../assets/PandaHead.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
-        <Text style={styles.title}>Welcome Back.</Text>
+    <ImageBackground source={require('../assets/Part.png')} style={[styles.background, { width: '100%', height: '100%' }]}>
+      <Image source={require('../assets/PandaHead.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>Welcome Back!</Text>
         <Text style={styles.subtitle}>Login</Text>
-      </ImageBackground>
+      </View>
+    </ImageBackground>
 
+  
     
-      <TextInput
+    <TextInput
         style={styles.input}
-        placeholder="Email"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={(email) => setEmail(email)}
+        placeholder="Email"
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
       <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      /> 
+  style={styles.input}
+  value={password}
+  onChangeText={(password) => setPassword(password)}
+  placeholder="Password"
+  secureTextEntry
+/>
+
       <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation.navigate('ForgotPass')}>
         <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
       </TouchableOpacity>
-      <View style={styles.buttonContainer}>
-    
-  <TouchableOpacity style={[styles.button, { marginRight: 10 }]} onPress={() => handleLogin(email, password)}>
-    <Text style={styles.buttonText}>LOGIN</Text>
+      <TouchableOpacity style={styles.button} onPress={() => handleLogin()}>
+        <Text style={styles.buttonText}>LOGIN</Text>
+      </TouchableOpacity>
+
+      <View style={styles.socialMedia}>
+
+      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 50, height: 50, marginRight: 10 }]}>
+    <Icon name="facebook" size={30} color="white" style={styles.icon} />
   </TouchableOpacity>
 
-  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 30, height: 30 }]}>
-    <Icon name="facebook" size={25} color="white" style={styles.icon} />
-  </TouchableOpacity>
-  
-  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 30, height: 30 }]}>
+  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 50, height: 50, marginLeft: 10 }]}>
     <Icon name="google" size={25} color="white" style={styles.icon} />
   </TouchableOpacity>
-  
+</View>
+      </View>
+
+
+      <View style={styles.bottomContainer}>
+  <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+   <Text>No account? <Text style={styles.SignUpText}> Sign up.</Text></Text>
+  </TouchableOpacity>
 </View>
 
-<TouchableOpacity  onPress={() => navigation.navigate('SignUp')}>
-      <Text> No account?</Text><Text style={styles.SignUpText}>Sign up.</Text>
-      </TouchableOpacity>
  
         
       </View>
@@ -95,27 +99,36 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F0FFF0',
+    
+  },
+  
+  background: {
+    width: 600,
+    height: 400,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
     color: 'black',
-    marginBottom: '10%',
-   
-    marginTop: '10%',
+    marginBottom: 10,
+    marginTop: 1,
     alignContent: 'center',
   },
-
+  
   subtitle: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
     color: 'black',
-    marginBottom: '10%',
-    
+    marginBottom: 20,
+    marginTop: 10,
     alignContent: 'center',
   },
+  
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -129,11 +142,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'black',
+    alignSelf:'center',
+    marginBottom: 30, // Adjusted marginBottom
   },
+  
+  
   buttonText: {
     color: 'white',
+    fontSize: 18,
     fontWeight: 'bold',
-    fontSize: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
   },
   background: {
     flex: 1,
@@ -142,35 +161,62 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    width: '80%',
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: 'grey',
-    paddingLeft: 20,
-    marginBottom: 20,
-    marginTop:20,
+    width: 300,
+    marginBottom: 10,
+    backgroundColor: '#C8E6C9', // light green
+    borderRadius: 20,
+    fontSize: 18,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginTop:10,
+    alignSelf: 'center',
+    color: 'black',
+    position: 'relative',
   },
   forgotPassword: {
     alignSelf: 'flex-end',
-    marginRight: '10%',
+    marginRight:60,
     marginBottom: '20%',
 
   },
   forgotPasswordText: {
-    color: 'blue',
+    color:  'navy',
     fontWeight: 'bold',
+    fontSize: 15,
+
     },  
     SignUpText: {
         color: 'black',
         fontWeight: 'bold',
         },
 
-  icon: {
-    padding: 10,
-    marginTop:10,
-
-
+ 
+    icon: {
+      alignSelf: 'center',
     },
+    socialMedia: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding:10,
+      
+      marginBottom: 10,
+      // Add spacing between buttons
+      paddingHorizontal: 50,
+      marginHorizontal:30,
+      alignSelf:'center',
+    justifyContent: 'space-between', // Evenly space out buttons
+    },
+    bottomContainer: {
+      position: 'absolute',
+      bottom: 0,
+      marginBottom: 20,
+      width: '100%',
+      alignItems: 'center',
+    },
+    
+   
+    
 
 });
 export default Login;

@@ -4,7 +4,8 @@ import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Footer from '../components/Footer';
 import { useState, useEffect } from 'react';
-
+import AttributePage from './AttributePage';
+import { useNavigation } from '@react-navigation/native';
 
 const Settings = ({navigation}) => {
     const [taskItems, setTaskItems] = useState([]);
@@ -57,6 +58,12 @@ const Settings = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
+
+      <TouchableOpacity onPress = {() => navigation.navigate('AttributePage')}
+      style={styles.settingRow}>
+        <Text style={styles.settingText}>Attributes</Text>
+        <Feather name="chevron-right" size={24} color="black" />
+      </TouchableOpacity>
       
       <TouchableOpacity style={styles.settingRow}>
         <Text style={styles.settingText}>Change Name</Text>

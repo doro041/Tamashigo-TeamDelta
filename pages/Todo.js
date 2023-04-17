@@ -9,6 +9,8 @@ import CalendarModal from './CalendarModal';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Coins from './Coins';
+import Attributes from './Attributes';
+import AttributePage from './AttributePage';
 
 const Todo = ({navigation}) => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -26,6 +28,12 @@ const Todo = ({navigation}) => {
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [filteredTasks, setFilteredTasks] = useState(taskItems.map((_, index) => index)); // Create a new state for filtered tasks
   const [completedTask, setCompletedTask] = useState(() => () => {});
+  const [startTimes, setStartTimes] = useState([]);
+  const [productivityCoins, setProductivityCoins] = useState(0);
+  const [healthCoins, setHealthCoins] = useState(0);
+  const [financeCoins, setFinanceCoins] = useState(0);
+  const [hobbyCoins, setHobbyCoins] = useState(0);
+ 
   const handleSelectCategory = (item) => {
     setSelectedCategory(item);
   };
@@ -47,7 +55,7 @@ const Todo = ({navigation}) => {
   };
 
   const handleSelectPriority = (item) => {
-    console.log(item)
+    console.log('handleSelectPriority')
     setSelectedPriority(item);
   };
 
@@ -121,6 +129,7 @@ const selectedCategoryColors = { // dictactes the colour of each task based on t
 }
 
 const handleAddTask = async () => {
+  console.log('handleAddTask')
   Keyboard.dismiss();
   if (!task.trim() || selectedCategory == null || selectedPriority == null) {
     return;
@@ -129,10 +138,14 @@ const handleAddTask = async () => {
   const newValueList = [...valueList, selectedPriority.index]; // Save the index instead of the value
   const newCategoriesList = [...categoriesList, selectedCategory];
   const newDeadlines = [...deadlines, new Date(deadline)];
+  const newStartTimes = [...startTimes, Date.now()]; // Store the start time of the new task
+
   setDeadlines(newDeadlines);
   setTaskItems(newTaskItems);
   setValueList(newValueList);
   setCategoriesList(newCategoriesList);
+  setStartTimes(newStartTimes); // Update startTimes state
+
 
 
   
@@ -167,6 +180,7 @@ const getFilteredTasks = () => {
 
 
 const confirmDeleteTask = (index) => {
+  console.log('Deleting Task')
   Alert.alert(
     'Delete Task',
     'Are you sure you want to delete this task?',
@@ -180,29 +194,47 @@ const confirmDeleteTask = (index) => {
         text: 'Yes',
         onPress: () => {
           let itemsCopy = [...taskItems];
-          let deadlinesCopy = [...deadlines];
-          let setValueListCopy = [...valueList];
-          let setCategoriesListCopy = [...categoriesList];
+  let deadlinesCopy = [...deadlines];
+  let setValueListCopy = [...valueList];
+  let setCategoriesListCopy = [...categoriesList];
+  let startTimesCopy = [...startTimes];
+  itemsCopy.splice(index, 1);
+  setValueListCopy.splice(index, 1);
+  setCategoriesListCopy.splice(index, 1);
+  
+  // Calculate the percentage of time that has passed since the task started
+  const startTime = startTimesCopy[index];
+  const parsedDeadline = Date.UTC(
+    deadlinesCopy[index].getFullYear(),
+    deadlinesCopy[index].getMonth(),
+    deadlinesCopy[index].getDate(),
+    deadlinesCopy[index].getHours(),
+    deadlinesCopy[index].getMinutes(),
+    deadlinesCopy[index].getSeconds()
+  );
+  
+   startTimesCopy.splice(index,1); // remove start time from array
+   setStartTimes(startTimesCopy); // update state
+
+   const timePassedPercent = (Date.now() - startTime) / (parsedDeadline - startTime);
+
+   // Pass the category, priority and timePassedPercent of the completed task to completedTask
+   console.log('percent',timePassedPercent);
+   completedTask(index, categoriesList[index], priorities[valueList[index]], timePassedPercent);
+
+   deadlinesCopy.splice(index, 1); // remove deadline from array
+   setTaskItems(itemsCopy);
+   setDeadlines(deadlinesCopy);
+   setValueList(setValueListCopy);
+   setCategoriesList(setCategoriesListCopy);
+          
+          
+    storeData('taskItems', itemsCopy);
+    storeData('deadlines', deadlinesCopy);
+    storeData('valueList', setValueListCopy);
+    storeData('categoriesList', setCategoriesListCopy);
         
-          itemsCopy.splice(index, 1);
-          deadlinesCopy.splice(index, 1);
-          setValueListCopy.splice(index, 1);
-          setCategoriesListCopy.splice(index, 1);
-          completedTask(index, categoriesList[index]);
-          setTaskItems(itemsCopy);
-          setDeadlines(deadlinesCopy);
-          setValueList(setValueListCopy);
-          setCategoriesList(setCategoriesListCopy);
-          
-          // Update coins based on the selected category of the new task
-          
-          
-          storeData('taskItems', itemsCopy);
-          storeData('deadlines', deadlinesCopy);
-          storeData('valueList', setValueListCopy);
-          storeData('categoriesList', setCategoriesListCopy);
-        
-          filterTasks(selectedCategory);
+    filterTasks(selectedCategory);
         },
       },
     ],
@@ -372,8 +404,19 @@ const confirmDeleteTask = (index) => {
       <View style={styles.tasksWrapper}>
         
         <Text style={styles.sectionTitle}>My Tasks</Text>
-        <Coins taskItems={taskItems} setTaskItems={setTaskItems} setCompletedTask={setCompletedTask} />
-
+        <Coins
+  taskItems={taskItems}
+  setTaskItems={setTaskItems}
+  setCompletedTask={setCompletedTask}
+  productivityCoins={productivityCoins}
+  setProductivityCoins={setProductivityCoins}
+  healthCoins={healthCoins}
+  setHealthCoins={setHealthCoins}
+  financeCoins={financeCoins}
+  setFinanceCoins={setFinanceCoins}
+  hobbyCoins={hobbyCoins}
+  setHobbyCoins={setHobbyCoins}
+/>
 
         <View style={{flexDirection: 'row', marginVertical: 10}}>
         <TouchableOpacity onPress={() => filterTasks('Productivity')}>
@@ -388,7 +431,7 @@ const confirmDeleteTask = (index) => {
         <TouchableOpacity onPress={() => filterTasks('Hobbies')} style={{ marginLeft: 10 }}>
           <Text style={{ backgroundColor: '#f9dede', color: 'black', padding: 10, borderRadius: 10, borderWidth: 1, borderColor: '#d1aeae' }}>Hobbies</Text>
         </TouchableOpacity>
-  
+        
 </View>
 <View style={styles.items}>
   {/* This is where the tasks will go! */}

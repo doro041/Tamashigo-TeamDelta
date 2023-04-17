@@ -15,7 +15,7 @@ import EggHatchAnimation from './pages/EggHatchAnimation';
 import Settings from './pages/Settings';
 import About from './pages/About';
 import Shop from './pages/Shop';
-
+import AttributePage from './pages/AttributePage';
 import TermsandConditions from './components/TermsandConditions';
 
 
@@ -40,6 +40,7 @@ const StackNavigator = () => {
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen name="About" component={About} />
         <Stack.Screen name="Shop" component={Shop} />
+        <Stack.Screen name="AttributePage" component={AttributePage} />
        
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
