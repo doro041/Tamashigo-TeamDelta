@@ -1,298 +1,183 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Text, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ImageBackground,
+  Image,
+  SafeAreaView,
+  Platform,
+  Dimensions,
+  StatusBar
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { getAuth, fetchSignInMethodsForEmail, updateProfile } from "firebase/auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
 
-
-import  TermsAndConditions from '../components/TermsandConditions';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-
-
-
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [passwordVisibility, setPasswordVisibility] = useState(true);
-  const [rightIcon, setRightIcon] = useState('eye-outline');
 
-  const auth = getAuth();
-
-  const togglePasswordVisibility = () => {
-    if (rightIcon === 'eye-outline') {
-      setRightIcon('eye-off-outline');
-      setPasswordVisibility(!passwordVisibility);
-    } else if (rightIcon === 'eye-off-outline') {
-      setRightIcon('eye-outline');
-      setPasswordVisibility(!passwordVisibility);
-    }
-  };
-
-
+  
   async function handleSignUp() {
     try {
-      // Check if password matches confirmed password
-      if (password !== confirmPassword) {
-        setErrorMessage("Passwords do not match");
-        return;
-      }
+      const auth = getAuth();
+      const actionCodeSettings = {
+        url: 'https://example.com/verify-email',
+        // This must be true.
+        handleCodeInApp: true,
+        iOS: {
+          bundleId: 'com.example.myapp',
+        },
+        android: {
+          packageName: 'com.example.myapp',
+          installApp: true,
+          minimumVersion: '12',
+        },
+        dynamicLinkDomain: 'example.com',
+      };
+ 
   
-      // Check for password length to be at least 6 characters
-      if (password.length < 6) {
-        setErrorMessage("Password must be at least 6 characters");
-        return;
-      }
-  
-      // Check for password to contain uppercase letters
-      const uppercaseRegex = /[A-Z]/;
-      if (!uppercaseRegex.test(password)) {
-        setErrorMessage("Password must contain uppercase letters");
-        return;
-      }
-  
-      // Check if email address is valid and not a ProtonMail or ProtonMail Bridge domain
-      const emailRegex =
-        /^[^\s@]+@[^\s@]+\.(?!protonmail\.com|protonmail\.ch|proton\.me)[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        setErrorMessage("Invalid email address");
-        return;
-      }
-  
-      // Check if email address is already in use
-      const emailExists = await fetchSignInMethodsForEmail(auth, email);
-      if (emailExists && emailExists.length > 0) {
-        setErrorMessage("That email address is already in use");
-        return;
-      }
-  
-      // Sign up the user with email and password
-      await createUserWithEmailAndPassword(auth, email, password);
-      // Set the user's display name
-      await updateProfile(auth.currentUser, { displayName: name });
-      // Save user data to local storage
-      await AsyncStorage.setItem(
-        "userData",
-        JSON.stringify(auth.currentUser)
-      );
-      // Navigate to the Home screen
-      navigation.replace("NameChar");
+      sendSignInLinkToEmail(auth, email, actionCodeSettings)
+        .then(() => {
+          window.localStorage.setItem("emailForSignIn", email);
+          // Redirect the user to a page that says "Check your email to sign in"
+          navigation.navigate('Namechar');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (error) {
-      setErrorMessage(error.message);
+      console.log(error);
+      alert(error.message);
     }
   }
   
   return (
-    <View style={styles.container}>
-      <ImageBackground source={require('../assets/Part.png')} style={styles.background}>
+    <SafeAreaView style={styles.container}>
+      <ImageBackground source={require('../assets/icon12.png')} style={styles.background} resizeMode='cover'>
+      <Image source={require('../assets/PandaHead.png')} style={{ width: windowWidth * 0.5, height: windowHeight * 0.3, resizeMode: 'contain' }} />
+<Text style={[styles.title, { marginTop: '50%' }]}>Create account</Text>
 
-  <Image source={require('../assets/PandaHead.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
-
-
-        <Text style={styles.title}>Welcome to Tamashigo</Text>
-        <Text style={styles.subtitle}>Sign Up</Text>
       </ImageBackground>
-
-
-       
+      <TextInput
+          style={styles.input}
+          placeholder="Name"
+          value={name}
+          onChangeText={setName}
+        />
     
-    <View>
       <TextInput
         style={styles.input}
-        value={name}
-        onChangeText={(name) => setName(name)}
-        placeholder="Name"
-      />
-      <TextInput
-        style={styles.input}
-        value={email}
-        onChangeText={(email) => setEmail(email)}
         placeholder="Email"
-        keyboardType="email-address"
-        autoCapitalize="none"
+        value={email}
+        onChangeText={setEmail}
       />
-      <TextInput
-  style={styles.input}
-  value={password}
-  onChangeText={(password) => setPassword(password)}
-  placeholder="Password"
-  secureTextEntry={passwordVisibility}
-/>
-<MaterialCommunityIcons
-    name={rightIcon}
-    size={24}
-    color="black"
-    style={styles.rightsIcon}
-    onPress={togglePasswordVisibility}
-  />
-
-<TextInput
-  style={styles.input}
-  value={confirmPassword}
-  onChangeText={(confirmPassword) => setConfirmPassword(confirmPassword)}
-  placeholder="Confirm Password"
-  secureTextEntry={passwordVisibility}
-/>
-  <MaterialCommunityIcons
-    name={rightIcon}
-    size={24}
-    color="black"
-    style={styles.rightIcon}
-    onPress={togglePasswordVisibility}
-  />
-
-
-<View style={{  alignItems: 'center' }}>
-  {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
-</View>
-
-      <TouchableOpacity style={styles.button} onPress={() => handleSignUp()}>
-        <Text style={styles.buttonText}>SIGN UP</Text>
-      </TouchableOpacity>
-
-      <View style={styles.socialMedia}>
-
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 50, height: 50, marginRight: 10 }]}>
-    <Icon name="facebook" size={25} color="white" style={styles.icon} />
+    
+      <View style={styles.buttonContainer}>
+      <View style={styles.buttonContainer}>
+  <TouchableOpacity style={[styles.button, { marginRight: windowWidth * 0.02 }]} onPress={() => navigation.navigate('Home') }>
+    <Text style={styles.buttonText}>SIGN UP</Text>
   </TouchableOpacity>
 
-  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 50, height: 50, marginLeft: 10 }]}>
-    <Icon name="google" size={25} color="white" style={styles.icon} />
+  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: windowWidth * 0.05, height: windowWidth * 0.05 }]}>
+    <Icon name="facebook" size={windowWidth * 0.5} color="white" style={styles.icon} />
+  </TouchableOpacity>
+
+  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: windowWidth * 0.05, height: windowWidth * 0.05 }]}>
+    <Icon name="google" size={windowWidth * 0.5} color="white" style={styles.icon} />
   </TouchableOpacity>
 </View>
+
       </View>
 
-
-      <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: -20 }}>
-  <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-    <Text>Already have an account?</Text><Text style={[styles.SignUpText, { marginTop: 4 }]}>Log in.</Text>
-  </TouchableOpacity>
-</View>
-
-
-<TermsAndConditions/>
-    </View>
-    </View>
-
-
-
+      <TouchableOpacity style={styles.alreadyacc} onPress={() => navigation.navigate('Login')}>
+        <Text>Already have an account?</Text><Text style={styles.SignInText}>Sign In.</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F0FFF0',
-    
+    justifyContent: 'center',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
-  
   background: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    alignItems: "center",
   },
   
   title: {
-    fontSize: 30,
+    fontSize: windowWidth * 0.06,
     fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  subtitle: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginBottom: 50,
-  },
-  input: {
-    width: 300,
-    marginBottom: 10,
-    backgroundColor: '#C8E6C9', // light green
-    borderRadius: 20,
-    fontSize: 18,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginTop:10,
-    alignSelf: 'center',
     color: 'black',
-    position: 'relative',
+    marginBottom: windowHeight * 0.05,
+    marginTop: windowHeight * 0.05,
+    textAlign: 'center',
   },
-  
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '80%',
+    marginBottom: windowHeight * 0.1,
+  },
+  //  d
   button: {
-    width: '30%',
+    width: windowWidth * 0.3,
     borderRadius: 40,
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F5F5F5',
-
-    alignSelf:'center'
+    backgroundColor: 'black',
   },
+  
+
   buttonText: {
-    color: 'black',
-    fontSize: 18,
+    color: 'white',
     fontWeight: 'bold',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    fontSize: windowWidth * 0.05,
   },
-  
-  buttonContainer: {
+  background: {
+    flex: 1,
+    width: '100%',
+    height: '60%',
+    alignItems: 'center',
+  },
+  input: {
+    width: '80%',
+    height: windowHeight * 0.05,
+    borderRadius: 25,
+    backgroundColor: 'grey',
+    paddingLeft: 20,
+    marginBottom: windowHeight * 0.01,
+  marginTop: windowHeight * 0.30, // adjust this value as needed
+  },
+
+  alreadyacc: {
+    marginTop: windowHeight * 0.1,
+    marginBottom: windowHeight * 0.1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
   },
+  SignInText: {
+    color: 'black',
+    fontWeight: 'bold',
+  },  
   icon: {
-    alignSelf: 'center',
+    padding: windowWidth * 0.01,
   },
-  socialMedia: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding:10,
-    
-    marginBottom: 10,
-    // Add spacing between buttons
-    paddingHorizontal: 50,
-    marginHorizontal:30,
-    alignSelf:'center',
-  justifyContent: 'space-between', // Evenly space out buttons
-  },
-  
-
-  SignUpText: {
-    color: 'black',
-    fontWeight: 'bold',
-  },
-  errorText: {
-    color: 'red',
-    marginTop: 10,
-    justifyContent: 'center',
-  },
-  rightIcon: {
-    position: 'absolute',
-    top: '23%',
-    right: '15%',
-    cursor: 'pointer',
-    padding: 10,
-  },
-
-  rightsIcon: {
-    position: 'absolute',
-    top: '16%',
-    right: '15%',
-    cursor: 'pointer',
-    padding: 10,
-  },
-
-  });
+});
 
 export default SignUp;
