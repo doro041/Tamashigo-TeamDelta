@@ -3,10 +3,11 @@ import { Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Coins = ({ taskItems = [], setTaskItems, setCompletedTask, productivityCoins, setProductivityCoins, healthCoins, setHealthCoins, financeCoins, setFinanceCoins, hobbyCoins, setHobbyCoins }) => {
+  console.log('Before completedTask')
   const completedTask = (index, category, priority, timePassedPercent) => {
     // Increment the appropriate coin based on the category of the completed task
     let coinIncrement = 0;
-    console.log('TEST111');
+    console.log('After CompletedTask');
     // Calculate coinIncrement based on priority
     switch (priority) {
       case 'Low':

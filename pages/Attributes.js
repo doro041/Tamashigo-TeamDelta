@@ -10,7 +10,7 @@ const Attributes = ({
   financeCoins,
   setFinanceCoins,
   hobbyCoins,
-  setHobbyCoins,
+  setHobbyCoins
 }) => {
   const [productivityLevel, setProductivityLevel] = useState(0);
   const [healthLevel, setHealthLevel] = useState(0);

@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Footer from '../components/Footer';
 import { useState, useEffect } from 'react';
+import AttributePage from './AttributePage';
 
 
 const Settings = ({navigation}) => {
@@ -58,8 +59,9 @@ const Settings = ({navigation}) => {
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
       
-      <TouchableOpacity style={styles.settingRow}>
-        <Text style={styles.settingText}>Change Name</Text>
+      <TouchableOpacity style={styles.settingRow}
+      onPress={() => navigation.navigate('AttributePage')}>
+        <Text style={styles.settingText}>Attributes</Text>
         <Feather name="chevron-right" size={24} color="black" />
       </TouchableOpacity>
 

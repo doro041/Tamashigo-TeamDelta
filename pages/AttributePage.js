@@ -4,23 +4,52 @@ import Attributes from './Attributes';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
 import Coins from './Coins';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Settings from './Settings';
 
-const AttributePage = ({ route }) => {
+const AttributePage = () => {
+    const navigation = useNavigation();
+
     const [taskItems, setTaskItems] = useState([]);
     const [deadlines, setDeadlines] = useState([]);
     const [valueList, setValueList] = useState([]);
     const [categoriesList, setCategoriesList] = useState([]);
+    const [completedTask, setCompletedTask] = useState(() => () => {});
+    const [productivityCoins, setProductivityCoins] = useState(0);
+    const [healthCoins, setHealthCoins] = useState(0);
+    const [financeCoins, setFinanceCoins] = useState(0);
+    const [hobbyCoins, setHobbyCoins] = useState(0);
+    console.log('AttributePage.js: ', productivityCoins, healthCoins, financeCoins, hobbyCoins)
+    console.log("TaskItems in Attribute.js: ", taskItems)
+    console.log("CompletedTask in Attribute.js: ", completedTask)
+    
+
+
+
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
     try {
+      console.log('Loading data in AttributePage.js')
       const storedTaskItems = await AsyncStorage.getItem("taskItems");
       const storedValueList = await AsyncStorage.getItem("valueList");
       const storedCategoriesList = await AsyncStorage.getItem("categoriesList");
       const storedDeadlines = await AsyncStorage.getItem("deadlines");
-  
+      const loadedCompletedTask = await AsyncStorage.getItem('completedTask');
+      const loadedProductivityCoins = await AsyncStorage.getItem('productivityCoins');
+      const loadedHealthCoins = await AsyncStorage.getItem('healthCoins');
+      const loadedFinanceCoins = await AsyncStorage.getItem('financeCoins');
+      const loadedHobbyCoins = await AsyncStorage.getItem('hobbyCoins');
+
+      if (loadedProductivityCoins !== null) setProductivityCoins(JSON.parse(loadedProductivityCoins));
+      if (loadedHealthCoins !== null) setHealthCoins(JSON.parse(loadedHealthCoins));
+      if (loadedFinanceCoins !== null) setFinanceCoins(JSON.parse(loadedFinanceCoins));
+      if (loadedHobbyCoins !== null) setHobbyCoins(JSON.parse(loadedHobbyCoins));
+      if (loadedCompletedTask !== null) setCompletedTask(JSON.parse(loadedCompletedTask));
+      console.log('LoadData in AttributePages: ', productivityCoins, healthCoins, financeCoins, hobbyCoins);
+
       let parsedTaskItems = [];
       let parsedValueList = [];
       let parsedCategoriesList = [];
@@ -51,20 +80,13 @@ const AttributePage = ({ route }) => {
       console.error('Error loading data:', error);
     }
   };
-  const navigation = useNavigation();
-  const [startTimes, setStartTimes] = useState([]);
-  const [productivityCoins, setProductivityCoins] = useState(0);
-  const [healthCoins, setHealthCoins] = useState(0);
-  const [financeCoins, setFinanceCoins] = useState(0);
-  const [hobbyCoins, setHobbyCoins] = useState(0);
-  //const { productivityCoins, healthCoins, financeCoins, hobbyCoins } = route.params;
-  console.log('Loaded coins in AttributePage.js:', productivityCoins, healthCoins, financeCoins, hobbyCoins)
   return (
     <View style={styles.container}>
+      
        <Coins
   taskItems={taskItems}
   setTaskItems={setTaskItems}
-  setCompletedTask={setCompletedTask}
+  setCompletedTask={setCompletedTask} 
   productivityCoins={productivityCoins}
   setProductivityCoins={setProductivityCoins}
   healthCoins={healthCoins}
@@ -74,12 +96,14 @@ const AttributePage = ({ route }) => {
   hobbyCoins={hobbyCoins}
   setHobbyCoins={setHobbyCoins}
 />
-      <Attributes
-        productivityCoins={productivityCoins}
-        healthCoins={healthCoins}
-        financeCoins={financeCoins}
-        hobbyCoins={hobbyCoins}
-      />
+<Attributes  productivityCoins={productivityCoins}  
+setProductivityCoins={setProductivityCoins}  
+healthCoins={healthCoins}  
+setHealthCoins={setHealthCoins}  
+financeCoins={financeCoins}  
+setFinanceCoins={setFinanceCoins}  
+hobbyCoins={hobbyCoins}  
+setHobbyCoins={setHobbyCoins}/>
       <Footer navigation={navigation} />
     </View>
   );

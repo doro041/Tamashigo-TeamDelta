@@ -91,11 +91,16 @@ const Todo = ({navigation}) => {
         const loadedHealthLevel = await AsyncStorage.getItem('healthLevel');
         const loadedFinanceLevel = await AsyncStorage.getItem('financeLevel');
         const loadedHobbyLevel = await AsyncStorage.getItem('hobbyLevel');
+        const loadedCompletedTask = await AsyncStorage.getItem('completedTask');
+
+
         console.log('AttributesData in LoadData:', loadedProductivityLevel, loadedHealthLevel, loadedFinanceLevel, loadedHobbyLevel)
         if (loadedProductivityLevel !== null) setProductivityLevel(JSON.parse(loadedProductivityLevel));
         if (loadedHealthLevel !== null) setHealthLevel(JSON.parse(loadedHealthLevel));
         if (loadedFinanceLevel !== null) setFinanceLevel(JSON.parse(loadedFinanceLevel));
         if (loadedHobbyLevel !== null) setHobbyLevel(JSON.parse(loadedHobbyLevel));
+        if (loadedCompletedTask !== null) setCompletedTask(JSON.parse(loadedCompletedTask));
+
       
   
       let parsedTaskItems = [];
@@ -250,7 +255,6 @@ const confirmDeleteTask = (index) => {
     storeData('deadlines', deadlinesCopy);
     storeData('valueList', setValueListCopy);
     storeData('categoriesList', setCategoriesListCopy);
-    
         
     filterTasks(selectedCategory);
 
@@ -441,14 +445,6 @@ const confirmDeleteTask = (index) => {
   hobbyCoins={hobbyCoins}
   setHobbyCoins={setHobbyCoins}
 />
-<Attributes  productivityCoins={productivityCoins} 
- setProductivityCoins={setProductivityCoins}  
- healthCoins={healthCoins} 
-  setHealthCoins={setHealthCoins}  
-  financeCoins={financeCoins}  
-  setFinanceCoins={setFinanceCoins}  
-  hobbyCoins={hobbyCoins}  
-  setHobbyCoins={setHobbyCoins}/>
 
         <View style={{flexDirection: 'row', marginVertical: 10}}>
         <TouchableOpacity onPress={() => filterTasks('Productivity')}>
