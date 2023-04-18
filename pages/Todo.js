@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView , Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Modal, Alert} from 'react-native';
+import { ScrollView , Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Modal, Alert, Image, ImageBackground} from 'react-native';
 import Timer from './Timer';
 import {Feather, FontAwesome, MaterialCommunityIcons, MaterialIcons, Entypo } from 'react-native-vector-icons';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -37,26 +37,51 @@ const Todo = ({navigation}) => {
   const [healthLevel, setHealthLevel] = useState(0);
   const [financeLevel, setFinanceLevel] = useState(0);
   const [hobbyLevel, setHobbyLevel] = useState(0);
+  const [backgroundImage, setBackgroundImage] = useState(null);
+
  
   const handleSelectCategory = (item) => {
     setSelectedCategory(item);
   };
 
-
+  const changeBackgroundImage = (category) => {
+    let newBackgroundImage;
+    switch (category) {
+      case 'Productivity':
+        newBackgroundImage = require('../assets/Blue.png');
+        break;
+      case 'Finances':
+        newBackgroundImage = require('../assets/Yellow.png');
+        break;
+      case 'Hobbies':
+        newBackgroundImage = require('../assets/Pink.png');
+        break;
+      case 'Health':
+        newBackgroundImage = require('../assets/Green.png');
+        break;
+      default:
+        newBackgroundImage = null;
+    }
+    setBackgroundImage(newBackgroundImage);
+  };
+  
  
 
   const filterTasks = (category) => {
     if (selectedCategory === category) {
       setSelectedCategory(null);
       setFilteredTasks(taskItems.map((_, index) => index));
+      changeBackgroundImage(null);
     } else {
       setSelectedCategory(category);
       const newFilteredTasks = taskItems
         .map((_, index) => index)
         .filter((index) => categoriesList[index] === category);
       setFilteredTasks(newFilteredTasks);
+      changeBackgroundImage(category);
     }
   };
+  
 
   const handleSelectPriority = (item) => {
     console.log('handleSelectPriority')
@@ -272,8 +297,11 @@ const confirmDeleteTask = (index) => {
 
   return (
    
-    <View style={styles.container}>
-      {/* Today's tasks */}
+<ImageBackground
+    source={backgroundImage}
+    resizeMode="cover"
+    style={{ flex: 1, width: '100%', height: '100%' }}>        
+    {/* Today's tasks */}
       
       <Modal  
 
@@ -505,7 +533,7 @@ const confirmDeleteTask = (index) => {
         categoriesList={categoriesList}
       />
   
-    </View>
+  </ImageBackground>
     
   );
 };
