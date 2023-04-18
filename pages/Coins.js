@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Attributes from './Attributes';	
 
-const Coins = ({ taskItems = [], setTaskItems,  setCompletedTask, productivityCoins, setProductivityCoins, healthCoins, setHealthCoins, financeCoins, setFinanceCoins, hobbyCoins, setHobbyCoins}) => {
-
-
-
+const Coins = ({ taskItems = [], setTaskItems, setCompletedTask, productivityCoins, setProductivityCoins, healthCoins, setHealthCoins, financeCoins, setFinanceCoins, hobbyCoins, setHobbyCoins }) => {
   const completedTask = (index, category, priority, timePassedPercent) => {
     // Increment the appropriate coin based on the category of the completed task
     let coinIncrement = 0;
@@ -23,11 +19,9 @@ const Coins = ({ taskItems = [], setTaskItems,  setCompletedTask, productivityCo
         break;
       case 'High':
         coinIncrement = 6;
-        console.log('high');
         break;
       case 'ASAP':
         coinIncrement = 8;
-        console.log('asap');
         break;
       default:
         break;
@@ -35,8 +29,8 @@ const Coins = ({ taskItems = [], setTaskItems,  setCompletedTask, productivityCo
     
     // Multiply coinIncrement based on timePassedPercent
     if (timePassedPercent >=0 && timePassedPercent <=0.2) {
-      console.log('timePassedPercent')
       coinIncrement *=5;
+      console.log('TEST',coinIncrement);
     } else if (timePassedPercent >0.2 && timePassedPercent <=0.4) {
       coinIncrement *=4;
     } else if (timePassedPercent >0.4 && timePassedPercent <=0.6) {
@@ -51,19 +45,15 @@ const Coins = ({ taskItems = [], setTaskItems,  setCompletedTask, productivityCo
     
     switch (category) {
       case 'Productivity':
-        console.log('Productivity Coins')
         setProductivityCoins((prevProductivityCoins) => prevProductivityCoins + coinIncrement);
         break;
       case 'Health':
-        console.log('Health Coins')
         setHealthCoins((prevHealthCoins) => prevHealthCoins + coinIncrement);
         break;
       case 'Finances':
-        console.log('Finance Coins')
         setFinanceCoins((prevFinanceCoins) => prevFinanceCoins + coinIncrement);
         break;
       case 'Hobbies':
-        console.log('Hobby Coins')
         setHobbyCoins((prevHobbyCoins) => prevHobbyCoins + coinIncrement);
         break;
       default:
@@ -94,29 +84,15 @@ const Coins = ({ taskItems = [], setTaskItems,  setCompletedTask, productivityCo
       const coins = await AsyncStorage.getItem('coins');
       if (coins !== null) {
         const parsedCoins = JSON.parse(coins);
-        
-        if (parsedCoins.hasOwnProperty('productivityCoins')) {
-          console.log('parsedCoins.productivityCoins')
-          setProductivityCoins(parsedCoins.productivityCoins);
-        }
-        if (parsedCoins.hasOwnProperty('healthCoins')) {
-          console.log('parsedCoins.healthCoins')
-          setHealthCoins(parsedCoins.healthCoins);
-        }
-        if (parsedCoins.hasOwnProperty('financeCoins')) {
-          console.log('parsedCoins.financeCoins')
-          setFinanceCoins(parsedCoins.financeCoins);
-        }
-        if (parsedCoins.hasOwnProperty('hobbyCoins')) {
-          console.log('parsedCoins.hobbyCoins')
-          setHobbyCoins(parsedCoins.hobbyCoins);
-        }
+        setProductivityCoins(parsedCoins.productivityCoins);
+        setHealthCoins(parsedCoins.healthCoins);
+        setFinanceCoins(parsedCoins.financeCoins);
+        setHobbyCoins(parsedCoins.hobbyCoins);
       }
     } catch (error) {
       console.error('Failed to load coins from storage:', error);
     }
   };
-  
 
   useEffect(() => {
     loadCoinsFromStorage();

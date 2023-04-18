@@ -33,6 +33,10 @@ const Todo = ({navigation}) => {
   const [healthCoins, setHealthCoins] = useState(0);
   const [financeCoins, setFinanceCoins] = useState(0);
   const [hobbyCoins, setHobbyCoins] = useState(0);
+  const [productivityLevel, setProductivityLevel] = useState(0);
+  const [healthLevel, setHealthLevel] = useState(0);
+  const [financeLevel, setFinanceLevel] = useState(0);
+  const [hobbyLevel, setHobbyLevel] = useState(0);
  
   const handleSelectCategory = (item) => {
     setSelectedCategory(item);
@@ -81,6 +85,18 @@ const Todo = ({navigation}) => {
       const storedValueList = await AsyncStorage.getItem("valueList");
       const storedCategoriesList = await AsyncStorage.getItem("categoriesList");
       const storedDeadlines = await AsyncStorage.getItem("deadlines");
+   
+
+        const loadedProductivityLevel = await AsyncStorage.getItem('productivityLevel');
+        const loadedHealthLevel = await AsyncStorage.getItem('healthLevel');
+        const loadedFinanceLevel = await AsyncStorage.getItem('financeLevel');
+        const loadedHobbyLevel = await AsyncStorage.getItem('hobbyLevel');
+        console.log('AttributesData in LoadData:', loadedProductivityLevel, loadedHealthLevel, loadedFinanceLevel, loadedHobbyLevel)
+        if (loadedProductivityLevel !== null) setProductivityLevel(JSON.parse(loadedProductivityLevel));
+        if (loadedHealthLevel !== null) setHealthLevel(JSON.parse(loadedHealthLevel));
+        if (loadedFinanceLevel !== null) setFinanceLevel(JSON.parse(loadedFinanceLevel));
+        if (loadedHobbyLevel !== null) setHobbyLevel(JSON.parse(loadedHobbyLevel));
+      
   
       let parsedTaskItems = [];
       let parsedValueList = [];
@@ -108,6 +124,7 @@ const Todo = ({navigation}) => {
       setTaskItems(parsedTaskItems);
       setValueList(parsedValueList);
       setCategoriesList(parsedCategoriesList);
+     
     } catch (error) {
       console.error('Error loading data:', error);
     }
@@ -233,8 +250,15 @@ const confirmDeleteTask = (index) => {
     storeData('deadlines', deadlinesCopy);
     storeData('valueList', setValueListCopy);
     storeData('categoriesList', setCategoriesListCopy);
+    
         
     filterTasks(selectedCategory);
+
+    storeData('productivityLevel', productivityLevel);
+    console.log('Storing Data of: productivityLevel', productivityLevel, 'healthLevel', healthLevel, 'financeLevel', financeLevel, 'hobbyLevel', hobbyLevel);
+    storeData('healthLevel', healthLevel);
+    storeData('financeLevel', financeLevel);
+    storeData('hobbyLevel', hobbyLevel);
         },
       },
     ],
@@ -417,6 +441,14 @@ const confirmDeleteTask = (index) => {
   hobbyCoins={hobbyCoins}
   setHobbyCoins={setHobbyCoins}
 />
+<Attributes  productivityCoins={productivityCoins} 
+ setProductivityCoins={setProductivityCoins}  
+ healthCoins={healthCoins} 
+  setHealthCoins={setHealthCoins}  
+  financeCoins={financeCoins}  
+  setFinanceCoins={setFinanceCoins}  
+  hobbyCoins={hobbyCoins}  
+  setHobbyCoins={setHobbyCoins}/>
 
         <View style={{flexDirection: 'row', marginVertical: 10}}>
         <TouchableOpacity onPress={() => filterTasks('Productivity')}>

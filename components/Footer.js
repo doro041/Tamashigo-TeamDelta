@@ -8,7 +8,6 @@ const Footer = ({taskItems, deadlines, valueList, categoriesList}) => {
 
   const navigation = useNavigation(); // obtain the navigation object
 
-console.log('Footer received:', taskItems, deadlines, valueList, categoriesList)
 
   
   return (
