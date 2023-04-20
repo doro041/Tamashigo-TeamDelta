@@ -62,6 +62,7 @@ const Attributes = ({
       coinSetter((prev) => prev - 1);
     }
   };
+  
 
   const buttonStyle = {
     backgroundColor: 'blue',
@@ -105,13 +106,14 @@ const Attributes = ({
       <View>
         <Text>Finances: {financeLevel}</Text>
         <TouchableOpacity
-          style={buttonStyle}
-          onPress={() => incrementAttribute(setFinanceLevel, setFinanceCoins, financeCoins)}
-        >
-          <View>
-            <Text style={{ color: 'white' }}>+</Text>
-          </View>
-        </TouchableOpacity>
+  style={buttonStyle}
+  onPress={() => incrementAttribute(setFinanceLevel, setFinanceCoins, financeCoins, financeLevel)}
+>
+  <View>
+    <Text style={{ color: 'white' }}>+</Text>
+  </View>
+</TouchableOpacity>
+
       </View>
       <View>
         <Text>Hobbies: {hobbyLevel}</Text>

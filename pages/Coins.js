@@ -53,6 +53,7 @@ const Coins = ({ taskItems = [], setTaskItems, setCompletedTask, productivityCoi
         break;
       case 'Finances':
         setFinanceCoins((prevFinanceCoins) => prevFinanceCoins + coinIncrement);
+        console.log(financeCoins, " in coins.js")
         break;
       case 'Hobbies':
         setHobbyCoins((prevHobbyCoins) => prevHobbyCoins + coinIncrement);

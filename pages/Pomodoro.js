@@ -36,7 +36,10 @@ const Pomodoro = () => {
         }
     }, [currentSeconds, currentMinute, start]);
 
-    var timing = currentMinute + ":" + currentSeconds;
+    const minuteString = currentMinute.toString().padStart(2, "0");
+    const secondString = currentSeconds.toString().padStart(2, "0");
+    
+    const timing = `${minuteString}:${secondString}`; // timing is now "05:00", "15:00", or "25:00"
 
     const startCount = () => {
         if (!start) {
@@ -89,146 +92,151 @@ const Pomodoro = () => {
         }
       };
 
-    const [backgroundStyle, setBackgroundStyle] = useState(require('../assets/backgroundShortBreak.svg'));
-    const [shortBreakStyle, setShortBreakStyle] = useState(styles.currentOption);
-    const [focusStyle, setFocusStyle] = useState(styles.breakIcon);
-    const [longBreakStyle, setLongBreakStyle] = useState(styles.breakIcon);
-    const focus = () => {
-        setStart(false);
-        setBackgroundStyle(require('../assets/backgroundFocus.svg'));
-        setFocusStyle(styles.currentOption);
-        setShortBreakStyle(styles.breakIcon);
-        setLongBreakStyle(styles.breakIcon);
-        setCurrentMinute(25);
-        setCurrentSecond(0);
-    }
-    const shortBreak = () => {
-        setStart(false);
-        setBackgroundStyle(require('../assets/backgroundShortBreak.svg'));
-        setShortBreakStyle(styles.currentOption);
-        setFocusStyle(styles.breakIcon);
-        setLongBreakStyle(styles.breakIcon);
-        setCurrentMinute(5);
-        setCurrentSecond(0);
-    }
-    const longBreak = () => {
-        setStart(false);
-        setBackgroundStyle(require('../assets/backgroundLongBreak.svg'));
-        setLongBreakStyle(styles.currentOption);
-        setShortBreakStyle(styles.breakIcon);
-        setFocusStyle(styles.breakIcon);
-        setCurrentMinute(15);
-        setCurrentSecond(0);
-    }
-    return (
-
-        <View style={styles.container}>
-            <ImageBackground style={styles.background} source={backgroundStyle}>
-                <View style={styles.buttonContainer}>
-                    <View style={styles.countdownOption}>
-                        <Pressable style={focusStyle} onPress={focus}>
-                            <Image
-                                style={styles.breakIcon}
-                                source={require('../assets/focus.svg')}
-                            />
-                        </Pressable>
-                        <Pressable style={shortBreakStyle} onPress={shortBreak}>
-                            <Image
-                                style={styles.breakIcon}
-                                source={require('../assets/shortBreak.svg')}
-                            />
-                        </Pressable>
-                        <Pressable style={longBreakStyle} onPress={longBreak}>
-                            <Image
-                                style={styles.breakIcon}
-                                source={require('../assets/longBreak.svg')}
-                            />
-                        </Pressable>
-                    </View>
-                    <Text key={"textTime"} adjustsFontSizeToFit={true} style={styles.time}>{timing}</Text>
-                    <Image
-                        style={styles.panda}
-                        source={require('../assets/pandaLvl3.svg')}
-                    />
-                    <Pressable onPress={() => startCount()} style={styles.resumePress}>
-                        <Image
-                            style={styles.resumeLogo}
-                            source={require('../assets/pomodoroResume.svg')}
-                        />
-                    </Pressable>
-                </View>
-                <Footer
+      const [backgroundStyle, setBackgroundStyle] = useState(require('../assets/LightGreen.png'));
+      const [shortBreakStyle, setShortBreakStyle] = useState(styles.currentOption);
+      const [focusStyle, setFocusStyle] = useState(styles.breakIcon);
+      const [longBreakStyle, setLongBreakStyle] = useState(styles.breakIcon);
+      const focus = () => {
+          setStart(false);
+          setBackgroundStyle(require('../assets/LightGreen.png'));
+          setFocusStyle(styles.currentOption);
+          setShortBreakStyle(styles.breakIcon);
+          setLongBreakStyle(styles.breakIcon);
+          setCurrentMinute(25);
+          setCurrentSecond(0);
+      }
+      const shortBreak = () => {
+          setStart(false);
+          setBackgroundStyle(require('../assets/GreenBackground.png'));
+          setShortBreakStyle(styles.currentOption);
+          setFocusStyle(styles.breakIcon);
+          setLongBreakStyle(styles.breakIcon);
+          setCurrentMinute(5);
+          setCurrentSecond(0);
+      }
+      const longBreak = () => {
+          setStart(false);
+          setBackgroundStyle(require('../assets/BlueBackground.png'));
+          setLongBreakStyle(styles.currentOption);
+          setShortBreakStyle(styles.breakIcon);
+          setFocusStyle(styles.breakIcon);
+          setCurrentMinute(15);
+          setCurrentSecond(0);
+      }
+      return (
+  
+          <View style={styles.container}>
+              <ImageBackground style={styles.background} source={backgroundStyle}>
+                  <View style={styles.buttonContainer}>
+                      <View style={styles.countdownOption}>
+                          <Pressable style={focusStyle} onPress={focus}>
+                              <Image
+                                  style={styles.breakIcon}
+                                  source={require('../assets/Focus.png')}
+                              />
+                          </Pressable>
+                          <Pressable style={shortBreakStyle} onPress={shortBreak}>
+                              <Image
+                                  style={styles.breakIcon}
+                                  source={require('../assets/ShortBreak.png')}
+                              />
+                          </Pressable>
+                          <Pressable style={longBreakStyle} onPress={longBreak}>
+                              <Image
+                                  style={styles.breakIcon}
+                                  source={require('../assets/LongBreak.png')}
+                              />
+                          </Pressable>
+                      </View>
+                      <Text key={"textTime"} adjustsFontSizeToFit={true} style={styles.time}>{timing}</Text>
+                      <Image
+                          style={styles.panda}
+                          source={require('../assets/Panda.png')}
+                      />
+                      <Pressable onPress={() => startCount()} style={styles.resumePress}>
+                          <Image
+                              style={styles.resumeLogo}
+                              source={require('../assets/ButtonGreen.png')}
+                          />
+                      </Pressable>
+                  </View>
+                  <Footer
         taskItems={taskItems}
         deadlines={deadlines}
         valueList={valueList}
         categoriesList={categoriesList}
       />
-            </ImageBackground >
-
-
-        </View >
-    );
-};
+              </ImageBackground >
+  
+  
+          </View >
+      );
+  };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        width: '100%',
-        height: '100%',
+      flex: 1,
+      width: '100%',
+      height: '100%',
     },
-
+  
     background: {
-        flex: 1,
-        width: '100%',
-        height: '100%',
+      flex: 1,
+      width: '100%',
+      height: '100%',
     },
-
+  
     buttonContainer: {
-        flex: 1,
+      flex: 1,
+      justifyContent: 'center',
     },
-
+  
     countdownOption: {
-        flex: 0.5,
-        flexDirection: 'row',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      paddingTop: 40,
     },
-
+  
     currentOption: {
-        flex: 0.5,
-        marginTop: 25,
-        resizeMode: "center",
+      resizeMode: "center",
     },
-
+  
     breakIcon: {
-        flex: 0.5,
-        resizeMode: "stretch",
+      resizeMode: "stretch",
+      width: 100,
+      height: 40,
     },
-
+  
     time: {
-        flex: 1,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        width: 300,
-        maxHeight: 50,
-        textAlign: 'center',
-        fontSize: 30,
-        margin: 'auto',
+      backgroundColor: 'white',
+      borderRadius: 10,
+      width: 300,
+      maxHeight: 50,
+      textAlign: 'center',
+      fontSize: 30,
+      alignSelf: 'center',
+      marginTop: 20,
     },
-
+  
     panda: {
-        flex: 2,
-        resizeMode: 'center',
+      width: 200,
+      height: 260,
+      alignSelf: 'center',
+      marginTop: 20
     },
-
-
+  
     resumePress: {
-        flex: 1,
+      alignSelf: 'center',
+      marginTop: 50,
     },
-
+  
     resumeLogo: {
-        flex: 0.5,
-        resizeMode: 'center',
+      width: 100,
+      height: 100,
+      resizeMode: 'contain',
     },
-
-});
+  
+  });
+  
 
 export default Pomodoro;

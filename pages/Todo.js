@@ -9,8 +9,9 @@ import CalendarModal from './CalendarModal';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Coins from './Coins';
-import Attributes from './Attributes';
-import AttributePage from './AttributePage';
+
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const Todo = ({navigation}) => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -119,7 +120,6 @@ const Todo = ({navigation}) => {
         const loadedCompletedTask = await AsyncStorage.getItem('completedTask');
 
 
-        console.log('AttributesData in LoadData:', loadedProductivityLevel, loadedHealthLevel, loadedFinanceLevel, loadedHobbyLevel)
         if (loadedProductivityLevel !== null) setProductivityLevel(JSON.parse(loadedProductivityLevel));
         if (loadedHealthLevel !== null) setHealthLevel(JSON.parse(loadedHealthLevel));
         if (loadedFinanceLevel !== null) setFinanceLevel(JSON.parse(loadedFinanceLevel));
@@ -288,6 +288,9 @@ const confirmDeleteTask = (index) => {
     storeData('healthLevel', healthLevel);
     storeData('financeLevel', financeLevel);
     storeData('hobbyLevel', hobbyLevel);
+
+
+    console.log(healthCoins, financeCoins, hobbyCoins, productivityCoins);
         },
       },
     ],
@@ -297,12 +300,12 @@ const confirmDeleteTask = (index) => {
 
   return (
    
+<View style={styles.container}>
 <ImageBackground
     source={backgroundImage}
-    resizeMode="cover"
-    style={{ flex: 1, width: '100%', height: '100%' }}>        
-    {/* Today's tasks */}
-      
+    resizeMode= "stretch"
+    style={{ flex: 1, width: '100%', height: '100%' }}>
+
       <Modal  
 
         animationType="slide"
@@ -316,7 +319,7 @@ const confirmDeleteTask = (index) => {
           <Header />
           {/* <ScrollView> */}
         <View style={styles.modalContainer}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', paddingBottom: '80%'}}>
 
          <TextInput
           style={styles.input}
@@ -452,14 +455,18 @@ const confirmDeleteTask = (index) => {
         {/* </ScrollView> */}
         </Modal>
         
-        
-      <View style = {styles.qualities}>
-      </View>
+
       
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View style={styles.tasksWrapper}>
-        
-        <Text style={styles.sectionTitle}>My Tasks</Text>
+      <View style={{justifyContent: 'center', alignItems: 'center', paddingHorizontal: '5%', paddingTop: '10%'}}>
+      <LinearGradient
+    colors={['rgba(245, 245, 245, 0.7)', 'rgba(245, 245, 245, 0.7)', 'rgba(245, 245, 245, 0.7)']}
+    start={[0, 0]}
+    end={[1, 0]}
+    style={{ borderRadius: 5, padding: 10 }}
+  >
+      <View style={styles.qualities}>
+      <Text style={styles.sectionTitle}>My Tasks</Text>
+  </View>
         <Coins
   taskItems={taskItems}
   setTaskItems={setTaskItems}
@@ -487,8 +494,15 @@ const confirmDeleteTask = (index) => {
         <TouchableOpacity onPress={() => filterTasks('Hobbies')} style={{ marginLeft: 10 }}>
           <Text style={{ backgroundColor: '#f9dede', color: 'black', padding: 10, borderRadius: 10, borderWidth: 1, borderColor: '#d1aeae' }}>Hobbies</Text>
         </TouchableOpacity>
-        
+        </View>
+
+</LinearGradient>
 </View>
+  <ScrollView contentContainerStyle={styles.scrollContainer}>
+
+      <View style={styles.tasksWrapper}>
+        
+        
 <View style={styles.items}>
   {/* This is where the tasks will go! */}
   {getFilteredTasks().map((item, index) => {
@@ -511,7 +525,6 @@ const confirmDeleteTask = (index) => {
 
 
 
-
 </View>  
       </View>
       </ScrollView>
@@ -519,6 +532,7 @@ const confirmDeleteTask = (index) => {
     
      
       <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+
           <View style={styles.addWrapper}>
           <Feather name="plus" size={24} color="#4A8AE7" />
 
@@ -532,9 +546,8 @@ const confirmDeleteTask = (index) => {
         valueList={valueList}
         categoriesList={categoriesList}
       />
-  
   </ImageBackground>
-    
+</View>    
   );
 };
 const styles = StyleSheet.create({

@@ -4,7 +4,6 @@ import Footer from '../components/Footer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
 
-
 const Shop = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [taskItems, setTaskItems] = useState([]);
