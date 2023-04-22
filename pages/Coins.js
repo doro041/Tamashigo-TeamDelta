@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text } from 'react-native';
+import { Text, StyleSheet, View, Image  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Coins = ({ taskItems = [], setTaskItems, setCompletedTask, productivityCoins, setProductivityCoins, healthCoins, setHealthCoins, financeCoins, setFinanceCoins, hobbyCoins, setHobbyCoins }) => {
@@ -108,11 +108,82 @@ useEffect(() => {
   setCompletedTask(() => completedTask);
 }, []);
 
-  return (
-    <Text>
-      Productivity Coins: {productivityCoins} | Health Coins: {healthCoins} | Finance Coins: {financeCoins} | Hobby Coins: {hobbyCoins}
-    </Text>
-  );
+return (
+  <View style={styles.column}>
+    <View style={styles.outerContainer}>
+      <View style={styles.titleContainer}>
+        <Image source={require('../assets/Panda.png')} style={styles.walletIcon} />
+        <Text style={styles.title}>Wallet</Text>
+      </View>
+    </View>
+    <View style={styles.row}>
+      <View style={styles.container}>
+        <Text style={styles.rowText}>Productivity Coins: {productivityCoins}</Text>
+        <Text style={styles.rowText}>Health Coins: {healthCoins}</Text>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.rowText}>Finance Coins: {financeCoins}</Text>
+        <Text style={styles.rowText}>Hobby Coins: {hobbyCoins}</Text>
+      </View>
+    </View>
+  </View>
+);
 };
+
+const styles = StyleSheet.create({
+outerContainer: {
+  marginTop: '20%',
+  flexDirection: 'row',
+  paddingVertical: 5,
+  paddingHorizontal: 10,
+  alignItems: 'center',
+  width: '100%',
+  height: '30%',
+  backgroundColor: '#000',
+  position: 'absolute',
+  top: 0,
+  zIndex: 1,
+},
+titleContainer: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  
+},
+title: {
+  fontSize: 24,
+  fontWeight: 'bold',
+  color: '#fff',
+},
+container: {
+  flexDirection: 'column',
+  backgroundColor: '#fcfcf2',
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+  elevation: 5,
+  marginBottom: 10,
+  borderWidth: 1,
+  padding: 5
+},
+column: {
+  flexDirection: 'column',
+  paddingTop: '28%',
+},
+row: {
+  flexDirection: 'row',
+  width: '100%',
+  padding: 50
+  
+},
+rowText: {
+  width: '100%',
+},
+walletIcon: {
+  width: 30,
+  height: 50,
+  marginRight: 5,
+},
+});
 
 export default Coins;

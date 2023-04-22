@@ -1,183 +1,383 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ImageBackground,
-  Image,
-  SafeAreaView,
-  Platform,
-  Dimensions,
-  StatusBar
-} from 'react-native';
+import { View, TextInput, StyleSheet, Text, TouchableOpacity, ImageBackground, Image,Button, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, fetchSignInMethodsForEmail, updateProfile } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+
+import  TermsAndConditions from '../components/TermsandConditions';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Alert } from 'react-native';
+import { CheckBox } from 'react-native-elements';
+import { AntDesign } from '@expo/vector-icons';
+
+
+
+
+
+
 
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [passwordVisibility, setPasswordVisibility] = useState(true);
+  const [rightIcon, setRightIcon] = useState('eye-outline');
+  const auth = getAuth();
+  // Define a function to display the terms and conditions alert
 
-  
+
+
+const showTermsAndConditionsAlert = (onAgree, onDisagree) => {
+  Alert.alert(
+    'Terms and Conditions',
+    'By using this app, you agree to the terms and conditions outlined in the app.',
+    [
+      {
+        text: 'I Agree',
+        
+        onPress: () => onAgree(),
+        style: 'default',
+        
+      },
+      {
+        text: 'Cancel',
+        onPress: () => onDisagree(),
+        style: 'cancel',
+      },
+    ],
+    {
+      cancelable: false,
+    }
+  );
+}
+
+// Define a function to show the error message
+const showError = () => {
+  Alert.alert(
+    'Error',
+    'You must agree to the terms and conditions to use this app.',
+    [
+      {
+        text: 'OK',
+        style: 'cancel',
+      },
+    ],
+    {
+      cancelable: false,
+    }
+  );
+};
+
+// Call the function to display the terms and conditions alert
+showTermsAndConditionsAlert(
+  () => {
+    console.log('User agreed to terms and conditions.');
+    // Add code here to allow access to the app
+  },
+  () => {
+    console.log('User cancelled the terms and conditions alert.');
+    showError();
+    // Add code here to restrict access to the app
+  }
+);
+
+  const togglePasswordVisibility = () => {
+    if (rightIcon === 'eye-outline') {
+      setRightIcon('eye-off-outline');
+      setPasswordVisibility(!passwordVisibility);
+    } else if (rightIcon === 'eye-off-outline') {
+      setRightIcon('eye-outline');
+      setPasswordVisibility(!passwordVisibility);
+    }
+  };
+
+
   async function handleSignUp() {
     try {
-      const auth = getAuth();
-      const actionCodeSettings = {
-        url: 'https://example.com/verify-email',
-        // This must be true.
-        handleCodeInApp: true,
-        iOS: {
-          bundleId: 'com.example.myapp',
-        },
-        android: {
-          packageName: 'com.example.myapp',
-          installApp: true,
-          minimumVersion: '12',
-        },
-        dynamicLinkDomain: 'example.com',
-      };
- 
+      // Check if password matches confirmed password
+      if (password !== confirmPassword) {
+        setErrorMessage("Passwords do not match");
+        return;
+      }
   
-      sendSignInLinkToEmail(auth, email, actionCodeSettings)
-        .then(() => {
-          window.localStorage.setItem("emailForSignIn", email);
-          // Redirect the user to a page that says "Check your email to sign in"
-          navigation.navigate('Namechar');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // Check for password length to be at least 6 characters
+      if (password.length < 6) {
+        setErrorMessage("Password must be at least 6 characters");
+        return;
+      }
+  
+      // Check for password to contain uppercase letters
+      const uppercaseRegex = /[A-Z]/;
+      if (!uppercaseRegex.test(password)) {
+        setErrorMessage("Password must contain uppercase letters");
+        return;
+      }
+  
+      // Check if email address is valid and not a ProtonMail or ProtonMail Bridge domain
+      const emailRegex =
+        /^[^\s@]+@[^\s@]+\.(?!protonmail\.com|protonmail\.ch|proton\.me)[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setErrorMessage("Invalid email address");
+        return;
+      }
+  
+      // Check if email address is already in use
+      const emailExists = await fetchSignInMethodsForEmail(auth, email);
+      if (emailExists && emailExists.length > 0) {
+        setErrorMessage("That email address is already in use");
+        return;
+      }
+  
+      // Sign up the user with email and password
+      await createUserWithEmailAndPassword(auth, email, password);
+      // Set the user's display name
+      await updateProfile(auth.currentUser, { displayName: name });
+      // Save user data to local storage
+      await AsyncStorage.setItem(
+        "userData",
+        JSON.stringify(auth.currentUser)
+      );
+      // Navigate to the Home screen
+      navigation.replace("EggHatchAnimation");
     } catch (error) {
-      console.log(error);
-      alert(error.message);
+      setErrorMessage(error.message);
     }
   }
   
   return (
-    <SafeAreaView style={styles.container}>
-      <ImageBackground source={require('../assets/icon12.png')} style={styles.background} resizeMode='cover'>
-      <Image source={require('../assets/PandaHead.png')} style={{ width: windowWidth * 0.5, height: windowHeight * 0.3, resizeMode: 'contain' }} />
-<Text style={[styles.title, { marginTop: '50%' }]}>Create account</Text>
+<ScrollView
+    style={styles.container}
+    contentContainerStyle={{
+      justifyContent: 'center',
+      alignItems: 'center'}}>      
+      
+      <ImageBackground source={require('../assets/Part.png')} style={styles.background}>
+
+
+
+        <Text style={styles.title}>Welcome to Tamashigo</Text>
+        
+        <Text style={styles.subtitle}>Sign Up</Text>
+        <Image source={require('../assets/PandaHead.png')} style={[styles.pandaImage, { marginBottom: 20 }]} />
 
       </ImageBackground>
-      <TextInput
-          style={styles.input}
-          placeholder="Name"
-          value={name}
-          onChangeText={setName}
-        />
+
+
+       
     
+      <View style={{ width: '100%', paddingHorizontal: 20, marginBottom: 20 }}>
+  <View style={{ flexDirection: 'column', alignItems: 'stretch', marginBottom: 10 }}>
+    <TextInput
+      style={{ backgroundColor: '#C8E6C9', borderRadius: 20, fontSize: 18, paddingHorizontal: 20, paddingVertical: 10, color: 'black' }}
+      value={name}
+      onChangeText={(name) => setName(name)}
+      placeholder="Name"
+    />
+  </View>
+  <View style={{ flexDirection: 'column', alignItems: 'stretch', marginBottom: 10 }}>
+    <TextInput
+      style={{ backgroundColor: '#C8E6C9', borderRadius: 20, fontSize: 18, paddingHorizontal: 20, paddingVertical: 10, color: 'black' }}
+      value={email}
+      onChangeText={(email) => setEmail(email)}
+      placeholder="Email"
+      keyboardType="email-address"
+      autoCapitalize="none"
+    />
+  </View>
+  <View style={{ flexDirection: 'column', alignItems: 'stretch', marginBottom: 10 }}>
+    <View style={{ position: 'relative' }}>
       <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
+        style={{ backgroundColor: '#C8E6C9', borderRadius: 20, fontSize: 18, paddingHorizontal: 20, paddingVertical: 10, color: 'black' }}
+        value={password}
+        onChangeText={(password) => setPassword(password)}
+        placeholder="Password"
+        secureTextEntry={passwordVisibility}
       />
-    
-      <View style={styles.buttonContainer}>
-      <View style={styles.buttonContainer}>
-  <TouchableOpacity style={[styles.button, { marginRight: windowWidth * 0.02 }]} onPress={() => navigation.navigate('Home') }>
-    <Text style={styles.buttonText}>SIGN UP</Text>
+      <MaterialCommunityIcons
+        name={rightIcon}
+        size={24}
+        color="black"
+        style={{ position: 'absolute', top: '23%', right: '5%', cursor: 'pointer', padding: 10 }}
+        onPress={togglePasswordVisibility}
+      />
+    </View>
+  </View>
+  <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+    <View style={{ position: 'relative' }}>
+      <TextInput
+        style={{ backgroundColor: '#C8E6C9', borderRadius: 20, fontSize: 18, paddingHorizontal: 20, paddingVertical: 10, color: 'black' }}
+        value={confirmPassword}
+        onChangeText={(confirmPassword) => setConfirmPassword(confirmPassword)}
+        placeholder="Confirm Password"
+        secureTextEntry={passwordVisibility}
+      />
+      <MaterialCommunityIcons
+        name={rightIcon}
+        size={24}
+        color="black"
+        style={{ position: 'absolute', top: '23%', right: '5%', cursor: 'pointer', padding: 10 }}
+        onPress={togglePasswordVisibility}
+      />
+    </View>
+    {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
+  </View>
+</View>
+
+
+
+
+
+
+
+      <TouchableOpacity style={styles.button} onPress={() => handleSignUp()}>
+        <Text style={styles.buttonText}>SIGN UP</Text>
+      </TouchableOpacity>
+
+      <View style={styles.socialMedia}>
+
+      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 50, height: 50, marginRight: 10 }]}>
+    <Icon name="facebook" size={25} color="white" style={styles.icon} />
   </TouchableOpacity>
 
-  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: windowWidth * 0.05, height: windowWidth * 0.05 }]}>
-    <Icon name="facebook" size={windowWidth * 0.5} color="white" style={styles.icon} />
+  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: 50, height: 50, marginLeft: 10 }]}>
+    <Icon name="google" size={25} color="white" style={styles.icon} />
   </TouchableOpacity>
+</View>
+      </View>
 
-  <TouchableOpacity style={[styles.button, { backgroundColor: 'green', width: windowWidth * 0.05, height: windowWidth * 0.05 }]}>
-    <Icon name="google" size={windowWidth * 0.5} color="white" style={styles.icon} />
+
+      <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: -20 }}>
+  <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+  <Button title="View Terms and Conditions" onPress={showTermsAndConditionsAlert} />
+    <Text>Already have an account?</Text><Text style={[styles.SignUpText, { marginTop: 4 }]}>Log in.</Text>
   </TouchableOpacity>
 </View>
 
-      </View>
-
-      <TouchableOpacity style={styles.alreadyacc} onPress={() => navigation.navigate('Login')}>
-        <Text>Already have an account?</Text><Text style={styles.SignInText}>Sign In.</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+      <TermsAndConditions/>
+    </ScrollView>
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-  },
-  background: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-    alignItems: "center",
+    flexGrow: 1,
+    backgroundColor: '#F0FFF0',
   },
   
-  title: {
-    fontSize: windowWidth * 0.06,
-    fontWeight: 'bold',
-    color: 'black',
-    marginBottom: windowHeight * 0.05,
-    marginTop: windowHeight * 0.05,
-    textAlign: 'center',
+  
+  background: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 700,
+    width: 400
   },
+  
+  
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  
+  input: {
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    marginBottom: 20,
+    fontSize: 18,
+  },
+  
+  
+  button: {
+    width: '50%',
+    borderRadius: 30,
+    paddingVertical: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F5F5F5',
+    alignSelf: 'center',
+    marginVertical: 20,
+  },
+  
+  
+  buttonText: {
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  
+  
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    width: '80%',
-    marginBottom: windowHeight * 0.1,
-  },
-  //  d
-  button: {
-    width: windowWidth * 0.3,
-    borderRadius: 40,
-    paddingVertical: 10,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'black',
+    marginTop: 10,
   },
-  
-
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: windowWidth * 0.05,
+  icon: {
+    alignSelf: 'center',
   },
-  background: {
-    flex: 1,
-    width: '100%',
-    height: '60%',
-    alignItems: 'center',
-  },
-  input: {
-    width: '80%',
-    height: windowHeight * 0.05,
-    borderRadius: 25,
-    backgroundColor: 'grey',
-    paddingLeft: 20,
-    marginBottom: windowHeight * 0.01,
-  marginTop: windowHeight * 0.30, // adjust this value as needed
-  },
-
-  alreadyacc: {
-    marginTop: windowHeight * 0.1,
-    marginBottom: windowHeight * 0.1,
+  socialMedia: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
+    marginBottom: 10,
+    paddingHorizontal: 50,
+    marginHorizontal: 30,
+    alignSelf: 'center',
+    justifyContent: 'space-between',
   },
-  SignInText: {
+  
+  
+
+  SignUpText: {
     color: 'black',
     fontWeight: 'bold',
-  },  
-  icon: {
-    padding: windowWidth * 0.01,
   },
-});
+  errorText: {
+    color: 'red',
+    marginTop: 10,
+    justifyContent: 'center',
+  },
+  rightIcon: {
+    position: 'absolute',
+    top: '23%',
+    right: '15%',
+    cursor: 'pointer',
+    padding: 10,
+  },
+
+  rightsIcon: {
+    position: 'absolute',
+    top: '16%',
+    right: '15%',
+    cursor: 'pointer',
+    padding: 10,
+  },
+  pandaImage: {
+    width: 200,
+    height: 300,
+    resizeMode: 'contain',
+    marginTop: 20,
+  },
+  
+  
+
+  });
 
 export default SignUp;

@@ -133,7 +133,7 @@ const CalendarItem = ({ date, day, tasks }) => {
 
 const VerticalCalendar = ({ route }) => {
   const {tasks, taskDates, priorities, categories } = route.params;
-  const days = generateDays(14, tasks, taskDates, priorities, categories);
+  const days = generateDays(7, tasks, taskDates, priorities, categories);
 
   return (
     <View style={styles.container}>

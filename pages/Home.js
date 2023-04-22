@@ -21,6 +21,9 @@ const Home = () => {
   const [categoriesList, setCategoriesList] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [itemLocation, setItemLocation] = useState({});
+  const [pandaImage, setPandaImage] = useState(require('../assets/Panda.png'));
+  const [timer, setTimer] = useState(0);
+
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,6 +39,28 @@ const Home = () => {
       loadSelectedItem();
     }, [])
   );
+
+  useEffect(() => {
+    const updateTimer = () => {
+      console.log('Timer:', timer)
+      if (timer >= 10 && timer < 20) {
+        setPandaImage(require('../assets/SadPanda.png'));
+      
+      } else if (timer >= 20) {
+        setPandaImage(require('../assets/SickPanda.png'));
+      } else {
+        setPandaImage(require('../assets/Panda.png'));
+      }
+      setTimer((prevTimer) => prevTimer + 1);
+    };
+  
+    const timerInterval = setInterval(updateTimer, 1000);
+  
+    return () => {
+      clearInterval(timerInterval);
+    };
+  }, [timer]);
+  
   
   const loadSelectedItem = async () => {
     try {
@@ -88,7 +113,10 @@ const Home = () => {
   
   
   
-
+  const resetTimer = () => {
+    setTimer(0);
+  };
+  
 
     const loadData = async () => {
       try {
@@ -109,7 +137,7 @@ const Home = () => {
         if (storedValueList) {
           parsedValueList = JSON.parse(storedValueList);
         } else {
-          console.warn('No value list found');}
+          console.log('No value list found');}
     
         if (storedCategoriesList) {
           parsedCategoriesList = JSON.parse(storedCategoriesList);
@@ -128,10 +156,6 @@ const Home = () => {
       }
     };
    
-
-
-
-
 
 
 
@@ -156,7 +180,7 @@ const Home = () => {
             <View style={styles.character}>
             <View style={styles.pandaContainer}>
 
-  <Image source={require('../assets/Panda.png')} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
+            <Image source={pandaImage} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
   </View>
   {selectedItem && (
     <Image
@@ -168,7 +192,7 @@ const Home = () => {
 
           <View>
        
-  <TouchableOpacity onPress={() => navigation.navigate('Todo')}>
+    <TouchableOpacity onPress={() => navigation.navigate('Todo', {resetTimer} )}>
     <View style={styles.button}> 
 
     <Feather name="plus" size={24} color="#4A8AE7" />

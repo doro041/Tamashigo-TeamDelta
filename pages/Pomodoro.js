@@ -73,7 +73,7 @@ const Pomodoro = () => {
           if (storedValueList) {
             parsedValueList = JSON.parse(storedValueList);
           } else {
-            console.warn('No value list found');}
+            console.log('No value list found');}
       
           if (storedCategoriesList) {
             parsedCategoriesList = JSON.parse(storedCategoriesList);

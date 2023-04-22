@@ -13,8 +13,9 @@ import Coins from './Coins';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-const Todo = ({navigation}) => {
-  const [selectedDate, setSelectedDate] = useState(null);
+const Todo = ({route}) => {
+  console.log("Start of Todo")
+  const { resetTimer } = route.params;
   const [deadline, setDeadline] = useState(new Date());
   const [deadlines, setDeadlines] = useState([]); // Array of deadlines
   const [task, setTask] = useState('');
@@ -39,7 +40,7 @@ const Todo = ({navigation}) => {
   const [financeLevel, setFinanceLevel] = useState(0);
   const [hobbyLevel, setHobbyLevel] = useState(0);
   const [backgroundImage, setBackgroundImage] = useState(null);
-
+  let [tasksCompleted, setTasksCompleted] = useState(0);
  
   const handleSelectCategory = (item) => {
     setSelectedCategory(item);
@@ -111,14 +112,14 @@ const Todo = ({navigation}) => {
       const storedValueList = await AsyncStorage.getItem("valueList");
       const storedCategoriesList = await AsyncStorage.getItem("categoriesList");
       const storedDeadlines = await AsyncStorage.getItem("deadlines");
-   
+      const storedTasksCompleted = await AsyncStorage.getItem("tasksCompleted");
 
         const loadedProductivityLevel = await AsyncStorage.getItem('productivityLevel');
         const loadedHealthLevel = await AsyncStorage.getItem('healthLevel');
         const loadedFinanceLevel = await AsyncStorage.getItem('financeLevel');
         const loadedHobbyLevel = await AsyncStorage.getItem('hobbyLevel');
         const loadedCompletedTask = await AsyncStorage.getItem('completedTask');
-
+        const loadedProductivityCoins = await AsyncStorage.getItem('productivityCoins');
 
         if (loadedProductivityLevel !== null) setProductivityLevel(JSON.parse(loadedProductivityLevel));
         if (loadedHealthLevel !== null) setHealthLevel(JSON.parse(loadedHealthLevel));
@@ -140,7 +141,7 @@ const Todo = ({navigation}) => {
       if (storedValueList) {
         parsedValueList = JSON.parse(storedValueList);
       } else {
-        console.warn('No value list found');}
+        console.log('No value list found');}
   
       if (storedCategoriesList) {
         parsedCategoriesList = JSON.parse(storedCategoriesList);
@@ -154,7 +155,7 @@ const Todo = ({navigation}) => {
       setTaskItems(parsedTaskItems);
       setValueList(parsedValueList);
       setCategoriesList(parsedCategoriesList);
-     
+      setTasksCompleted(storedTasksCompleted);
     } catch (error) {
       console.error('Error loading data:', error);
     }
@@ -240,6 +241,8 @@ const confirmDeleteTask = (index) => {
       {
         text: 'Yes',
         onPress: () => {
+          tasksCompleted ++;
+
           let itemsCopy = [...taskItems];
   let deadlinesCopy = [...deadlines];
   let setValueListCopy = [...valueList];
@@ -288,8 +291,9 @@ const confirmDeleteTask = (index) => {
     storeData('healthLevel', healthLevel);
     storeData('financeLevel', financeLevel);
     storeData('hobbyLevel', hobbyLevel);
-
-
+    storeData('tasksCompleted', tasksCompleted);
+    resetTimer();
+    console.log("Completed Tasks: ", tasksCompleted)
     console.log(healthCoins, financeCoins, hobbyCoins, productivityCoins);
         },
       },

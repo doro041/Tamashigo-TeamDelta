@@ -4,7 +4,7 @@ import { View, Image, StyleSheet, ImageBackground, TouchableOpacity, Text } from
 const EggHatchAnimation = ({ navigation }) => {
   const handlePress = () => {
     console.log('Pressed');
-    navigation.navigate('Beginning');
+    navigation.navigate('Beginning'); //changed Home from Beginning
   };
   return (
     <View style={styles.container}>

@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground,Animat
 
 
 const BeginningPage = ({ navigation }) => {
-  
+  console.log('BeginningPage');
  
 
 
@@ -12,7 +12,7 @@ const BeginningPage = ({ navigation }) => {
   return (
    
     <View style={styles.container}>
-     
+      
       <ImageBackground source={require('../assets/Bg.png')} style={styles.background}>
         <Image source={require('../assets/logo1.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
         <Text style={styles.title}>Welcome to Tamashigo</Text>
