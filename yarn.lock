@@ -6307,6 +6307,11 @@ expo-pwa@0.0.124:
     commander "2.20.0"
     update-check "1.5.3"
 
+expo-speech@^11.1.1:
+  version "11.1.1"
+  resolved "https://registry.npmjs.org/expo-speech/-/expo-speech-11.1.1.tgz"
+  integrity sha512-JiyZmmNci7vIXZA/XLZ7x64jIvT/v/TOc5Y/nTBzo6Aqc3+YnYk3VoR+QDVQzeFRR6MW72FZyOvhvlFbfGRzTQ==
+
 expo-splash-screen@~0.18.1:
   version "0.18.1"
   resolved "https://registry.npmjs.org/expo-splash-screen/-/expo-splash-screen-0.18.1.tgz"
