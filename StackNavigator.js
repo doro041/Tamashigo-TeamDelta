@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import NameChar from "./pages/Namechar";
 import SignUp from "./pages/SignUp";
@@ -18,19 +18,21 @@ import Shop from './pages/Shop';
 import AttributePage from './pages/AttributePage';
 import TermsandConditions from './components/TermsandConditions';
 
+const Stack = createStackNavigator();
 
-const Stack = createStackNavigator(); // Create a StackNavigator
-
-const StackNavigator = () => { 
+const StackNavigator = ({ user }) => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName={user ? 'Home' : 'Beginning'}
+    >
       <Stack.Group>
-      <Stack.Screen name="EggHatchAnimation" component={EggHatchAnimation} />
         <Stack.Screen name="Beginning" component={BeginningPage} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="TermsandConditions" component={TermsandConditions} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ForgotPass" component={ForgotPass} />
+        <Stack.Screen name="EggHatchAnimation" component={EggHatchAnimation} />
         <Stack.Screen name="NameChar" component={NameChar} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Calendar" component={VerticalCalendar} />

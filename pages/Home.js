@@ -6,15 +6,80 @@ import Footer from '../components/Footer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather} from 'react-native-vector-icons';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-
-
-
-const Home = () => {
+import { useRoute } from '@react-navigation/native';
+import LevelUp from '../components/LevelUp';
+const Home = ({ route }) => {
+  // In the Home screen
+  const [level, setLevel] = useState(1);
+  const handleLevelUp = () => {
+    setLevel(level + 1);
+  };
+ 
+  // Initialize the name state with a fallback value
+  const [name, setName] = useState('');
+  // Update the name state when route.params change
+  useEffect(() => {
+    if (route.params && route.params.name) {
+      setName(route.params.name);
+    }
+  }, [route.params]);
   const navigation = useNavigation();
   const [taskPrompt, setTaskPrompt] = useState('');
-  const taskPrompts = ["Don't forget to take a break!", "Remember to drink water!", "Stretch your legs!", "Take a deep breath!", "Look away from the screen!", "Stand up and walk around!"];
-  const taskPromptFrequency = 5000; // in milliseconds
-  const name = "Bo"; // just for demo purpose
+  const taskPrompts = [
+    "Don't forget to take a break!",
+    "Remember to drink water!",
+    "Stretch your legs!",
+    "Take a deep breath!",
+    "Look away from the screen!",
+    "Stand up and walk around!",
+    "Do some neck stretches!",
+    "Take a quick walk outside!",
+    "Close your eyes and rest for a moment!",
+    "Give yourself a pat on the back for what you've accomplished so far!",
+    "Take a moment to appreciate the progress you've made!",
+    "Visualize yourself successfully completing the task at hand!",
+    "Treat yourself to a healthy snack!",
+    "Think positive thoughts and keep moving forward!",
+    "Take a few minutes to meditate and clear your mind!",
+    "Ask for help or support if you need it!",
+    "Take a power nap to recharge your batteries!",
+    "Reward yourself for completing a task!",
+    "Smile and find something to be grateful for!",
+    "Listen to your favorite music and dance it out!",
+    "Take a moment to connect with a loved one or friend!",
+    "Remember to practice self-care and prioritize your well-being!",
+    "Celebrate your accomplishments, no matter how small they may seem!",
+    "Take a break from technology and enjoy the outdoors!",
+    "Take a moment to reflect on your goals and progress!",
+    "Visualize yourself overcoming any obstacles or challenges!",
+    "Practice positive affirmations and self-talk!",
+    "Take a break and do something you enjoy!",
+    "Stay focused on your goals and keep pushing forward!",
+    "Take a deep breath and let go of any stress or tension!",
+    "Believe in yourself and your abilities!",
+    "Take a moment to appreciate the beauty around you!",
+    "Celebrate your uniqueness and individuality!",
+    "Take a moment to practice gratitude and thankfulness!",
+    "Stay positive and keep a growth mindset!",
+    "Take a moment to appreciate and acknowledge your strengths!",
+    "Remember to take care of your physical health!",
+    "Take a moment to reflect on your personal growth and progress!",
+    "Stay organized and prioritize your tasks!",
+    "Take a break and do something fun and creative!",
+    "Stay motivated and committed to your goals!",
+    "Take a moment to appreciate the support and encouragement of others!",
+    "Remember to take breaks and avoid burnout!",
+    "Stay curious and keep learning new things!",
+    "Take a moment to celebrate your successes!",
+    "Stay focused on the present moment and enjoy the journey!",
+    "Believe that you are capable of achieving great things!",
+    "Take a moment to connect with your inner peace and calm!",
+    "Stay true to your values and beliefs!",
+    "Take a moment to appreciate the power"  
+  ];
+  
+  
+  
   const [taskItems, setTaskItems] = useState([]);
   const [deadlines, setDeadlines] = useState([]);
   const [valueList, setValueList] = useState([]);
@@ -23,23 +88,18 @@ const Home = () => {
   const [itemLocation, setItemLocation] = useState({});
   const [pandaImage, setPandaImage] = useState(require('../assets/Panda.png'));
   const [timer, setTimer] = useState(0);
-
   
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const randomIndex = Math.floor(Math.random() * taskPrompts.length);
-      setTaskPrompt(taskPrompts[randomIndex]);
-    }, taskPromptFrequency);
-    return () => clearInterval(interval);
-  }, [taskPrompts, taskPromptFrequency]); // <-- dependencies
-  
+  const handlePromptChange = () => {
+    const randomIndex = Math.floor(Math.random() * taskPrompts.length);
+    setTaskPrompt(taskPrompts[randomIndex]);
+  }
+   
   useFocusEffect(
     React.useCallback(() => {
       loadData();
       loadSelectedItem();
     }, [])
   );
-
   useEffect(() => {
     const updateTimer = () => {
       console.log('Timer:', timer)
@@ -100,7 +160,6 @@ const Home = () => {
       case 'sunglasses':
         location = { top: -335, left: -5, width: 120};
         break;
-
           default:
             break;
         }
@@ -117,7 +176,6 @@ const Home = () => {
     setTimer(0);
   };
   
-
     const loadData = async () => {
       try {
         const storedTaskItems = await AsyncStorage.getItem("taskItems");
@@ -159,65 +217,66 @@ const Home = () => {
 
 
 
-
-  return (
-    <View style={{ flex: 1 }}>
-      <Header>
-        <Text style={styles.text}>Welcome {name}!</Text>
-        
-      </Header>
-      <View style={styles.container}>
-       
-        <ImageBackground source={require('../assets/NameChar.png')} style={{ width: '100%', height: '100%' }}>
-            <View style={{marginTop:60,justifyContent: 'flex-end'}}>
-                <Image source={require('../assets/egg.png')} style={{ width: 100, height: 100, resizeMode: 'contain', alignSelf: 'flex-end' }} />
-                <Text style={{ position: 'absolute', bottom: 0, right: 0 }}>1</Text>
-            </View>
-            <View style ={{marginBottom:10,justifyContent:'flex-start'}}>
-                <Image source={require('../assets/coin.png')} style={{ width: 25, height: 30, resizeMode: 'contain', alignSelf: 'flex-start' }} />
-                <Text style={{ position: 'absolute', bottom: 0, right: 0 }}>1</Text>
-            </View>
-            <View style={styles.character}>
-            <View style={styles.pandaContainer}>
-
+    return (	
+      <View style={{ flex: 1 }}>	
+      <Header>	
+      <Text style={styles.text}>Welcome {name}!</Text>	
+      </Header>	
+      <View style={styles.container}>	
+          
+        <View style={{ marginTop: 60, justifyContent: 'flex-end', height: 100 }}>	
+          <Image source={require('../assets/egg.png')} style={{ width: 100, height: '100%', resizeMode: 'contain', alignSelf: 'flex-end' }} />	
+          {/* <Text style={{ position: 'absolute', bottom:30, right: 45 }}>  
+          <TouchableOpacity onPress={handleLevelUp}>	
+        <Text style={{fontSize:20,fontWeight:'bold'}}>{level}</Text>	
+      </TouchableOpacity></Text>	 */}
+        </View>	
+        <View style={{ marginBottom: 10, justifyContent: 'flex-start', height: 100 }}>	
+          <Image source={require('../assets/Wallet.png')} style={{ width: 85, height: '100%', resizeMode: 'contain', alignSelf: 'flex-start',position:'absolute', bottom:110,left:0 }} />	
+        </View>	
+        <View style={styles.character}>	
+          <View style={styles.pandaContainer}>	
+          {level >=2 ? (	
+    <TouchableOpacity onPress={handlePromptChange}>	
+      <Image source={require('../assets/bigpanda.png')} style={{ width: 300, height: 450, resizeMode: 'contain' }} />	
+    </TouchableOpacity>	
+  ) : (	
+    <TouchableOpacity onPress={handlePromptChange}>	
             <Image source={pandaImage} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
-  </View>
-  {selectedItem && (
-    <Image
-      style={[styles.itemImage, itemLocation]}
-      source={selectedItem.image}
-    />
-  )}
-</View>
-
-          <View>
-       
-    <TouchableOpacity onPress={() => navigation.navigate('Todo', {resetTimer} )}>
-    <View style={styles.button}> 
-
-    <Feather name="plus" size={24} color="#4A8AE7" />
-    </View>
-  </TouchableOpacity>
- 
-</View>
-
-          <View style={styles.balloon}>
-          <Text style={styles.text}>{taskPrompt}</Text>
-            <Text style={styles.text}>Hi,my name is {name}!</Text>
-            
-          </View>
-        </ImageBackground>
-      </View>
-      
-      <Footer
-       taskItems={taskItems}
-       deadlines={deadlines}
-       valueList={valueList}
-       categoriesList={categoriesList}
-      />
-    </View>
-  )
-}
+    </TouchableOpacity>	
+  )}	
+          </View>	
+          {selectedItem && (	
+            <Image	
+              style={[styles.itemImage, itemLocation]}	
+              source={selectedItem.image}	
+            />	
+          )}	
+        </View>	
+        <View>	
+        
+          <TouchableOpacity onPress={() => navigation.navigate('Todo', {resetTimer})}>	
+            <View style={styles.button}>	
+              <Feather name="plus" size={24} color="#4A8AE7" />	
+              {/* <LevelUp></LevelUp>	 */}
+            </View>	
+          </TouchableOpacity>	
+        </View>	
+        <View style={styles.balloon}>	
+          <Text style={[styles.text, styles.taskPrompts]} numberOfLines={2}>{taskPrompt}</Text>	
+          <Text style={styles.text}>Hi, my name is {name}!</Text>	
+        </View>	
+          
+      </View>	
+      <Footer	
+        taskItems={taskItems}	
+        deadlines={deadlines}	
+        valueList={valueList}	
+        categoriesList={categoriesList}	
+      />	
+    </View>	
+    );	
+  };
 
 const styles = StyleSheet.create({
   text: {
