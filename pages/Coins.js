@@ -132,7 +132,6 @@ return (
 
 const styles = StyleSheet.create({
 outerContainer: {
-  marginTop: '20%',
   flexDirection: 'row',
   paddingVertical: 5,
   paddingHorizontal: 10,
@@ -162,13 +161,13 @@ container: {
   shadowOpacity: 0.25,
   shadowRadius: 3.84,
   elevation: 5,
-  marginBottom: 10,
+  marginBottom: 30,
   borderWidth: 1,
   padding: 5
 },
 column: {
   flexDirection: 'column',
-  paddingTop: '28%',
+  paddingTop: '10%',
 },
 row: {
   flexDirection: 'row',

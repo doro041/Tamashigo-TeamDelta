@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView , Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Modal, Alert, Image, ImageBackground} from 'react-native';
 import Timer from './Timer';
-import {Feather, FontAwesome, MaterialCommunityIcons, MaterialIcons, Entypo } from 'react-native-vector-icons';
+import {Feather, FontAwesome, MaterialCommunityIcons, MaterialIcons, Entypo, Ionicons } from 'react-native-vector-icons';
 import SelectDropdown from 'react-native-select-dropdown';
 import TaskItem from './TaskItem'; // Import the TaskItem component
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -41,7 +41,7 @@ const Todo = ({route}) => {
   const [hobbyLevel, setHobbyLevel] = useState(0);
   const [backgroundImage, setBackgroundImage] = useState(null);
   let [tasksCompleted, setTasksCompleted] = useState(0);
- 
+  const [infoVisible, setInfoVisible] = useState(false);
   const handleSelectCategory = (item) => {
     setSelectedCategory(item);
   };
@@ -485,6 +485,14 @@ const confirmDeleteTask = (index) => {
   setHobbyCoins={setHobbyCoins}
 />
 
+<View style={{flexDirection: 'row', alignItems: 'center', marginTop: -60, marginLeft: 50, marginBottom: 10}}>
+<TouchableOpacity onPress={() => setInfoVisible(!infoVisible)}>
+<Ionicons name="md-information-circle-outline" size={25} color="#000000" />
+      </TouchableOpacity>
+      {infoVisible && <Text style={styles.infoText}>Coins are earned from completing tasks! Coins can be used to earn cosmetics at the shop or level up your pet!</Text>}
+       </View>
+
+
         <View style={{flexDirection: 'row', marginVertical: 10}}>
         <TouchableOpacity onPress={() => filterTasks('Productivity')}>
           <Text style={{ backgroundColor: '#dce4ef', color: 'black', padding: 10, borderRadius: 10, borderWidth: 1, borderColor: '#abb7c7' }}>Productivity</Text>
@@ -685,6 +693,11 @@ const styles = StyleSheet.create({
     borderColor: '#C0C0C0',
     borderWidth: 1,
     alignSelf: 'center',
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#000000',
+    paddingRight: 10,
   },
 
   

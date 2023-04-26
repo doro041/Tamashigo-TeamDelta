@@ -4,10 +4,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Feather} from 'react-native-vector-icons';
+import { Feather, Ionicons} from 'react-native-vector-icons';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import LevelUp from '../components/LevelUp';
+import Onboarding from 'react-native-onboarding-swiper';
+import Tooltip from 'react-native-walkthrough-tooltip';
+
 const Home = ({ route }) => {
   // In the Home screen
   const [level, setLevel] = useState(1);
@@ -23,6 +26,41 @@ const Home = ({ route }) => {
       setName(route.params.name);
     }
   }, [route.params]);
+
+
+  const onboardingPages = [
+    {
+      backgroundColor: '#FE6B8B',
+      image: <Image source={require('../assets/Panda.png')} 
+      style = {{marginTop: -100}} />,
+      title: 'Welcome to Tamashigo!',
+      subtitle:'Make your life more productive and organised!',
+    },
+    {
+      backgroundColor: '#FF8E53',
+      image: <Image source={require('../assets/Home.png')}
+      style = {{marginTop: -100}} />,
+      title: 'Our Features',
+      subtitle: 'Manage your tasks, events, and plans all in one place.',
+    },
+    {
+      backgroundColor: '#4FC0E8',
+      image: <Image source={require('../assets/SadPanda.png')} 
+      style = {{marginTop: -100}} 
+      />,
+      title: 'Keep your pet healthy!',
+      subtitle: 'The more tasks you complete the healthier your pet will be!',
+    },
+  ];
+
+
+
+
+  const [showOnboarding, setShowOnboarding] = useState(true);
+
+
+
+
   const navigation = useNavigation();
   const [taskPrompt, setTaskPrompt] = useState('');
   const taskPrompts = [
@@ -78,7 +116,10 @@ const Home = ({ route }) => {
     "Take a moment to appreciate the power"  
   ];
   
-  
+  const [showPlusTooltip, setShowPlusTooltip] = useState(false);
+  const [showFooterTooltip, setShowFooterTooltip] = useState(false);
+  const [showHeaderTooltip, setShowHeaderTooltip] = useState(false);
+  const [showPandaTooltip, setShowPandaTooltip] = useState(false);
   
   const [taskItems, setTaskItems] = useState([]);
   const [deadlines, setDeadlines] = useState([]);
@@ -219,11 +260,32 @@ const Home = ({ route }) => {
 
     return (	
       <View style={{ flex: 1 }}>	
-      <Header>	
-      <Text style={styles.text}>Welcome {name}!</Text>	
-      </Header>	
+      {showOnboarding ? (
+        <Onboarding
+          onDone={() => setShowOnboarding(false)}
+          onSkip={() => setShowOnboarding(false)}
+          pages={onboardingPages}
+
+        />
+      
+      ) : (
+        <View style={{ flex: 1 }}>	
+      <Tooltip
+        isVisible={showHeaderTooltip}
+        content={<Text>Tap here to see your profile and settings</Text>}
+        contentStyle={{ marginTop: 50, width: '100%'}}
+        onClose={() => {setShowHeaderTooltip(false); setShowPandaTooltip(true);}}>
+      <Header/>
+      </Tooltip>	
+      {/* <Text style={styles.text}>Welcome {name}!</Text>	 */}
+      	
       <View style={styles.container}>	
-          
+      <TouchableOpacity onPress={() => setShowHeaderTooltip(true)}>
+  <View style={{alignSelf: 'center'}}>
+  <Ionicons name="md-information-circle-outline" size={25} color="#000000" />
+  </View>
+</TouchableOpacity>
+
         <View style={{ marginTop: 60, justifyContent: 'flex-end', height: 100 }}>	
           <Image source={require('../assets/egg.png')} style={{ width: 100, height: '100%', resizeMode: 'contain', alignSelf: 'flex-end' }} />	
           {/* <Text style={{ position: 'absolute', bottom:30, right: 45 }}>  
@@ -236,7 +298,12 @@ const Home = ({ route }) => {
         </View>	
         <View style={styles.character}>	
           <View style={styles.pandaContainer}>	
-          {level >=2 ? (	
+          <Tooltip
+    isVisible={showPandaTooltip}
+    content={<Text>This is your pet! Try clicking it!</Text>}
+    contentStyle = {{width: '100%'}}
+    onClose={() => {setShowPandaTooltip(false); setShowPlusTooltip(true);}}>
+    {level >=2 ? (	
     <TouchableOpacity onPress={handlePromptChange}>	
       <Image source={require('../assets/bigpanda.png')} style={{ width: 300, height: 450, resizeMode: 'contain' }} />	
     </TouchableOpacity>	
@@ -245,6 +312,7 @@ const Home = ({ route }) => {
             <Image source={pandaImage} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
     </TouchableOpacity>	
   )}	
+  </Tooltip>
           </View>	
           {selectedItem && (	
             <Image	
@@ -253,30 +321,42 @@ const Home = ({ route }) => {
             />	
           )}	
         </View>	
-        <View>	
-        
-          <TouchableOpacity onPress={() => navigation.navigate('Todo', {resetTimer})}>	
-            <View style={styles.button}>	
-              <Feather name="plus" size={24} color="#4A8AE7" />	
-              {/* <LevelUp></LevelUp>	 */}
-            </View>	
-          </TouchableOpacity>	
-        </View>	
+        <View>
+  <Tooltip
+    isVisible={showPlusTooltip}
+    content={<Text>Click here to add a new task!</Text>}
+    onClose={() => {setShowPlusTooltip(false); setShowFooterTooltip(true);}}>
+      
+    <TouchableOpacity onPress={() => navigation.navigate('Todo', {resetTimer})}>
+      <View style={styles.button}>
+        <Feather name="plus" size={24} color="#4A8AE7" />
+      </View>
+    </TouchableOpacity>
+  </Tooltip>
+</View>
+
         <View style={styles.balloon}>	
           <Text style={[styles.text, styles.taskPrompts]} numberOfLines={2}>{taskPrompt}</Text>	
           <Text style={styles.text}>Hi, my name is {name}!</Text>	
         </View>	
-          
+        
       </View>	
-      <Footer	
+      <Tooltip
+    isVisible={showFooterTooltip}
+    content={<Text>Click here to use the Home, Pomodoro, Calendar or Shop!</Text>}
+    onClose={() => setShowFooterTooltip(false)}
+    contentStyle={{ marginTop: -50, width: '150%'}}>
+    <Footer	
         taskItems={taskItems}	
         deadlines={deadlines}	
         valueList={valueList}	
         categoriesList={categoriesList}	
       />	
+      </Tooltip>
     </View>	
-    );	
-  };
+    )}
+  </View>
+  );}
 
 const styles = StyleSheet.create({
   text: {
@@ -329,7 +409,14 @@ const styles = StyleSheet.create({
       bottom: 150,
       left: '50%',
       transform: [{ translateX: -100 }], // This will center the image horizontally
-    }
+    }, 
+    onboardingSubtitle: {
+      marginBottom: 5,
+
+    },
+    
+  
+    
   
 });
 

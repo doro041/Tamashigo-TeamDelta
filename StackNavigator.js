@@ -17,11 +17,12 @@ import About from './pages/About';
 import Shop from './pages/Shop';
 import AttributePage from './pages/AttributePage';
 import TermsandConditions from './components/TermsandConditions';
-
+import { CopilotProvider } from "react-native-copilot";
 const Stack = createStackNavigator();
 
 const StackNavigator = ({ user }) => {
   return (
+    <CopilotProvider>
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
       initialRouteName={user ? 'Home' : 'Beginning'}
@@ -50,6 +51,7 @@ const StackNavigator = ({ user }) => {
     </Stack.Group>
 
     </Stack.Navigator>
+    </CopilotProvider>
   );
 };
 
