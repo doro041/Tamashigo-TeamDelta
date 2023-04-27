@@ -3,6 +3,20 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Footer from '../components/Footer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
+import { currentLevel } from './Attributes';
+
+
+const items = [
+  {id: 1, name: 'EyeMask', Level: 1, image: require('../assets/EyeMask.png'), width: 100, height: 80, isLocked:true},
+  {id: 2, name: 'Halo', Level: 2, image: require('../assets/Halo.png'), width: 100, height: 100, isLocked:true},
+  {id: 3, name: 'DevilEars', Level: 3, image: require('../assets/DevilEars.png'), width: 100, height: 100, isLocked:true},
+  {id: 4, name: 'CowboyHat', Level: 4, image: require('../assets/CowboyHat.png'), width: 100, height: 100, isLocked:true},
+  {id: 5, name: 'baguette', Level: 5, image: require('../assets/baguette.png'), width: 70, height: 75, isLocked:true},
+  {id: 6, name: 'hat', Level: 6, image: require('../assets/hat.png'), width: 80, height: 60, isLocked:true},
+  {id: 7, name: 'beret', Level: 7, image: require('../assets/beret.png'), width: 100, height: 65, isLocked:true},    
+  {id: 8, name: 'slime', Level: 8, image: require('../assets/slime.png'), width: 90, height: 60, isLocked:true},
+  {id: 9, name: 'sunglasses', Level: 9, image: require('../assets/sunglasses.png'), width: 100, height: 42, isLocked:true},
+];
 
 const Shop = () => {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -12,10 +26,28 @@ const Shop = () => {
   const [categoriesList, setCategoriesList] = useState([]);
   const [numDays, setNumDays] = useState(7);
   const [itemLocation, setItemLocation] = useState({});
-
-
+  const [updatedItems, setUpdatedItems] = useState([]);
+  const [currentLevel, setCurrentLevel] = useState(1);
+  console.log("Current Level: ", currentLevel);
   useEffect(() => {
     loadData();
+  }, []);
+
+
+  const getData = async (key, setter) => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(key);
+      if (jsonValue !== null) {
+        setter(JSON.parse(jsonValue));
+      }
+    } catch (error) {
+      console.log('Error getting data:', error);
+    }
+  };
+  
+  useEffect(() => {
+    getData('currentLevel', setCurrentLevel);
+    console.log("Current Level USEEFFECT: ", currentLevel)
   }, []);
 
   const loadData = async () => {
@@ -24,7 +56,8 @@ const Shop = () => {
       const storedValueList = await AsyncStorage.getItem("valueList");
       const storedCategoriesList = await AsyncStorage.getItem("categoriesList");
       const storedDeadlines = await AsyncStorage.getItem("deadlines");
-  
+      const storedCurrentLevel = await AsyncStorage.getItem("currentLevel");
+      console.log("THE LEVEL: ", storedCurrentLevel);
       let parsedTaskItems = [];
       let parsedValueList = [];
       let parsedCategoriesList = [];
@@ -47,28 +80,37 @@ const Shop = () => {
         parsedDeadlines = JSON.parse(storedDeadlines).map(dateString => new Date(dateString));
       }
 
-      console.log('Loaded data:', parsedTaskItems, parsedValueList, parsedCategoriesList, parsedDeadlines)
+      console.log('Loaded data:', parsedTaskItems, parsedValueList, parsedCategoriesList, parsedDeadlines, storedCurrentLevel);
       setDeadlines(parsedDeadlines);
       setTaskItems(parsedTaskItems);
       setValueList(parsedValueList);
       setCategoriesList(parsedCategoriesList);
+      setCurrentLevel(storedCurrentLevel);
+
+      // Set isLocked property for each item
+      const updatedItems = items.map(item => ({
+        ...item,
+        isLocked: isItemLocked(item, currentLevel),
+      }));
+      setUpdatedItems(updatedItems);
     } catch (error) {
       console.error('Error loading data:', error);
     }
   };
 
-  const items = [
-    {id: 1, name: 'EyeMask', price: 30, image: require('../assets/EyeMask.png'), width: 100, height: 80},
-    {id: 2, name: 'Halo', price: 30, image: require('../assets/Halo.png'), width: 100, height: 100},
-    {id: 3, name: 'DevilEars', price: 30, image: require('../assets/DevilEars.png'), width: 100, height: 100},
-    {id: 4, name: 'CowboyHat', price: 50, image: require('../assets/CowboyHat.png'), width: 100, height: 100},
-    {id: 5, name: 'baguette', price: 50, image: require('../assets/baguette.png'), width: 70, height: 75},
-    {id: 6, name: 'hat', price: 50, image: require('../assets/hat.png'), width: 80, height: 60},
-    {id: 7, name: 'beret', price: 80, image: require('../assets/beret.png'), width: 100, height: 65},    
-    {id: 8, name: 'slime', price: 80, image: require('../assets/slime.png'), width: 90, height: 60},
-    {id: 9, name: 'sunglasses', price: 80, image: require('../assets/sunglasses.png'), width: 100, height: 42},
-      
-  ];
+  const isItemLocked = (item, currentLevel) => {
+    return item.id > currentLevel;
+  };
+
+  useEffect(() => {
+    const updatedItems = items.map(item => ({
+      ...item,
+      isLocked: isItemLocked(item, currentLevel),
+    }));
+    setUpdatedItems(updatedItems);
+  }, [currentLevel]);
+  
+  
 
   const handlePress = (item) => {
     setSelectedItem(item);
@@ -118,36 +160,54 @@ const Shop = () => {
     }
   };
   
-
   return (
     <View style={styles.container}>
-    <Text style={styles.title}>Shop</Text>
-    <View style={styles.mascotContainer}>
-      <Image style={styles.mascot} source={require('../assets/Panda.png')} />
-      {selectedItem && (
-        <Image
-          style={[styles.itemImage, itemLocation]}
-          source={selectedItem.image}
-        />
-      )}
-    </View>
+      <Text style={styles.title}>Shop</Text>
+      <View style={styles.mascotContainer}>
+        <Image style={styles.mascot} source={require('../assets/Panda.png')} />
+        {selectedItem && (
+          <Image
+            style={[styles.itemImage, itemLocation]}
+            source={selectedItem.image}
+          />
+        )}
+      </View>
       <ScrollView>
         <View style={styles.itemsContainer}>
-          {items.map((item) => (
-            <TouchableOpacity key={item.id} style={[styles.item, selectedItem === item && styles.selectedItem]} onPress={() => handlePress(item)}>
-              <Image style={[styles.itemImage, {width: item.width, height: item.height}]} source={item.image} />
+          {updatedItems.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              style={[
+                styles.item,
+                selectedItem === item && styles.selectedItem,
+                item.isLocked && styles.lockedItem,
+              ]}
+              onPress={() => !item.isLocked && handlePress(item)}
+              disabled={item.isLocked}
+            >
+              <Image
+                style={[
+                  styles.itemImage,
+                  { width: item.width, height: item.height },
+                ]}
+                source={item.image}
+              />
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemPrice}>{item.price} coins</Text>
             </TouchableOpacity>
           ))}
         </View>
         <TouchableOpacity style={styles.buyButton} onPress={handleBuy} disabled={!selectedItem}>
-          <Text style={styles.buyButtonText}>Buy {selectedItem?.name} for {selectedItem?.price} coins</Text>
+          <Text style={styles.buyButtonText}>
+            Buy {selectedItem?.name} for {selectedItem?.price} coins
+          </Text>
         </TouchableOpacity>
         <View style={styles.selectedItemContainer}>
-          {selectedItem &&
-            <Text style={styles.selectedItemText}>You selected: {selectedItem.name}</Text>
-          }
+          {selectedItem && (
+            <Text style={styles.selectedItemText}>
+              You selected: {selectedItem.name}
+            </Text>
+          )}
         </View>
       </ScrollView>
       <View style={styles.footerContainer}>
@@ -159,10 +219,12 @@ const Shop = () => {
         />
       </View>
     </View>
-  );};
+  );
+};  
 
 
 const styles = StyleSheet.create({
+  
   container: {
     flex: 1,
     paddingTop: 20,
@@ -250,7 +312,33 @@ const styles = StyleSheet.create({
   },
   mascotContainer: {
     position: 'relative',
-  }
+  },
+  lockedItem: {
+    backgroundColor: 'lightgrey',
+    padding: 10,
+    borderRadius: 5,
+    overflow: 'hidden', // this is required for the blur filter to work
+    ...Platform.select({
+      ios: {
+        // apply the blur filter for iOS devices
+        backgroundColor: 'transparent', // or change to lightgrey
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.5,
+        shadowRadius: 10,
+        zIndex: 1,
+        position: 'relative',
+      },
+      android: {
+        // apply the blur filter for Android devices
+        backgroundColor: 'lightgrey',
+        blurRadius: 5,
+        opacity: 0.5,
+        zIndex: 1,
+        position: 'relative',
+      },
+    }),
+  },
 });
 
 export default Shop;

@@ -18,7 +18,7 @@ const Attributes = ({
   const [financeLevel, setFinanceLevel] = useState(0);
   const [hobbyLevel, setHobbyLevel] = useState(0);
   const [maxLevel, setMaxLevel] = useState(10);
-  const [currentLevel, setCurrentLevel] = useState(1);
+  const [currentLevel, setCurrentLevel] = useState(2);
 
   const checkAttributesMaxLevel = () => {
     const attributes = [      { name: 'Productivity', level: productivityLevel },      { name: 'Health', level: healthLevel },      { name: 'Finance', level: financeLevel },      { name: 'Hobby', level: hobbyLevel },    ];
@@ -88,6 +88,7 @@ const Attributes = ({
     storeData('financeLevel', financeLevel);
     storeData('hobbyLevel', hobbyLevel);
     storeData('maxLevel', maxLevel);
+    console.log("Testing Attribues: ", currentLevel);
     storeData('currentLevel', currentLevel);
   }, [productivityLevel, healthLevel, financeLevel, hobbyLevel, maxLevel, currentLevel]);
 
@@ -109,15 +110,8 @@ const Attributes = ({
   
   
 
-  const buttonStyle = {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 50,
-  };
   return (
+    
     <View style={styles.parentContainer}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Attributes</Text>
