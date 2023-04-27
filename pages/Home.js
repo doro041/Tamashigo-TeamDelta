@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, Image, StyleSheet } from 'react-native';
+import { View, Text, ImageBackground, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather, Ionicons} from 'react-native-vector-icons';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
@@ -255,7 +254,7 @@ const Home = ({ route }) => {
       }
     };
    
-
+const [startTooltip, setStartTooltip] = useState(false);
 
 
     return (	
@@ -270,23 +269,27 @@ const Home = ({ route }) => {
       
       ) : (
         <View style={{ flex: 1 }}>	
+    
       <Tooltip
         isVisible={showHeaderTooltip}
         content={<Text>Tap here to see your profile and settings</Text>}
         contentStyle={{ marginTop: 50, width: '100%'}}
-        onClose={() => {setShowHeaderTooltip(false); setShowPandaTooltip(true);}}>
-      <Header/>
+        onClose={() => {setShowHeaderTooltip(false); setShowPandaTooltip(true);}}
+        allowChildInteraction={false} >
+          <Header/>
       </Tooltip>	
+      <Header/>
       {/* <Text style={styles.text}>Welcome {name}!</Text>	 */}
       	
       <View style={styles.container}>	
       <TouchableOpacity onPress={() => setShowHeaderTooltip(true)}>
-  <View style={{alignSelf: 'center'}}>
-  <Ionicons name="md-information-circle-outline" size={25} color="#000000" />
+  <View style={{alignSelf: 'flex-end', marginTop: 80, marginBottom:-60}}>
+  <Feather name="help-circle" size={25} color="#000000" />
   </View>
 </TouchableOpacity>
 
         <View style={{ marginTop: 60, justifyContent: 'flex-end', height: 100 }}>	
+        
           <Image source={require('../assets/egg.png')} style={{ width: 100, height: '100%', resizeMode: 'contain', alignSelf: 'flex-end' }} />	
           {/* <Text style={{ position: 'absolute', bottom:30, right: 45 }}>  
           <TouchableOpacity onPress={handleLevelUp}>	
@@ -302,7 +305,8 @@ const Home = ({ route }) => {
     isVisible={showPandaTooltip}
     content={<Text>This is your pet! Try clicking it!</Text>}
     contentStyle = {{width: '100%'}}
-    onClose={() => {setShowPandaTooltip(false); setShowPlusTooltip(true);}}>
+    onClose={() => {setShowPandaTooltip(false); setShowPlusTooltip(true);}}
+    allowChildInteraction={false}>
     {level >=2 ? (	
     <TouchableOpacity onPress={handlePromptChange}>	
       <Image source={require('../assets/bigpanda.png')} style={{ width: 300, height: 450, resizeMode: 'contain' }} />	
@@ -325,7 +329,8 @@ const Home = ({ route }) => {
   <Tooltip
     isVisible={showPlusTooltip}
     content={<Text>Click here to add a new task!</Text>}
-    onClose={() => {setShowPlusTooltip(false); setShowFooterTooltip(true);}}>
+    onClose={() => {setShowPlusTooltip(false); setShowFooterTooltip(true);}}
+    allowChildInteraction={false}>
       
     <TouchableOpacity onPress={() => navigation.navigate('Todo', {resetTimer})}>
       <View style={styles.button}>
@@ -345,7 +350,8 @@ const Home = ({ route }) => {
     isVisible={showFooterTooltip}
     content={<Text>Click here to use the Home, Pomodoro, Calendar or Shop!</Text>}
     onClose={() => setShowFooterTooltip(false)}
-    contentStyle={{ marginTop: -50, width: '150%'}}>
+    contentStyle={{ marginTop: -50, width: '150%'}}
+    allowChildInteraction={false}>
     <Footer	
         taskItems={taskItems}	
         deadlines={deadlines}	
