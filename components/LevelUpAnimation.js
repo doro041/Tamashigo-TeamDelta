@@ -69,7 +69,7 @@ function LevelUpAnimation({ isMounted }) {
     };
     const interpolatePos = posAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: ['20%', '-10%'],
+        outputRange: ['0%', '-15%'],
     });
 
     useEffect(() => {
@@ -103,9 +103,9 @@ function LevelUpAnimation({ isMounted }) {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         height: '100%',
         width: '100%',
-        position: 'absolute',
     },
     image: {
         flex: 1,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         width: '100%',
         zIndex: 2,
         position: 'absolute',
-        marginTop: '5%',
+        marginTop: '20%',
     },
     pandaLvl2: {
         height: '100%',

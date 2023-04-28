@@ -28,7 +28,7 @@ const BeginningPage = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1, color: 'black', fontSize: 20, fontWeight: 'bold' }]}
-          onPress={() => navigation.navigate('Settings')}
+          onPress={() => navigation.navigate('Home')}
         >
           <Text style={[styles.buttonText, { color: 'black' }]}>setting</Text>
         </TouchableOpacity>
