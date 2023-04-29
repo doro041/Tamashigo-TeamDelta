@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
       flex: 1,
       width: '100%',
       height: '100%',
+      
     },
   
     background: {
@@ -189,12 +190,14 @@ const styles = StyleSheet.create({
     buttonContainer: {
       flex: 1,
       justifyContent: 'center',
+      
     },
   
     countdownOption: {
       flexDirection: 'row',
       justifyContent: 'space-around',
       paddingTop: 40,
+      
     },
   
     currentOption: {
@@ -208,8 +211,6 @@ const styles = StyleSheet.create({
     },
   
     time: {
-      backgroundColor: 'white',
-      borderRadius: 10,
       width: 300,
       maxHeight: 50,
       textAlign: 'center',

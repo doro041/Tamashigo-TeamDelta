@@ -222,7 +222,7 @@ const Home = ({ route }) => {
         const storedValueList = await AsyncStorage.getItem("valueList");
         const storedCategoriesList = await AsyncStorage.getItem("categoriesList");
         const storedDeadlines = await AsyncStorage.getItem("deadlines");
-    
+        const storedLevel = await AsyncStorage.getItem("currentLevel");
         let parsedTaskItems = [];
         let parsedValueList = [];
         let parsedCategoriesList = [];
@@ -249,6 +249,7 @@ const Home = ({ route }) => {
         setTaskItems(parsedTaskItems);
         setValueList(parsedValueList);
         setCategoriesList(parsedCategoriesList);
+        setLevel(storedLevel);
       } catch (error) {
         console.error('Error loading data:', error);
       }
@@ -290,7 +291,11 @@ const [startTooltip, setStartTooltip] = useState(false);
 
         <View style={{ marginTop: 60, justifyContent: 'flex-end', height: 100 }}>	
         
-          <Image source={require('../assets/egg.png')} style={{ width: 100, height: '100%', resizeMode: 'contain', alignSelf: 'flex-end' }} />	
+        <View style={{ position: 'absolute', top: 0, right: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: '100%', width: 100 }}>
+  <Image source={require('../assets/egg.png')} style={{ width: 100, height: '100%', resizeMode: 'contain' }} />
+  <Text style={{ position: 'absolute', textAlign: 'center', bottom: 30, color: 'white' }}>{level}</Text>
+</View>
+
           {/* <Text style={{ position: 'absolute', bottom:30, right: 45 }}>  
           <TouchableOpacity onPress={handleLevelUp}>	
         <Text style={{fontSize:20,fontWeight:'bold'}}>{level}</Text>	
@@ -307,15 +312,11 @@ const [startTooltip, setStartTooltip] = useState(false);
     contentStyle = {{width: '100%'}}
     onClose={() => {setShowPandaTooltip(false); setShowPlusTooltip(true);}}
     allowChildInteraction={false}>
-    {level >=2 ? (	
-    <TouchableOpacity onPress={handlePromptChange}>	
-      <Image source={require('../assets/bigpanda.png')} style={{ width: 300, height: 450, resizeMode: 'contain' }} />	
-    </TouchableOpacity>	
-  ) : (	
+    
     <TouchableOpacity onPress={handlePromptChange}>	
             <Image source={pandaImage} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
     </TouchableOpacity>	
-  )}	
+  
   </Tooltip>
           </View>	
           {selectedItem && (	

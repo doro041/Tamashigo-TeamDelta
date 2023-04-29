@@ -60,45 +60,52 @@ const generateDays = (numDays, tasks, taskDates, priorities, categories) => {
     return map;
   }, {});
 
-  for (let i = today.getMonth(); i < today.getMonth() + 1 && count < numDays; i++) {
+  let currentMonth = today.getMonth();
+  let currentDate = today.getDate();
+
+  for (let i = 0; i < numDays && count < numDays; i++) {
     const year = today.getFullYear();
-    const month = months[i];
-    const daysInMonth = month.days;
+    const daysInMonth = new Date(year, currentMonth + 1, 0).getDate();
 
-    for (let k = today.getDate(); k <= daysInMonth && count < numDays; k++) {
-      const date = k.toString();
-      const day = new Date(year, i, k).toLocaleDateString('en-GB', { weekday: 'short' });
-      const dateString = new Date(year, i, k).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' });
-      const tasksForDate = taskDatesMap[dateString] || [];
-
-      let filteredTasks = tasks
-        .map((task, idx) => {
-          const taskDate = new Date(taskDates[idx]);
-          if (
-            taskDate.getFullYear() === year &&
-            taskDate.getMonth() === i &&
-            taskDate.getDate() === k
-          ) {
-            return {
-              title: task,
-              priority: priorities[idx],
-              category: categories[idx],
-            };
-          }
-          return null;
-        })
-        .filter(task => task !== null);
-
-      if ((count < numDays) && count < 7) {
-        result.push({ date, day, tasks: filteredTasks });
-      } else if (count >= 7) {
-        result.push({ message: 'Purchase premium to get more.' });
-      }
-      count++;
+    if (currentDate > daysInMonth) {
+      // if we've gone beyond the last day of the current month, skip to the next month
+      currentMonth++;
+      currentDate = 1;
     }
+
+    const date = currentDate.toString();
+    const day = new Date(year, currentMonth, currentDate).toLocaleDateString('en-GB', { weekday: 'short' });
+    const dateString = new Date(year, currentMonth, currentDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' });
+    const tasksForDate = taskDatesMap[dateString] || [];
+
+    let filteredTasks = tasks
+      .map((task, idx) => {
+        const taskDate = new Date(taskDates[idx]);
+        if (
+          taskDate.getFullYear() === year &&
+          taskDate.getMonth() === currentMonth &&
+          taskDate.getDate() === currentDate
+        ) {
+          return {
+            title: task,
+            priority: priorities[idx],
+            category: categories[idx],
+          };
+        }
+        return null;
+      })
+      .filter(task => task !== null);
+      result.push({ date, day, tasks: filteredTasks });
+
+   
+      count++;
+
+      currentDate++;
   }
   return result;
 };
+
+
 
 
 
@@ -133,7 +140,7 @@ const CalendarItem = ({ date, day, tasks }) => {
 
 const VerticalCalendar = ({ route }) => {
   const {tasks, taskDates, priorities, categories } = route.params;
-  const days = generateDays(7, tasks, taskDates, priorities, categories);
+  const days = generateDays(14, tasks, taskDates, priorities, categories);
 
   return (
     <View style={styles.container}>
@@ -179,6 +186,7 @@ const VerticalCalendar = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#8BC34A80',
   },
   calendarContainer: {
     flex: 1,

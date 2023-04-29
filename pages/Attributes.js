@@ -18,7 +18,7 @@ const Attributes = ({
   const [financeLevel, setFinanceLevel] = useState(0);
   const [hobbyLevel, setHobbyLevel] = useState(0);
   const [maxLevel, setMaxLevel] = useState(10);
-  const [currentLevel, setCurrentLevel] = useState(2);
+  const [currentLevel, setCurrentLevel] = useState(1);
 
   const checkAttributesMaxLevel = () => {
     const attributes = [      { name: 'Productivity', level: productivityLevel },      { name: 'Health', level: healthLevel },      { name: 'Finance', level: financeLevel },      { name: 'Hobby', level: hobbyLevel },    ];
