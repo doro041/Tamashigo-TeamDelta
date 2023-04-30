@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, View, Image  } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { firestore } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
-const Coins = ({ taskItems = [], setTaskItems, setCompletedTask, productivityCoins, setProductivityCoins, healthCoins, setHealthCoins, financeCoins, setFinanceCoins, hobbyCoins, setHobbyCoins }) => {
+const Coins = ({ taskItems = [], setTaskItems, setCompletedTask, productivityCoins, setProductivityCoins, healthCoins, setHealthCoins, financeCoins, setFinanceCoins, hobbyCoins, setHobbyCoins, saveCoins }) => {
   console.log('Before completedTask')
-  const completedTask = (index, category, priority, timePassedPercent) => {
+  const completedTask = async (index, category, priority, timePassedPercent) => {
+    
     // Increment the appropriate coin based on the category of the completed task
     let coinIncrement = 0;
     console.log('After CompletedTask');
@@ -67,46 +70,32 @@ const Coins = ({ taskItems = [], setTaskItems, setCompletedTask, productivityCoi
     setTaskItems(itemsCopy);
   };
 
-  const saveCoinsToStorage = async () => {
+useEffect(() => {
+  setCompletedTask(() => completedTask);
+}, []);
+
+useEffect(() => {
+  (async () => {
+    if (!productivityCoins && !healthCoins && !financeCoins && !hobbyCoins)
+      return
+  
+    console.log("Saving coins.")
+  
     try {
-      const coins = {
+      // TODO: the variables to be saved are always 0?
+      const auth = getAuth()
+      const ref = doc(firestore, 'coins', auth.currentUser.uid)
+      await setDoc(ref, {
         productivityCoins,
         healthCoins,
         financeCoins,
         hobbyCoins,
-      };
-      await AsyncStorage.setItem('coins', JSON.stringify(coins));
+      })
     } catch (error) {
       console.error('Failed to save coins to storage:', error);
     }
-  };
-
-  const loadCoinsFromStorage = async () => {
-    try {
-      const coins = await AsyncStorage.getItem('coins');
-      if (coins !== null) {
-        const parsedCoins = JSON.parse(coins);
-        setProductivityCoins(parsedCoins.productivityCoins);
-        setHealthCoins(parsedCoins.healthCoins);
-        setFinanceCoins(parsedCoins.financeCoins);
-        setHobbyCoins(parsedCoins.hobbyCoins);
-      }
-    } catch (error) {
-      console.error('Failed to load coins from storage:', error);
-    }
-  };
-
-  useEffect(() => {
-    loadCoinsFromStorage();
-  }, []);
-
-  useEffect(() => {
-    saveCoinsToStorage();
-  }, [productivityCoins, healthCoins, financeCoins, hobbyCoins]);
-
-useEffect(() => {
-  setCompletedTask(() => completedTask);
-}, []);
+  })()
+}, [productivityCoins, healthCoins, financeCoins, hobbyCoins])
 
 return (
   <View style={styles.column}>

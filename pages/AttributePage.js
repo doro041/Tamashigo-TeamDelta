@@ -6,6 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 import Coins from './Coins';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Settings from './Settings';
+import { getAuth } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { firestore } from '../firebase';
 
 const AttributePage = () => {
     const navigation = useNavigation();
@@ -33,20 +36,21 @@ const AttributePage = () => {
   const loadData = async () => {
     try {
       console.log('Loading data in AttributePage.js')
+      const auth = getAuth()
+
       const storedTaskItems = await AsyncStorage.getItem("taskItems");
       const storedValueList = await AsyncStorage.getItem("valueList");
       const storedCategoriesList = await AsyncStorage.getItem("categoriesList");
       const storedDeadlines = await AsyncStorage.getItem("deadlines");
       const loadedCompletedTask = await AsyncStorage.getItem('completedTask');
-      const loadedProductivityCoins = await AsyncStorage.getItem('productivityCoins');
-      const loadedHealthCoins = await AsyncStorage.getItem('healthCoins');
-      const loadedFinanceCoins = await AsyncStorage.getItem('financeCoins');
-      const loadedHobbyCoins = await AsyncStorage.getItem('hobbyCoins');
 
-      if (loadedProductivityCoins !== null) setProductivityCoins(JSON.parse(loadedProductivityCoins));
-      if (loadedHealthCoins !== null) setHealthCoins(JSON.parse(loadedHealthCoins));
-      if (loadedFinanceCoins !== null) setFinanceCoins(JSON.parse(loadedFinanceCoins));
-      if (loadedHobbyCoins !== null) setHobbyCoins(JSON.parse(loadedHobbyCoins));
+      const ref = doc(firestore, 'coins', auth.currentUser.uid)
+      const loadedCoins = (await getDoc(ref)).data()
+      setProductivityCoins(loadedCoins.productivityCoins || 0);
+      setHealthCoins(loadedCoins.healthCoins || 0);
+      setFinanceCoins(loadedCoins.financeCoins || 0);
+      setHobbyCoins(loadedCoins.hobbyCoins|| 0);
+
       if (loadedCompletedTask !== null) setCompletedTask(JSON.parse(loadedCompletedTask));
       console.log('LoadData in AttributePages: ', productivityCoins, healthCoins, financeCoins, hobbyCoins);
 

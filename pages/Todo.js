@@ -11,6 +11,9 @@ import Footer from '../components/Footer';
 import Coins from './Coins';
 
 import { LinearGradient } from 'expo-linear-gradient';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { firestore } from '../firebase';
+import { getAuth } from 'firebase/auth';
 
 
 const Todo = ({route}) => {
@@ -45,6 +48,18 @@ const Todo = ({route}) => {
   const handleSelectCategory = (item) => {
     setSelectedCategory(item);
   };
+
+  useEffect( () => {
+    const auth = getAuth()
+    const ref = doc(firestore, 'coins', auth.currentUser.uid)
+    getDoc(ref).then(loadedCoins => {
+      loadedCoins = loadedCoins.data()
+      setProductivityCoins(loadedCoins.productivityCoins || 0);
+      setHealthCoins(loadedCoins.healthCoins || 0);
+      setFinanceCoins(loadedCoins.financeCoins || 0);
+      setHobbyCoins(loadedCoins.hobbyCoins|| 0);
+    })
+  }, [])
 
   const changeBackgroundImage = (category) => {
     let newBackgroundImage;
@@ -227,80 +242,80 @@ const getFilteredTasks = () => {
 
 
 
-const confirmDeleteTask = (index) => {
-  console.log('Deleting Task')
-  Alert.alert(
-    'Delete Task',
-    'Are you sure you want to delete this task?',
-    [
-      {
-        text: 'No',
-        onPress: () => {},
-        style: 'cancel',
-      },
-      {
-        text: 'Yes',
-        onPress: () => {
-          tasksCompleted ++;
+  const confirmDeleteTask = (index) => {
+    console.log('Deleting Task')
+    // Alert.alert(
+    //   'Delete Task',
+    //   'Are you sure you want to delete this task?',
+    //   [
+    //     {
+    //       text: 'No',
+    //       onPress: () => { },
+    //       style: 'cancel',
+    //     },
+    //     {
+    //       text: 'Yes',
+    //       onPress: () => {
+            tasksCompleted++;
 
-          let itemsCopy = [...taskItems];
-  let deadlinesCopy = [...deadlines];
-  let setValueListCopy = [...valueList];
-  let setCategoriesListCopy = [...categoriesList];
-  let startTimesCopy = [...startTimes];
-  itemsCopy.splice(index, 1);
-  setValueListCopy.splice(index, 1);
-  setCategoriesListCopy.splice(index, 1);
-  
-  // Calculate the percentage of time that has passed since the task started
-  const startTime = startTimesCopy[index];
-  const parsedDeadline = Date.UTC(
-    deadlinesCopy[index].getFullYear(),
-    deadlinesCopy[index].getMonth(),
-    deadlinesCopy[index].getDate(),
-    deadlinesCopy[index].getHours(),
-    deadlinesCopy[index].getMinutes(),
-    deadlinesCopy[index].getSeconds()
-  );
-  
-   startTimesCopy.splice(index,1); // remove start time from array
-   setStartTimes(startTimesCopy); // update state
+            let itemsCopy = [...taskItems];
+            let deadlinesCopy = [...deadlines];
+            let setValueListCopy = [...valueList];
+            let setCategoriesListCopy = [...categoriesList];
+            let startTimesCopy = [...startTimes];
+            itemsCopy.splice(index, 1);
+            setValueListCopy.splice(index, 1);
+            setCategoriesListCopy.splice(index, 1);
 
-   const timePassedPercent = (Date.now() - startTime) / (parsedDeadline - startTime);
+            // Calculate the percentage of time that has passed since the task started
+            const startTime = startTimesCopy[index];
+            const parsedDeadline = Date.UTC(
+              deadlinesCopy[index].getFullYear(),
+              deadlinesCopy[index].getMonth(),
+              deadlinesCopy[index].getDate(),
+              deadlinesCopy[index].getHours(),
+              deadlinesCopy[index].getMinutes(),
+              deadlinesCopy[index].getSeconds()
+            );
 
-   // Pass the category, priority and timePassedPercent of the completed task to completedTask
-   console.log('percent',timePassedPercent);
-   completedTask(index, categoriesList[index], priorities[valueList[index]], timePassedPercent);
+            startTimesCopy.splice(index, 1); // remove start time from array
+            setStartTimes(startTimesCopy); // update state
 
-   deadlinesCopy.splice(index, 1); // remove deadline from array
-   setTaskItems(itemsCopy);
-   setDeadlines(deadlinesCopy);
-   setValueList(setValueListCopy);
-   setCategoriesList(setCategoriesListCopy);
-          
-          
-    storeData('taskItems', itemsCopy);
-    storeData('deadlines', deadlinesCopy);
-    storeData('valueList', setValueListCopy);
-    storeData('categoriesList', setCategoriesListCopy);
-        
-    filterTasks(selectedCategory);
+            const timePassedPercent = (Date.now() - startTime) / (parsedDeadline - startTime);
 
-    storeData('productivityLevel', productivityLevel);
-    console.log('Storing Data of: productivityLevel', productivityLevel, 'healthLevel', healthLevel, 'financeLevel', financeLevel, 'hobbyLevel', hobbyLevel);
-    storeData('healthLevel', healthLevel);
-    storeData('financeLevel', financeLevel);
-    storeData('hobbyLevel', hobbyLevel);
-    storeData('tasksCompleted', tasksCompleted);
-    resetTimer();
-    console.log("Completed Tasks: ", tasksCompleted)
-    console.log(healthCoins, financeCoins, hobbyCoins, productivityCoins);
-        },
-      },
-    ],
-    { cancelable: false }
-  );
-};
+            // Pass the category, priority and timePassedPercent of the completed task to completedTask
+            console.log('percent', timePassedPercent);
+            completedTask(index, categoriesList[index], priorities[valueList[index]], timePassedPercent);
+
+            deadlinesCopy.splice(index, 1); // remove deadline from array
+            setTaskItems(itemsCopy);
+            setDeadlines(deadlinesCopy);
+            setValueList(setValueListCopy);
+            setCategoriesList(setCategoriesListCopy);
+
+
+            storeData('taskItems', itemsCopy);
+            storeData('deadlines', deadlinesCopy);
+            storeData('valueList', setValueListCopy);
+            storeData('categoriesList', setCategoriesListCopy);
+
+            filterTasks(selectedCategory);
+
+            storeData('productivityLevel', productivityLevel);
+            console.log('Storing Data of: productivityLevel', productivityLevel, 'healthLevel', healthLevel, 'financeLevel', financeLevel, 'hobbyLevel', hobbyLevel);
+            storeData('healthLevel', healthLevel);
+            storeData('financeLevel', financeLevel);
+            storeData('hobbyLevel', hobbyLevel);
+            storeData('tasksCompleted', tasksCompleted);
+            resetTimer();
+            console.log("Completed Tasks: ", tasksCompleted)
+            console.log(healthCoins, financeCoins, hobbyCoins, productivityCoins);
+    //       },
+    //     },
+    //   ],
+    //   { cancelable: false }
+    // );
+  };
 
   return (
    
