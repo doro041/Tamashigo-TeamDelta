@@ -1,58 +1,128 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ImageBackground, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, ImageBackground, Pressable  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Footer from '../components/Footer';
-
+import Footer from '../components/Footer'
+import { Alert } from 'react-native';
 
 
 const Pomodoro = () => {
-    const [currentMinute, setCurrentMinute] = useState(1);
+    const [currentMinute, setCurrentMinute] = useState(5);
     const [currentSeconds, setCurrentSecond] = useState(0);
     const [start, setStart] = useState(false);
     const [taskItems, setTaskItems] = useState([]);
     const [deadlines, setDeadlines] = useState([]);
     const [valueList, setValueList] = useState([]);
     const [categoriesList, setCategoriesList] = useState([]);
-
+    const [pomodoroCount, setPomodoroCount] = useState(0);
+    const [todaysPomodoros, setTodaysPomodoros] = useState([]);
+    const [message, setMessage] = useState("");
+    const showAlert = () => {
+      Alert.alert(
+        'Time is up!',
+        '',
+        [
+          {
+            text: 'OK',
+            onPress: () => console.log('OK Pressed'),
+            style: 'cancel',
+          },
+        ],
+        { 
+          cancelable: false,
+          titleStyle: {
+            fontSize: 24,
+            fontWeight: 'bold',
+            color: '#ff0000',
+            textAlign: 'center'
+          },
+          messageStyle: {
+            fontSize: 18,
+            fontStyle: 'italic',
+            color: '#333',
+            textAlign: 'center'
+          },
+          containerStyle: {
+            backgroundColor: '#ffffff',
+            borderRadius: 10,
+            padding: 20
+          }
+        }
+      );
+    };
+    
+  
+    const loadCounts = async () => {
+        try {
+            const storedPomodoroCount = await AsyncStorage.getItem('pomodoroCount');
+            const storedTodaysPomodoros = await AsyncStorage.getItem('todaysPomodoros');
+            if (storedPomodoroCount) {
+                setPomodoroCount(parseInt(storedPomodoroCount));
+            }
+            if (storedTodaysPomodoros) {
+                setTodaysPomodoros(JSON.parse(storedTodaysPomodoros));
+            }
+        } catch (error) {
+            console.error('Error loading counts:', error);
+        }
+    };
+    
+    useEffect(() => {
+        loadCounts();
+    }, []);
+    
+    const startCount = () => {
+        setStart(!start);
+        if (!start) {
+            setTodaysPomodoros([...todaysPomodoros, new Date()]);
+            setPomodoroCount(pomodoroCount + 1);
+            
+        }
+    };
+    
     useEffect(() => {
         if (start) {
             const interval = setInterval(() => {
                 setCurrentSecond(currentSeconds - 1);
-                if ((currentSeconds === 0)) {
-                    if (currentMinute != 0) {
+                if (currentSeconds === 0) {
+                    if (currentMinute !== 0) {
                         setCurrentSecond(59);
                         setCurrentMinute(currentMinute - 1);
                     } else {
                         setStart(false);
                         clearInterval(interval);
-                        alert("Time'up !");
+                        showAlert();
+                        setPomodoroCount(pomodoroCount + 1);
+                        setTodaysPomodoros([...todaysPomodoros, new Date()]);
                         shortBreak();
                     }
                 }
             }, 1000);
             return () => {
                 clearInterval(interval);
-            }
+            };
         }
-    }, [currentSeconds, currentMinute, start]);
-
+    }, [currentSeconds, currentMinute, start, pomodoroCount, todaysPomodoros]);
+    
     const minuteString = currentMinute.toString().padStart(2, "0");
     const secondString = currentSeconds.toString().padStart(2, "0");
-    
-    const timing = `${minuteString}:${secondString}`; // timing is now "05:00", "15:00", or "25:00"
-
-    const startCount = () => {
-        if (!start) {
-            setStart(true);
-        } else {
-            setStart(false);
-        }
-    };
+    const timing = `${minuteString}:${secondString}`;
+    const today = new Date().toISOString().substr(0, 10);
+    const todaysCount = todaysPomodoros.filter(date => date.toISOString().substr(0, 10) === today).length;
 
     useEffect(() => {
         loadData();
-      }, []);
+    }, []);
+    
+      useEffect(() => {
+        const messages = [      "You're doing great! Keep it up!",      "Stay focused and keep working!",      "You got this! Keep pushing forward!",      "Remember why you started. You can do it!",      "Stay determined and keep going!",    ];
+        const interval = setInterval(() => {
+          const randomIndex = Math.floor(Math.random() * messages.length);
+          setMessage(messages[randomIndex]);
+        }, 3000); //  how many seconds is that? 
 
+        return () => clearInterval(interval);
+      }, []);
+    
 
     const loadData = async () => {
         try {
@@ -127,18 +197,20 @@ const Pomodoro = () => {
   
           <View style={styles.container}>
               <ImageBackground style={styles.background} source={backgroundStyle}>
+             
                   <View style={styles.buttonContainer}>
                       <View style={styles.countdownOption}>
-                          <Pressable style={focusStyle} onPress={focus}>
-                              <Image
-                                  style={styles.breakIcon}
-                                  source={require('../assets/Focus.png')}
-                              />
-                          </Pressable>
+                         
                           <Pressable style={shortBreakStyle} onPress={shortBreak}>
                               <Image
                                   style={styles.breakIcon}
                                   source={require('../assets/ShortBreak.png')}
+                              />
+                          </Pressable>
+                          <Pressable style={focusStyle} onPress={focus}>
+                              <Image
+                                  style={styles.breakIcon}
+                                  source={require('../assets/Focus.png')}
                               />
                           </Pressable>
                           <Pressable style={longBreakStyle} onPress={longBreak}>
@@ -148,17 +220,25 @@ const Pomodoro = () => {
                               />
                           </Pressable>
                       </View>
-                      <Text key={"textTime"} adjustsFontSizeToFit={true} style={styles.time}>{timing}</Text>
+                      <View style={styles.timeContainer}>
+  <Text key={"textTime"} adjustsFontSizeToFit={true} style={styles.time}>{timing}</Text>
+</View>
+
+                      <Text style={styles.message}>{message}</Text>
+                     
+
                       <Image
                           style={styles.panda}
                           source={require('../assets/Panda.png')}
                       />
-                      <Pressable onPress={() => startCount()} style={styles.resumePress}>
-                          <Image
-                              style={styles.resumeLogo}
-                              source={require('../assets/ButtonGreen.png')}
-                          />
-                      </Pressable>
+                     
+                        <Pressable onPress={startCount}>
+      <Image
+        style={styles.resumePress}
+        source={start ? require('../assets/Go.png') : require('../assets/ButtonGreen.png')}
+      />
+    </Pressable>
+   
                   </View>
                   <Footer
         taskItems={taskItems}
@@ -178,7 +258,7 @@ const styles = StyleSheet.create({
       flex: 1,
       width: '100%',
       height: '100%',
-      
+      alignItems:'center',
     },
   
     background: {
@@ -191,15 +271,26 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       
+      
     },
-  
     countdownOption: {
       flexDirection: 'row',
       justifyContent: 'space-around',
       paddingTop: 40,
-      
+      borderRadius: 900,
+
     },
-  
+    timeContainer: {
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      backgroundColor: 'white',
+      justifyContent: 'center',
+      alignSelf: 'center',
+      padding: 10,
+      marginTop: 30,
+    },
+   
     currentOption: {
       resizeMode: "center",
     },
@@ -208,17 +299,31 @@ const styles = StyleSheet.create({
       resizeMode: "stretch",
       width: 100,
       height: 40,
+
     },
-  
     time: {
+      color: 'black',
+      fontWeight: 'bold',
       width: 300,
       maxHeight: 50,
       textAlign: 'center',
       fontSize: 30,
       alignSelf: 'center',
       marginTop: 20,
+      borderRadius: 90,
+      padding:10,
+      opacity: 0.8,
     },
   
+  
+message: {
+  padding: 30,
+  fontSize: 18,
+  fontStyle: "italic",
+  color: "#333",
+  textAlign: "center",
+  marginHorizontal: 20,
+},
     panda: {
       width: 200,
       height: 260,
@@ -229,6 +334,7 @@ const styles = StyleSheet.create({
     resumePress: {
       alignSelf: 'center',
       marginTop: 50,
+    
     },
   
     resumeLogo: {

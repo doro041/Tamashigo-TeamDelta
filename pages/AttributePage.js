@@ -7,7 +7,6 @@ import Coins from './Coins';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { CommonActions } from '@react-navigation/native';
-import { getAuth } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 

@@ -134,14 +134,15 @@ const styles = StyleSheet.create({
 outerContainer: {
   flexDirection: 'row',
   paddingVertical: 5,
-  paddingHorizontal: 10,
+  paddingHorizontal:10,
   alignItems: 'center',
-  width: '100%',
+  width: '60%',
   height: '20%',
   backgroundColor: 'rgba(48, 210, 162, 0.5)',
   position: 'absolute',
   top: 20,
   zIndex: 1,
+  borderRadius: 20
 },
 titleContainer: {
   flexDirection: 'row',
@@ -172,6 +173,7 @@ container: {
 column: {
   flexDirection: 'column',
   paddingTop: '10%',
+  alignItems: 'center',
 },
 row: {
   flexDirection: 'row',

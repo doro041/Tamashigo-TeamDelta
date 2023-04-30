@@ -36,13 +36,17 @@ const ForgotPass = ({ navigation }) => {
         </View>
       ) : (
         <>
-          <View style={styles.background}>
-          <ImageBackground source={require('../assets/Part.png')} style={styles.background}>
-            <Image source={require('../assets/PandaHead.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
-            <Text style={styles.title}>Forgot Password</Text>
-          </ImageBackground>
-      
-          </View>
+        <View style={styles.container}>
+  <ImageBackground source={require('../assets/PartsLog.png')} style={styles.backgroundImage}>
+  <View style={{marginTop: 90}}>
+  <Image source={require('../assets/PandaHead.png')} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
+</View>
+
+    <Text style={styles.title}>Forgot Password</Text>
+  </ImageBackground>
+</View>
+
+        
           <View style={styles.content}>
             <Text style={styles.text}>Enter your email address below and we will send you a link to reset your password.</Text>
             <TextInput
@@ -66,24 +70,27 @@ const ForgotPass = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 
+  
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F0FFF0',
-    
+    width: '100%',
   },
-  
-  background: {
-    width: 600,
-    height: 400,
+  backgroundImage: {
+    width: '100%',
+    height: 390,
     justifyContent: 'center',
     alignItems: 'center',
+    borderBottomLeftRadius: 50, /* Add a border radius of 20 pixels to top left corner */
+    borderBottomRightRadius: 50, /* Add a border radius of 20 pixels to top right corner */
+   
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginTop: 60,
     alignSelf: 'center'
     ,
     maxWidth: 400,

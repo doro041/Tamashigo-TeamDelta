@@ -26,7 +26,6 @@ const NameChar = () => {
 
   return (
     <View style={styles.container}>
-      <Header />
       <ImageBackground source={require('../assets/NameChar.png')} style={styles.background}>
         <Text style={styles.text}>Pick a name for your character:</Text>
         <TextInput
@@ -36,10 +35,9 @@ const NameChar = () => {
           placeholder="Enter your character's name"
           placeholderTextColor="gray"
         />
-        <Button title="Next" onPress={onPress} />
+        <Button title="Next" onPress={onPress} disabled={!name} />
         <Image source={require('../assets/Panda.png')} style={styles.image} />
       </ImageBackground>
-      <Footer />
     </View>
   );
 };
@@ -53,8 +51,8 @@ const styles = StyleSheet.create({
   },
   background: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: '120%',
+    height: '120%',
     alignItems: 'center',
     justifyContent: 'center',
   },

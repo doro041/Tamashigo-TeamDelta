@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet,Platform } from 'react-native';
 import Footer from '../components/Footer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
-import { currentLevel } from './Attributes';
+
 
 
 const items = [
@@ -199,14 +199,16 @@ const Shop = () => {
         </View>
         <TouchableOpacity style={styles.buyButton} onPress={handleBuy} disabled={!selectedItem}>
           <Text style={styles.buyButtonText}>
-            Buy {selectedItem?.name} for {selectedItem?.price} coins
+            Put on cosmetic
           </Text>
         </TouchableOpacity>
         <View style={styles.selectedItemContainer}>
           {selectedItem && (
             <Text style={styles.selectedItemText}>
-              You selected: {selectedItem.name}
-            </Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 24 }}>You selected:</Text> 
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 24 }}>{selectedItem.name}</Text>
+          </Text>
+          
           )}
         </View>
       </ScrollView>
@@ -224,7 +226,7 @@ const Shop = () => {
 
 
 const styles = StyleSheet.create({
-  
+
   container: {
     flex: 1,
     paddingTop: 20,
@@ -252,7 +254,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   selectedItem: {
-    borderColor: 'blue',
+    borderColor: 'green',
     borderWidth: 2,
   },
   itemImage: {
@@ -321,11 +323,9 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         // apply the blur filter for iOS devices
-        backgroundColor: 'transparent', // or change to lightgrey
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.5,
-        shadowRadius: 10,
+        backgroundColor: 'lightgrey',
+        blurRadius: 5,
+        opacity: 0.5,
         zIndex: 1,
         position: 'relative',
       },
@@ -341,4 +341,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Shop;
+export default Shop; 

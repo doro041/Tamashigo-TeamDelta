@@ -389,20 +389,19 @@ const styles = StyleSheet.create({
 
   },
   balloon: {
-    position: 'absolute',
+    alignSelf: 'center',
     backgroundColor: '#F2F2F2',
     borderRadius: 20,
     padding: 10,
     width: 200,
     height: 100,
-    bottom: 300,
-    left: 20,
+    marginTop: '-40%',    
 
     alignItems: 'center',
     justifyContent: 'center',
   },
   button: {
-   
+    
       width: 60,
       height: 60,
       backgroundColor: '#FFF',

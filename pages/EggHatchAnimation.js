@@ -1,6 +1,10 @@
 import React, { useRef, useEffect,useState } from 'react';	
-import { StyleSheet, View, Text, TouchableOpacity, Image, Animated } from 'react-native';	
+import { StyleSheet, View, Text, TouchableOpacity, Image, Animated,ImageBackground } from 'react-native';	
 import { useNavigation } from '@react-navigation/native';	
+import { FontAwesome } from 'react-native-vector-icons';
+
+
+
 const EggHatchAnimation = () => {	
   const navigation = useNavigation();	
   const handlePandaPress = () => {	
@@ -42,12 +46,14 @@ const interpolateOpen = openAnim.interpolate({
 
 const interpolateTransTopOpen = openAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 0],
+    outputRange: [0, -2],
 });
 const interpolateTransBotOpen = openAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 0.0],
+    outputRange: [0, 10],
 });
+
+
 const pandaScaling = () => {
     Animated.timing(scaleAnim, {
         toValue: 1,
@@ -56,8 +62,8 @@ const pandaScaling = () => {
 };
 const interpolatePandaScale = scaleAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [-0.5, 1.25],
-});
+    outputRange: [-2, 3],
+  });
 const fadeOut = () => {
     Animated.timing(fadeOutAnim, {
         toValue: 0,
@@ -87,6 +93,8 @@ useEffect(() => {
 
   return (	
     <View style={styles.container}>	
+   <ImageBackground source={require('../assets/PartsLog.png')} style={styles.backgroundImage}/>
+
         <Animated.View	
             style={{	
                 flex: 1, transform: [{ translateX: shakeAnim }, { rotate: interpolateRotation }]	
@@ -118,24 +126,33 @@ useEffect(() => {
             </View>	
         </Animated.View >	
        
-        <TouchableOpacity onPress={handlePandaPress} style={styles.button}>	
-    <Text style={styles.buttonText}>Go to NameChar</Text>	
-  </TouchableOpacity> 	
+        <TouchableOpacity onPress={handlePandaPress} style={styles.button}>
+  <FontAwesome name="arrow-right" size={24} color="black" />
+</TouchableOpacity>
+
     </View >	
 );	
 };	
 const styles = StyleSheet.create({	
-container: {	
-    height: '100%',	
-    width: '100%',	
-    position: 'absolute',	
-},	
-image: {	
-    flex: 1,	
-    height: '100%',	
-    width: '100%',	
-    resizeMode: 'center',	
-},	
+    container: {
+        flex: 1,
+        position: 'relative',
+        zIndex: 0,
+      },
+      backgroundImage: {
+        height: '100%',
+        width: '100%',
+        resizeMode: 'cover',
+        position: 'absolute',
+        zIndex: -1,
+      },
+image: {
+    flex: 1,
+    height: '100%',
+    width: '100%',
+    resizeMode: 'center',
+  },
+  
 panda: {	
     zIndex: 3,	
     position: 'absolute',	
@@ -146,5 +163,28 @@ separated: {
     position: 'absolute',	
     zIndex: 2,	
 },	
+button: {
+    alignItems: "center",
+    alignSelf: 'flex-end',
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    zIndex: 4,
+    },
+topEgg: {
+    zIndex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+},
+bottomEgg: {
+    zIndex: 1,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+},
+
 });	
 export default EggHatchAnimation;

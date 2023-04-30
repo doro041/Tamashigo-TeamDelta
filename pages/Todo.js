@@ -244,18 +244,18 @@ const getFilteredTasks = () => {
 
   const confirmDeleteTask = (index) => {
     console.log('Deleting Task')
-    // Alert.alert(
-    //   'Delete Task',
-    //   'Are you sure you want to delete this task?',
-    //   [
-    //     {
-    //       text: 'No',
-    //       onPress: () => { },
-    //       style: 'cancel',
-    //     },
-    //     {
-    //       text: 'Yes',
-    //       onPress: () => {
+    Alert.alert(
+      'Delete Task',
+       'Are you sure you want to delete this task?',
+       [
+        {
+          text: 'No',
+           onPress: () => { },
+           style: 'cancel',
+         },
+         {
+           text: 'Yes',
+           onPress: () => {
             tasksCompleted++;
 
             let itemsCopy = [...taskItems];
@@ -310,11 +310,11 @@ const getFilteredTasks = () => {
             resetTimer();
             console.log("Completed Tasks: ", tasksCompleted)
             console.log(healthCoins, financeCoins, hobbyCoins, productivityCoins);
-    //       },
-    //     },
-    //   ],
-    //   { cancelable: false }
-    // );
+           },
+         },
+       ],
+       { cancelable: false }
+     );
   };
 
   return (
@@ -681,8 +681,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 20,
+    justifyContent: "center",
+    marginBottom: 0,
     
   },
   

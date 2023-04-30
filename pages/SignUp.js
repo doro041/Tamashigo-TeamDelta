@@ -244,7 +244,7 @@ const SignUp = ({ navigation }) => {
         name={rightIcon}
         size={24}
         color="black"
-        style={{ position: 'absolute', top: '23%', right: '5%', cursor: 'pointer', padding: 10 }}
+        style={{ position: 'absolute', top: '29%', right: '5%', cursor: 'pointer', padding: 10 }}
         onPress={togglePasswordVisibility}
       />
     </View>
@@ -262,7 +262,7 @@ const SignUp = ({ navigation }) => {
         name={rightIcon}
         size={24}
         color="black"
-        style={{ position: 'absolute', top: '23%', right: '5%', cursor: 'pointer', padding: 10 }}
+        style={{ position: 'absolute', top: '30%', right: '5%', cursor: 'pointer', padding: 10 }}
         onPress={togglePasswordVisibility}
       />
     </View>
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0FFF0',
     width: '100%',
   },
-  
+
   background: {
     width: '100%',
     height: 400,

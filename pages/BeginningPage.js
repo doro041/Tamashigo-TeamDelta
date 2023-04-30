@@ -8,7 +8,7 @@ import { getAuth } from 'firebase/auth';
 
 const BeginningPage = ({ navigation }) => {
   console.log('BeginningPage');
- 
+
   const auth = getAuth()
 
   auth.onAuthStateChanged(async () => {
@@ -20,10 +20,11 @@ const BeginningPage = ({ navigation }) => {
 
       const ref = doc(firestore, 'tamashigoNames', auth.currentUser.uid)
 
-      navigation.navigate('Home', { name: await (await getDoc(ref)).get("name") });
+      setTimeout(async () => {
+        navigation.navigate('NameChar', { name: await (await getDoc(ref)).get("name") });
+      }, 10000); // 5 seconds delay
     }
   })
-
   
   return (
    
