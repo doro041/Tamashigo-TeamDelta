@@ -59,11 +59,7 @@ const Settings = ({navigation}) => {
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
       
-      <TouchableOpacity style={styles.settingRow}
-      onPress={() => navigation.navigate('AttributePage')}>
-        <Text style={styles.settingText}>Attributes</Text>
-        <Feather name="chevron-right" size={24} color="black" />
-      </TouchableOpacity>
+      
 
       <TouchableOpacity style={styles.settingRow}>
         <Text style={styles.settingText}>Change Theme</Text>
@@ -90,11 +86,6 @@ const Settings = ({navigation}) => {
         <Feather name="chevron-right" size={24} color="black" />
       </TouchableOpacity>
 
-      <TouchableOpacity  style={styles.settingRow}
-              onPress={() => navigation.navigate('Profile')}>
-        <Text style={styles.settingText}>Profile</Text>
-        <Feather name="chevron-right" size={24} color="black" />
-      </TouchableOpacity>
       <TouchableOpacity style={styles.settingRow}
         onPress={() => navigation.navigate('About')}>
         <Text style={styles.settingText}>About</Text>

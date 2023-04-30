@@ -89,14 +89,16 @@ const Login = ({ navigation }) => {
   }
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../assets/Part.png')} style={styles.background}>
-        <Image source={require('../assets/PandaHead.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
+      <ImageBackground source={require('../assets/PartsLog.png')} style={styles.background}>
+      <View style={{marginTop: 200}}>
+  <Image source={require('../assets/PandaHead.png')} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
+</View>
+
         <View style={styles.textContainer}>
           <Text style={styles.title}>Welcome Back!</Text>
           <Text style={styles.subtitle}>Login</Text>
         </View>
       </ImageBackground>
-
       <TextInput
         style={styles.input}
         value={email}
@@ -106,11 +108,12 @@ const Login = ({ navigation }) => {
         autoCapitalize="none"
       />
       <TextInput
-        style={styles.input}
+       
         value={password}
         onChangeText={(password) => setPassword(password)}
         placeholder="Password"
         secureTextEntry
+        style={[styles.input, {marginTop: 30}]}
       />
 
       <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation.navigate('ForgotPass')}>
@@ -145,31 +148,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F0FFF0',
-    
-  },
-  
-  background: {
     width: '100%',
-    height: '100%',
+  },
+  backgroundImage: {
+    width: '100%',
+    height: 490,
     justifyContent: 'center',
     alignItems: 'center',
+    borderBottomEndRadius: 50,
+    borderBottomStartRadius: 50,
+    borderRadius: 50, // Add this property
   },
+   
+   
+ 
   title: {
     fontSize: 30,
     fontWeight: 'bold',
     color: 'black',
-    marginBottom: 10,
-    marginTop: 1,
     alignContent: 'center',
+    marginBottom: 40,
+  },
+  textContainer:{
+    alignContent: 'center',
+    alignSelf: 'center',
+   
+
+
   },
   
   subtitle: {
     fontSize: 25,
     fontWeight: 'bold',
     color: 'black',
-    marginBottom: 20,
-    marginTop: 10,
+    marginBottom: 100,
     alignContent: 'center',
+    alignSelf: 'center',
   },
   
   buttonContainer: {
@@ -208,13 +222,13 @@ const styles = StyleSheet.create({
   },
   input: {
     width: 300,
-    marginBottom: 10,
+   
     backgroundColor: '#C8E6C9', // light green
     borderRadius: 20,
     fontSize: 18,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    marginTop:10,
+    marginTop:90,
     alignSelf: 'center',
     color: 'black',
     position: 'relative',
@@ -223,10 +237,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginRight:60,
     marginBottom: '20%',
+    color: '#013220',
 
   },
   forgotPasswordText: {
-    color:  'navy',
     fontWeight: 'bold',
     fontSize: 15,
 

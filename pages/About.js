@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const About = ({navigation}) => {
   
@@ -82,6 +83,9 @@ const About = ({navigation}) => {
               We are excited to share Tamashigo with you and hope that it will help you lead a more productive and fulfilling life. Please feel free to contact us with any questions or feedback you may have.
             </Text>
             
+            <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+              <Text style={{color: '#3F484A', fontWeight: 'bold', fontSize: 18, textAlign: 'center'}}>Go back</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

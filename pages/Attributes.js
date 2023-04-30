@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AttributesProgressBar from './AttributesProgressBar';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 const Attributes = ({
   productivityCoins,
   setProductivityCoins,
@@ -113,62 +114,62 @@ const Attributes = ({
   return (
     
     <View style={styles.parentContainer}>
+      
       <View style={styles.header}>
         <Text style={styles.headerText}>Attributes</Text>
       </View>
       <View style={styles.container}>
         <View>
-      {[
-        {
-          label: 'Productivity',
-          level: productivityLevel,
-          onPress: () =>
-            incrementAttribute(
-              setProductivityLevel,
-              setProductivityCoins,
-              productivityCoins,
-              maxLevel
-            ),
-        },
-        {
-          label: 'Health',
-          level: healthLevel,
-          onPress: () =>
-            incrementAttribute(
-              setHealthLevel,
-              setHealthCoins,
-              healthCoins,
-              maxLevel
-            ),
-        },
-        {
-          label: 'Finances',
-          level: financeLevel,
-          onPress: () =>
-            incrementAttribute(
-              setFinanceLevel,
-              setFinanceCoins,
-              financeCoins,
-              maxLevel
-            ),
-        },
-        {
-          label: 'Hobbies',
-          level: hobbyLevel,
-          onPress: () =>
-            incrementAttribute(
-              setHobbyLevel,
-              setHobbyCoins,
-              hobbyCoins,
-              maxLevel
-            ),
-            
-        },
-      ].map(({ label, level, onPress }) => (
-            <View key={label} style={styles.attributeContainer}>
-              <View style={styles.labelContainer}>
-                <Text style={styles.label}>{label}: {currentLevel}</Text>
-              </View>
+        {[
+  {
+    label: 'Productivity',
+    level: productivityLevel,
+    icon: 'briefcase',
+    onPress: () =>
+      incrementAttribute(
+        setProductivityLevel,
+        setProductivityCoins,
+        productivityCoins,
+        maxLevel
+      ),
+  },
+  {
+    label: 'Health',
+    level: healthLevel,
+    icon: 'heartbeat',
+    onPress: () =>
+      incrementAttribute(
+        setHealthLevel,
+        setHealthCoins,
+        healthCoins,
+        maxLevel
+      ),
+  },
+  {
+    label: 'Finance',
+    level: financeLevel,
+    icon: 'dollar',
+    onPress: () =>
+      incrementAttribute(
+        setFinanceLevel,
+        setFinanceCoins,
+        financeCoins,
+        maxLevel
+      ),
+  },
+  {
+    label: 'Hobbies',
+    level: hobbyLevel,
+    icon: 'gamepad',
+    onPress: () =>
+      incrementAttribute(setHobbyLevel, setHobbyCoins, hobbyCoins, maxLevel),
+  },
+      ].map(({ label, level, icon, onPress }) => (
+        <View key={label} style={styles.attributeContainer}>
+          <View style={styles.iconContainer}>
+            <Icon name={icon} size={24} color="#555" />
+          </View>
+        
               
               <View style={styles.progressContainer}>
                 <AttributesProgressBar
@@ -179,7 +180,7 @@ const Attributes = ({
                 />
               </View>
               <TouchableOpacity style={styles.plusButton} onPress={onPress}>
-                <Text style={styles.plusButtonText}>+</Text>
+              <Feather name="plus" size={24} color="#4A8AE7" />
               </TouchableOpacity>
             </View>
           ))}
@@ -194,7 +195,10 @@ const styles = StyleSheet.create({
   progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    position: 'relative',
+    position: 'absolute',
+    marginRight: '30%',
+    marginLeft: '5%',
+    left: '200%',
   },
   progressBar: {
     flexGrow: 1,
@@ -242,7 +246,7 @@ const styles = StyleSheet.create({
   labelContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 5,
+    marginRight: 0,
   },
   label: {
     minWidth: 85,
@@ -258,9 +262,10 @@ const styles = StyleSheet.create({
     borderRadius: 13,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 20,
-    height:20,
-    marginRight: 110,
+    position: 'absolute',
+    width: 25,
+    height:25,
+    left: '900%',
   },
   plusButtonText: {
     fontSize:20,

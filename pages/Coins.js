@@ -112,18 +112,29 @@ return (
   <View style={styles.column}>
     <View style={styles.outerContainer}>
       <View style={styles.titleContainer}>
-        <Image source={require('../assets/Panda.png')} style={styles.walletIcon} />
         <Text style={styles.title}>Wallet</Text>
       </View>
     </View>
     <View style={styles.row}>
       <View style={styles.container}>
-        <Text style={styles.rowText}>Productivity Coins: {productivityCoins}</Text>
-        <Text style={styles.rowText}>Health Coins: {healthCoins}</Text>
+        <View style={styles.rowText}>
+          <Image source={require('../assets/CoinProd.png')} />
+          <Text style={styles.coinText}>{productivityCoins}</Text>
+        </View>
+        <View style={styles.rowText}>
+          <Image source={require('../assets/CoinHealth.png')} />
+          <Text style={styles.coinText}>{healthCoins}</Text>
+        </View>
       </View>
       <View style={styles.container}>
-        <Text style={styles.rowText}>Finance Coins: {financeCoins}</Text>
-        <Text style={styles.rowText}>Hobby Coins: {hobbyCoins}</Text>
+        <View style={styles.rowText}>
+          <Image source={require('../assets/CoinFinance(1).png')} />
+          <Text style={styles.coinText}>{financeCoins}</Text>
+        </View>
+        <View style={styles.rowText}>
+          <Image source={require('../assets/CoinHobbies.png')} />
+          <Text style={styles.coinText}>{hobbyCoins}</Text>
+        </View>
       </View>
     </View>
   </View>
@@ -137,33 +148,37 @@ outerContainer: {
   paddingHorizontal: 10,
   alignItems: 'center',
   width: '100%',
-  height: '30%',
-  backgroundColor: '#000',
+  height: '20%',
+  backgroundColor: 'rgba(48, 210, 162, 0.5)',
   position: 'absolute',
-  top: 0,
+  top: 20,
   zIndex: 1,
 },
 titleContainer: {
   flexDirection: 'row',
   alignItems: 'center',
-  
+  justifyContent: 'center', // Add this line
+  flex: 1, // Add this line
 },
+
 title: {
   fontSize: 24,
   fontWeight: 'bold',
   color: '#fff',
+
 },
 container: {
   flexDirection: 'column',
   backgroundColor: '#fcfcf2',
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
-  elevation: 5,
-  marginBottom: 30,
+  // shadowColor: '#000',
+  // shadowOffset: { width: 0, height: 2 },
+  // shadowOpacity: 0.25,
+  // shadowRadius: 3.84,
+  // elevation: 5,
+   marginBottom: 30,
   borderWidth: 1,
-  padding: 5
+   padding: 5,
+  width: '50%'
 },
 column: {
   flexDirection: 'column',
@@ -177,12 +192,16 @@ row: {
 },
 rowText: {
   width: '100%',
+  top: 10
 },
 walletIcon: {
   width: 30,
   height: 50,
-  marginRight: 5,
 },
+coinText: {
+  textAlign: 'right',
+  top: -27
+}
 });
 
 export default Coins;

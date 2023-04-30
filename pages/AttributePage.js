@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Button, ImageBackground } from 'react-native';
 import Attributes from './Attributes';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
 import Coins from './Coins';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Settings from './Settings';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { CommonActions } from '@react-navigation/native';
 
 const AttributePage = () => {
     const navigation = useNavigation();
@@ -22,6 +23,46 @@ const AttributePage = () => {
     console.log('AttributePage.js: ', productivityCoins, healthCoins, financeCoins, hobbyCoins)
     console.log("TaskItems in Attribute.js: ", taskItems)
     console.log("CompletedTask in Attribute.js: ", completedTask)
+    const [currentUser, setCurrentUser] = useState(null);
+    const auth = getAuth();
+  
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        setCurrentUser(user);
+      });
+      return unsubscribe;
+    }, [auth]);
+  
+    // Function to handle the log out button press
+    const handleLogout = async () => {
+      try {
+        await auth.signOut();
+        console.log('Log out successful!');
+        setCurrentUser(null);
+        // Reset the navigation stack and go to the login screen
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              { name: 'Login' },
+            ],
+          })
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    // Custom header component with a logout button
+    const HeaderComponent = () => {
+      return (
+        <View style={styles.header}>
+          {currentUser && (
+            <Button title="Log out" onPress={handleLogout} />
+          )}
+        </View>
+      );
+    };
     
 
 
@@ -82,7 +123,21 @@ const AttributePage = () => {
   };
   return (
     <View style={styles.container}>
-      
+
+      <View style={styles.content}>
+
+      <HeaderComponent />
+
+        {currentUser ? (
+          <View>
+            <Text style={styles.text}>Welcome, {currentUser.email}!</Text>
+          </View>
+        ) : (
+          <View>
+            <Text style={styles.text}>You are not logged in.</Text>
+            <Button title="Log in" onPress={() => navigation.navigate('Login')} />
+          </View>
+        )}
        <Coins
   taskItems={taskItems}
   setTaskItems={setTaskItems}
@@ -96,6 +151,7 @@ const AttributePage = () => {
   hobbyCoins={hobbyCoins}
   setHobbyCoins={setHobbyCoins}
 />
+
 <Attributes  productivityCoins={productivityCoins}  
 setProductivityCoins={setProductivityCoins}  
 healthCoins={healthCoins}  
@@ -104,28 +160,63 @@ financeCoins={financeCoins}
 setFinanceCoins={setFinanceCoins}  
 hobbyCoins={hobbyCoins}  
 setHobbyCoins={setHobbyCoins}/>
-      <Footer navigation={navigation} />
+      </View>
+
+      <Footer	
+        taskItems={taskItems}	
+        deadlines={deadlines}	
+        valueList={valueList}	
+        categoriesList={categoriesList}	
+      />	
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    title: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginBottom: 24,
-    },
-    subtitle: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 24,
-    },
+  container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+  title: {
+      fontSize: 30,
+      fontWeight: 'bold',
+      marginBottom: 12,
+  },
+  subtitle: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 12,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 10,
+    justifyContent: 'flex-start',
+  },
+  text: {
+    fontSize: 16,
+    marginBottom: 50,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+ 
 });
+
+
+
+
 
 export default AttributePage;

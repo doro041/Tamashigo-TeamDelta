@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {AntDesign} from 'react-native-vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -18,6 +19,12 @@ const Header = ({ title, onSettingsPress = () => {} }) => {
         <Icon name="settings-outline" size={24} color="black" />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
+
+    <View style = {{flexDirection: 'row', justifyContent: 'flex-end', flex: 1}}>
+      <TouchableOpacity onPress={() => navigation.navigate('AttributePage')}>
+      <Icon name="person-circle-outline" size={24} color="black" />
+      </TouchableOpacity>
+      </View>
     </View>
   );
 };
