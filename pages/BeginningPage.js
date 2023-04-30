@@ -1,12 +1,28 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground,Animated  } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, Animated } from 'react-native';
+import { firestore } from '../firebase';
+import { doc, getDoc } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth';
 
 
 const BeginningPage = ({ navigation }) => {
   console.log('BeginningPage');
  
+  const auth = getAuth()
 
+  auth.onAuthStateChanged(async () => {
+
+    if (auth.currentUser) {
+      console.log("User already logged in, continuing")
+
+      const auth = getAuth()
+
+      const ref = doc(firestore, 'tamashigoNames', auth.currentUser.uid)
+
+      navigation.navigate('Home', { name: await (await getDoc(ref)).get("name") });
+    }
+  })
 
   
   return (
