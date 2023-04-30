@@ -3,14 +3,25 @@ import { View, Text, TextInput, StyleSheet, Button, ImageBackground, Image } fro
 import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { getAuth } from 'firebase/auth'
+import { firestore } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore'
 
 
- const NameChar = () => {
+const NameChar = () => {
   const [name, setName] = useState('');
   const navigation = useNavigation();
+ 
+  const onPress = async () => {
+    const auth = getAuth()
 
-  const onPress = () => {
-    navigation.navigate('Home', { name });
+    const ref = doc(firestore, 'tamashigoNames', auth.currentUser.uid)
+
+    await setDoc(ref, {
+      name: name
+    })
+
+    navigation.navigate('Home', { name, onboarding: true });
   };
 
   return (

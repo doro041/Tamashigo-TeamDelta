@@ -23,6 +23,9 @@ const Home = ({ route }) => {
   useEffect(() => {
     if (route.params && route.params.name) {
       setName(route.params.name);
+      // set onboarding to false, except when coming from the setup screen (NameChar)
+      console.info(route.params)
+      setShowOnboarding(route.params.onboarding || false);
     }
   }, [route.params]);
 
@@ -55,7 +58,7 @@ const Home = ({ route }) => {
 
 
 
-  const [showOnboarding, setShowOnboarding] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
 
 
@@ -265,7 +268,6 @@ const [startTooltip, setStartTooltip] = useState(false);
           onDone={() => setShowOnboarding(false)}
           onSkip={() => setShowOnboarding(false)}
           pages={onboardingPages}
-
         />
       
       ) : (
