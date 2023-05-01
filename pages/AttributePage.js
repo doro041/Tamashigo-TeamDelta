@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Button, ImageBackground, ScrollView } from 'react-native';
-import Attributes from './Attributes';
+import { View, Text, StyleSheet, Button, ImageBackground } from 'react-native';
+import Attributes from '../components/Attributes';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
-import Coins from './Coins';
+import Coins from '../components/Coins';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { CommonActions } from '@react-navigation/native';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 
 const Profile = () => {

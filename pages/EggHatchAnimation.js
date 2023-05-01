@@ -126,9 +126,7 @@ useEffect(() => {
             </View>	
         </Animated.View >	
        
-        <TouchableOpacity onPress={handlePandaPress} style={styles.button}>
-  <FontAwesome name="arrow-right" size={24} color="black" />
-</TouchableOpacity>
+     
 
     </View >	
 );	

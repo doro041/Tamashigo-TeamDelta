@@ -17,6 +17,7 @@ const ForgotPass = ({ navigation }) => {
     }
   };
   const handleGoBack = () => {
+    // Go back on the navigation stack when the back button is pressed - which in our case is Login screen
     navigation.goBack();
   };
   return (

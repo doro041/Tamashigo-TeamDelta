@@ -1,36 +1,42 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, Animated } from 'react-native';
-import { firestore } from '../firebase';
-import { doc, getDoc } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
+import { firestore } from '../firebase'; // Importing the Firebase Firestore module
+import { doc, getDoc } from 'firebase/firestore' // Importing the necessary Firestore functions
+import { getAuth } from 'firebase/auth'; // Importing the Firebase authentication module
 
-
+// Defining the BeginningPage component
 const BeginningPage = ({ navigation }) => {
-  console.log('BeginningPage');
 
-  const auth = getAuth()
+  console.log('BeginningPage'); // Logging a message to the console
 
+  const auth = getAuth() // Getting the authentication object
+
+  // Setting up a listener for authentication state changes
   auth.onAuthStateChanged(async () => {
 
+    // If a user is already logged in
     if (auth.currentUser) {
       console.log("User already logged in, continuing")
 
-      const auth = getAuth()
+      const auth = getAuth() // Getting the authentication object again (unnecessary, as it was already defined above)
 
+      // Getting the user's name from the Firestore database
       const ref = doc(firestore, 'tamashigoNames', auth.currentUser.uid)
 
+      // Navigating to the NameChar screen after a delay
       setTimeout(async () => {
         navigation.navigate('NameChar', { name: await (await getDoc(ref)).get("name") });
-      }, 10000); // 5 seconds delay
+      }, 10000); // 10 second delay
     }
   })
   
+  // Rendering the component
   return (
-   
+    // The main container
     <View style={styles.container}>
-      
+ 
       <ImageBackground source={require('../assets/Bg.png')} style={styles.background}>
+     
         <Image source={require('../assets/logo1.png')} style={{ margin: '10%', width: 200, height: 300, resizeMode: 'contain' }} />
         <Text style={styles.title}>Welcome to Tamashigo</Text>
         <Text style={styles.subtitle}>Where productivity meets fun!</Text>
@@ -41,10 +47,12 @@ const BeginningPage = ({ navigation }) => {
         <TouchableOpacity
           style={[styles.button, { backgroundColor: 'black' }]}
           onPress={() => navigation.navigate('Login')}
+
         >
-         
+
           <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
+       
         <TouchableOpacity
           style={[styles.button, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1, color: 'black',fontSize: 20, fontWeight: 'bold' }]}
           onPress={() => navigation.navigate('SignUp')}
@@ -55,6 +63,8 @@ const BeginningPage = ({ navigation }) => {
     </View>
   );
 };
+
+// Exporting the component and styling it using react native stylesheet
 
 const styles = StyleSheet.create({
   container: {

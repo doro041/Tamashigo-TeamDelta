@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView , Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Modal, Alert, Image, ImageBackground} from 'react-native';
-import Timer from './Timer';
+import Timer from '../components/Timer';
 import {Feather, FontAwesome, MaterialCommunityIcons, MaterialIcons, Entypo, Ionicons } from 'react-native-vector-icons';
 import SelectDropdown from 'react-native-select-dropdown';
-import TaskItem from './TaskItem'; // Import the TaskItem component
+import TaskItem from '../components/TaskItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CalendarModal from './CalendarModal';
+import CalendarModal from '../components/CalendarModal';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Coins from './Coins';
+import Coins from '../components/Coins';
+
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { doc, getDoc, setDoc } from 'firebase/firestore';

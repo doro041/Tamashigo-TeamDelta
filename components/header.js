@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {AntDesign} from 'react-native-vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Modal, StyleSheet, Button } from 'react-native';
-import MyCalendar from './MyCalendar';
+import MyCalendar from '../components/MyCalendar';
 
 const CalendarModal = ({ visible, setVisible, setDeadline }) => {
   return (

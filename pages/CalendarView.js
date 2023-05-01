@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ScrollView, StyleSheet } from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import TaskItem from './TaskItem';
+import TaskItem from '../components/TaskItem';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';

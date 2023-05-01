@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Text, StyleSheet, View, Image  } from 'react-native';
 import { firestore } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
@@ -46,6 +46,8 @@ const Coins = ({ taskItems = [], setTaskItems, setCompletedTask, productivityCoi
     else if (timePassedPercent<0) {
       coinIncrement *=0.5;
     }
+
+    // Increment the appropriate coin based on the category of the completed task
     
     switch (category) {
       case 'Productivity':
@@ -64,7 +66,7 @@ const Coins = ({ taskItems = [], setTaskItems, setCompletedTask, productivityCoi
       default:
         break;
     }
-    
+  // Remove the completed task from the taskItems array
     let itemsCopy = [...taskItems];
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy);
@@ -82,7 +84,7 @@ useEffect(() => {
     console.log("Saving coins.")
   
     try {
-      // TODO: the variables to be saved are always 0?
+      // Save coins to storage
       const auth = getAuth()
       const ref = doc(firestore, 'coins', auth.currentUser.uid)
       await setDoc(ref, {

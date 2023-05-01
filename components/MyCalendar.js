@@ -4,34 +4,45 @@ import { Calendar } from 'react-native-calendars';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const MyCalendar = ({ setDeadline }) => {
+  
   const [selectedDate, setSelectedDate] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(new Date().toISOString().slice(0,7));
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-    const year = date.getFullYear().toString().substr(-2);
-    return `${day}/${month}/${year}`;
-  };
 
+  // format the date to dd/mm/yyyy
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const year = String(date.getFullYear()).slice(-2);
+  return `${day}/${month}/${year}`;
+};
+
+  // handle a day being pressed on the calendar
   const handleDayPress = (day) => {
     setSelectedDate(day.dateString);
     setDeadline(day.dateString);
   };
 
+ // handle a month being pressed on the calendar
   const handleMonthChange = (month) => {
     setCurrentMonth(month.dateString);
   };
 
+// show the time picker modal
   const showTimePicker = () => {
     setTimePickerVisibility(true);
   };
 
+
+
   const hideTimePicker = () => {
     setTimePickerVisibility(false);
   };
+
+
+   // handle the time being confirmed in the time picker modal
 
   const handleTimeConfirm = (time) => {
     if (selectedDate) {
@@ -43,6 +54,10 @@ const MyCalendar = ({ setDeadline }) => {
     hideTimePicker();
   };
 
+
+
+  // handle the time being changed in the time picker modal
+
   const handleTimeChange = (event) => {
     if (selectedDate) {
       const [hours, minutes] = event.target.value.split(':');
@@ -53,6 +68,7 @@ const MyCalendar = ({ setDeadline }) => {
     }
   };
 
+  // render the calendar
   return (
     <View style={styles.container}>
       <Calendar 

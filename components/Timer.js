@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Button, View, Text, TouchableOpacity } from 'react-native';
+import {View, Text, TouchableOpacity } from 'react-native';
 
 import { StyleSheet } from 'react-native';
 
