@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Button, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Button, ImageBackground, ScrollView } from 'react-native';
 import Attributes from './Attributes';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
@@ -10,7 +10,7 @@ import { CommonActions } from '@react-navigation/native';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 
-const AttributePage = () => {
+const Profile = () => {
     const navigation = useNavigation();
 
     const [taskItems, setTaskItems] = useState([]);
@@ -125,20 +125,25 @@ const AttributePage = () => {
     }
   };
   return (
+   
     <View style={styles.container}>
-
+      
       <View style={styles.content}>
 
       <HeaderComponent />
 
         {currentUser ? (
           <View>
+
             <Text style={styles.text}>Welcome, {currentUser.email}!</Text>
+          
           </View>
         ) : (
           <View>
             <Text style={styles.text}>You are not logged in.</Text>
             <Button title="Log in" onPress={() => navigation.navigate('Login')} />
+            <ImageBackground source={require('../assets/Profile.png')} style={styles.background}>
+            </ImageBackground>
           </View>
         )}
        <Coins
@@ -172,10 +177,17 @@ setHobbyCoins={setHobbyCoins}/>
         categoriesList={categoriesList}	
       />	
     </View>
+  
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+      flex: 1,
+      resizeMode: 'cover',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
   container: {
       flex: 1,
       backgroundColor: '#fff',
@@ -196,6 +208,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
+
   },
   text: {
     fontSize: 16,
@@ -210,10 +225,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    width: '100%',
+    margin: 20,
+  
+
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    margin: 20,
   },
  
 });
@@ -222,4 +242,4 @@ const styles = StyleSheet.create({
 
 
 
-export default AttributePage;
+export default Profile;

@@ -114,11 +114,11 @@ const Attributes = ({
   return (
     
     <View style={styles.parentContainer}>
-      
       <View style={styles.header}>
         <Text style={styles.headerText}>Attributes</Text>
       </View>
       <View style={styles.container}>
+        
         <View>
         {[
   {
@@ -192,13 +192,22 @@ const Attributes = ({
 
 
 const styles = StyleSheet.create({
+  parentContainer:{
+    width:'100%',
+    height: '100%',
+    alignItems:'center',
+    borderRadius:30,
+    justifyContent:'center',
+   
+  },
   progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
-    marginRight: '30%',
+    marginRight: '3%',
     marginLeft: '5%',
-    left: '200%',
+    left: '100%',
+   
   },
   progressBar: {
     flexGrow: 1,
@@ -209,49 +218,56 @@ const styles = StyleSheet.create({
   parentContainer: {
     width: '100%',
     alignItems: 'center',
-  },
-  header: {
-    // backgroundColor: 'rgba(240, 140, 240, 0.7)',
-    // paddingVertical: 5,
-    // paddingHorizontal: 10,
-    // alignItems: 'center',
-    // width: '100%',
-    // height:'25%',
-    // backgroundColor: '#000',
-    // justifyContent: 'center',
-    // textAlign: 'center',
-  },
-  headerText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    // color: '#fff',
-    // fontSize:'45%',
+    borderRadius: 30,
+   
 
   },
+  header: {
+    padding: 5, 
+    width: '70%',
+    height: '25%',
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    textAlign: 'center',
+    borderRadius: 30,
+    alignSelf: 'center',
+    alignItems: 'center'
+  },
+  headerText: {
+    fontWeight: 'bold',
+    color: '#fff',
+    fontSize: 20, // Change this line to use a numeric value instead of a percentage
+    textAlign: 'center', // This line is already here, and it should center the text horizontally
+  },
+  
+
   container: {
     backgroundColor: '#fcfcf2',
     padding: 15,
     width:'100%',
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 3.84,
-    // elevation: 5,
+     shadowColor: '#000',
+     shadowOffset: { width: 0, height: 2 },
+     shadowOpacity: 0.25,
+     shadowRadius: 3.84,
+     elevation: 5,
   },
   attributeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+    marginRight: '90%',
   },
   labelContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: 0,
+    
   },
   label: {
     minWidth: 85,
     textAlign: 'right',
     marginRight: 5,
+   
   },
   progressBar: {
     flex: 1,
@@ -272,6 +288,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     color: 'white',
+    borderWidth:1,
+    borderColor:'#000',
   },
 });
 

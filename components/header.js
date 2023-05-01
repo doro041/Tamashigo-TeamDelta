@@ -21,7 +21,7 @@ const Header = ({ title, onSettingsPress = () => {} }) => {
       <Text style={styles.title}>{title}</Text>
 
     <View style = {{flexDirection: 'row', justifyContent: 'flex-end', flex: 1}}>
-      <TouchableOpacity onPress={() => navigation.navigate('AttributePage')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
       <Icon name="person-circle-outline" size={24} color="black" />
       </TouchableOpacity>
       </View>

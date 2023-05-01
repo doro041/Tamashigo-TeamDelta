@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   level: {
-    // fontWeight: 'bold',
-    // fontWeight:'90%',
+    fontWeight: 'bold',
+     fontWeight:'90%',
   },
 });
 

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Profiler } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import NameChar from "./pages/Namechar";
+import NameChar from "./pages/NameChar";
 import SignUp from "./pages/SignUp";
 import ForgotPass from "./pages/ForgotPass";
 import BeginningPage from './pages/BeginningPage';
@@ -15,7 +15,6 @@ import EggHatchAnimation from './pages/EggHatchAnimation';
 import Settings from './pages/Settings';
 import About from './pages/About';
 import Shop from './pages/Shop';
-import AttributePage from './pages/AttributePage';
 import TermsandConditions from './components/TermsandConditions';
 import { CopilotProvider } from "react-native-copilot";
 const Stack = createStackNavigator();
@@ -43,7 +42,7 @@ const StackNavigator = ({ user }) => {
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen name="About" component={About} />
         <Stack.Screen name="Shop" component={Shop} />
-        <Stack.Screen name="AttributePage" component={AttributePage} />
+  
        
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'modal' }}>

@@ -5,18 +5,14 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Feather, Ionicons} from 'react-native-vector-icons';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { useRoute } from '@react-navigation/native';
-import LevelUp from '../components/LevelUp';
+
 import Onboarding from 'react-native-onboarding-swiper';
 import Tooltip from 'react-native-walkthrough-tooltip';
 
 const Home = ({ route }) => {
   // In the Home screen
   const [level, setLevel] = useState(1);
-  const handleLevelUp = () => {
-    setLevel(level + 1);
-  };
- 
+
   // Initialize the name state with a fallback value
   const [name, setName] = useState('');
   // Update the name state when route.params change
@@ -40,11 +36,20 @@ const Home = ({ route }) => {
     },
     {
       backgroundColor: '#FF8E53',
-      image: <Image source={require('../assets/Home.png')}
-      style = {{marginTop: -100}} />,
+      image: (
+        <Image
+          source={require('../assets/screenymeeny.png')}
+          style={{
+            width: 250, // Set the width of the image
+            height: 520, // Set the height of the image
+            marginTop: -100,
+          }}
+        />
+      ),
       title: 'Our Features',
       subtitle: 'Manage your tasks, events, and plans all in one place.',
     },
+    
     {
       backgroundColor: '#4FC0E8',
       image: <Image source={require('../assets/SadPanda.png')} 
@@ -131,12 +136,23 @@ const Home = ({ route }) => {
   const [itemLocation, setItemLocation] = useState({});
   const [pandaImage, setPandaImage] = useState(require('../assets/Panda.png'));
   const [timer, setTimer] = useState(0);
+  const [clickCount, setClickCount] = useState(0);
+  const [showTaskPrompts, setShowTaskPrompts] = useState(false);
+
+
   
   const handlePromptChange = () => {
-    const randomIndex = Math.floor(Math.random() * taskPrompts.length);
-    setTaskPrompt(taskPrompts[randomIndex]);
-  }
-   
+    setClickCount((prevCount) => prevCount + 1);
+  
+    if (clickCount >= 1) {
+      const randomIndex = Math.floor(Math.random() * taskPrompts.length);
+      setTaskPrompt(taskPrompts[randomIndex]);
+    }
+  };
+  
+  
+
+  
   useFocusEffect(
     React.useCallback(() => {
       loadData();
@@ -146,10 +162,10 @@ const Home = ({ route }) => {
   useEffect(() => {
     const updateTimer = () => {
       console.log('Timer:', timer)
-      if (timer >= 10 && timer < 20) {
+      if (timer >= 100000 && timer < 200000) {
         setPandaImage(require('../assets/SadPanda.png'));
       
-      } else if (timer >= 20) {
+      } else if (timer >= 200000 ) {
         setPandaImage(require('../assets/SickPanda.png'));
       } else {
         setPandaImage(require('../assets/Panda.png'));
@@ -276,17 +292,17 @@ const [startTooltip, setStartTooltip] = useState(false);
       <Tooltip
         isVisible={showHeaderTooltip}
         content={<Text>Tap here to see your profile and settings</Text>}
-        contentStyle={{ marginTop: 50, width: '100%'}}
+        contentStyle={{ marginTop: 120, width: '100%', height: 35}}
         onClose={() => {setShowHeaderTooltip(false); setShowPandaTooltip(true);}}
         allowChildInteraction={false} >
           <Header/>
       </Tooltip>	
       <Header/>
-      {/* <Text style={styles.text}>Welcome {name}!</Text>	 */}
+       
       	
       <View style={styles.container}>	
       <TouchableOpacity onPress={() => setShowHeaderTooltip(true)}>
-  <View style={{alignSelf: 'flex-end', marginTop: 80, marginBottom:-60}}>
+  <View style={{alignSelf: 'flex-end', marginTop: 75, marginBottom:-60, marginRight: 35}}>
   <Feather name="help-circle" size={25} color="#000000" />
   </View>
 </TouchableOpacity>
@@ -295,7 +311,7 @@ const [startTooltip, setStartTooltip] = useState(false);
         
         <View style={{ position: 'absolute', top: 0, right: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: '100%', width: 100 }}>
   <Image source={require('../assets/egg.png')} style={{ width: 100, height: '100%', resizeMode: 'contain' }} />
-  <Text style={{ position: 'absolute', textAlign: 'center', bottom: 30, color: 'white' }}>{level}</Text>
+  <Text style={{ position: 'absolute', textAlign: 'center', bottom: 30, color: 'black',fontWeight:'bold' }}>{level}</Text>
 </View>
 
           {/* <Text style={{ position: 'absolute', bottom:30, right: 45 }}>  
@@ -314,10 +330,15 @@ const [startTooltip, setStartTooltip] = useState(false);
     contentStyle = {{width: '100%'}}
     onClose={() => {setShowPandaTooltip(false); setShowPlusTooltip(true);}}
     allowChildInteraction={false}>
-    
-    <TouchableOpacity onPress={handlePromptChange}>	
+    {level >=2 ? (    
+    <TouchableOpacity onPress={handlePromptChange}>    
+      <Image source={require('../assets/bigpanda.png')} style={{ width: 200, height: 300, resizeMode: 'contain' }} />    
+    </TouchableOpacity>    
+  ) : (    
+    <TouchableOpacity onPress={handlePromptChange}>    
             <Image source={pandaImage} style={{ width: 200, height: 300, resizeMode: 'contain' }} />
-    </TouchableOpacity>	
+    </TouchableOpacity>    
+  )}    
   
   </Tooltip>
           </View>	
@@ -332,6 +353,7 @@ const [startTooltip, setStartTooltip] = useState(false);
   <Tooltip
     isVisible={showPlusTooltip}
     content={<Text>Click here to add a new task!</Text>}
+    contentStyle={{ bottom: -400, right: -100}}
     onClose={() => {setShowPlusTooltip(false); setShowFooterTooltip(true);}}
     allowChildInteraction={false}>
       
@@ -342,10 +364,10 @@ const [startTooltip, setStartTooltip] = useState(false);
     </TouchableOpacity>
   </Tooltip>
 </View>
-
         <View style={styles.balloon}>	
-          <Text style={[styles.text, styles.taskPrompts]} numberOfLines={2}>{taskPrompt}</Text>	
-          <Text style={styles.text}>Hi, my name is {name}!</Text>	
+        {clickCount === 1 && <Text style={styles.text}>Hi, my name is {name}!</Text>}
+        {clickCount >1  && <Text style={[styles.text, styles.taskPrompts]} numberOfLines={3}>{taskPrompt}</Text>	}
+          
         </View>	
         
       </View>	
@@ -378,6 +400,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '100%',
     height: '100%',
+    backgroundColor:'#8be0ba'
   },
   character: {
     position: 'absolute',
@@ -393,25 +416,29 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
     borderRadius: 20,
     padding: 10,
-    width: 200,
+    width: '80%',
     height: 100,
-    marginTop: '-40%',    
+    marginTop: '10%',    
 
     alignItems: 'center',
     justifyContent: 'center',
   },
   button: {
-    
-      width: 60,
-      height: 60,
-      backgroundColor: '#FFF',
-      borderRadius: 60,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderColor: '#C0C0C0',
-      borderWidth: 1,
-      alignSelf: 'center',
-    },
+    bottom: -400,
+    right: -150,
+    width: 60,
+    height: 60,
+    backgroundColor: '#FFF',
+    borderRadius: 60,
+    alignItems: 'center',
+    borderColor: '#C0C0C0',
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    zIndex: 0,
+  },
     pandaContainer: {
       position: 'absolute',
       bottom: 150,

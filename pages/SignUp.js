@@ -5,13 +5,9 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { getAuth, fetchSignInMethodsForEmail, updateProfile } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {  Alert } from 'react-native';
-
-
-
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Input } from 'react-native-elements';
 import { CheckBox } from 'react-native-elements';
-import { AntDesign } from '@expo/vector-icons';
+
 
 
 

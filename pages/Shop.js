@@ -4,8 +4,7 @@ import Footer from '../components/Footer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
 
-
-
+// Define the items available for purchase in the shop
 const items = [
   {id: 1, name: 'EyeMask', Level: 1, image: require('../assets/EyeMask.png'), width: 100, height: 80, isLocked:true},
   {id: 2, name: 'Halo', Level: 2, image: require('../assets/Halo.png'), width: 100, height: 100, isLocked:true},
@@ -28,11 +27,19 @@ const Shop = () => {
   const [itemLocation, setItemLocation] = useState({});
   const [updatedItems, setUpdatedItems] = useState([]);
   const [currentLevel, setCurrentLevel] = useState(1);
+
   console.log("Current Level: ", currentLevel);
+
+  // Load data on initial render
   useEffect(() => {
     loadData();
   }, []);
 
+  // Load current level on initial render
+  useEffect(() => {
+    getData('currentLevel', setCurrentLevel);
+    console.log("Current Level USEEFFECT: ", currentLevel)
+  }, []);
 
   const getData = async (key, setter) => {
     try {
@@ -98,6 +105,8 @@ const Shop = () => {
     }
   };
 
+
+  // Determine if an item is locked based on its id and the current level
   const isItemLocked = (item, currentLevel) => {
     return item.id > currentLevel;
   };
@@ -109,9 +118,8 @@ const Shop = () => {
     }));
     setUpdatedItems(updatedItems);
   }, [currentLevel]);
+  //handlePress function to select an item
   
-  
-
   const handlePress = (item) => {
     setSelectedItem(item);
 
@@ -151,7 +159,7 @@ const Shop = () => {
     setItemLocation(location);
 
   };
-
+// handleBuy function to buy an item
   const handleBuy = async () => {
     try {
       await AsyncStorage.setItem("selectedShopItem", JSON.stringify(selectedItem));
@@ -159,7 +167,8 @@ const Shop = () => {
       console.error("Error saving selected shop item:", error);
     }
   };
-  
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Shop</Text>
@@ -193,7 +202,7 @@ const Shop = () => {
                 source={item.image}
               />
               <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemPrice}>{item.price} coins</Text>
+              <Text style={styles.itemPrice}>{item.price} </Text>
             </TouchableOpacity>
           ))}
         </View>

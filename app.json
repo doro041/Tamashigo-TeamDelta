@@ -18,7 +18,8 @@
     "slug": "rn",
     "name": "rn",
     "sdkVersion": "48.0.0",
-    "entryPoint": ".vscode/exponentIndex.js"
+    "version": "1.0.0",
+    "orientation": "portrait"
   },
   "name": "rn"
 }

@@ -49,8 +49,7 @@ const Pomodoro = () => {
         }
       );
     };
-    
-  
+
     const loadCounts = async () => {
         try {
             const storedPomodoroCount = await AsyncStorage.getItem('pomodoroCount');
@@ -105,10 +104,9 @@ const Pomodoro = () => {
     
     const minuteString = currentMinute.toString().padStart(2, "0");
     const secondString = currentSeconds.toString().padStart(2, "0");
-    const timing = `${minuteString}:${secondString}`;
-    const today = new Date().toISOString().substr(0, 10);
-    const todaysCount = todaysPomodoros.filter(date => date.toISOString().substr(0, 10) === today).length;
 
+    const timing = `${minuteString}:${secondString}`;
+ 
     useEffect(() => {
         loadData();
     }, []);

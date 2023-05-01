@@ -186,10 +186,12 @@ const VerticalCalendar = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8BC34A80',
+    backgroundColor: '#d2f8dc',
+
   },
   calendarContainer: {
     flex: 1,
+    
   },
   calendarList: {
     flexGrow: 1,
