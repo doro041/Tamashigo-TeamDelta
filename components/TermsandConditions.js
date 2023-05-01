@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 const TermsAndConditions = () => {
+ 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Terms and Conditions</Text>

@@ -6,6 +6,9 @@ import { Alert } from 'react-native';
 
 
 const Pomodoro = () => {
+// minutes, seconds, and start are all states that are used to keep track of the timer and whether it is running or not
+
+
     const [currentMinute, setCurrentMinute] = useState(5);
     const [currentSeconds, setCurrentSecond] = useState(0);
     const [start, setStart] = useState(false);

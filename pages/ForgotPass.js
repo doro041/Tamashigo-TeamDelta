@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity,Image,ImageBackgrou
 import { sendPasswordResetEmail, getAuth } from 'firebase/auth';
 import { Ionicons } from '@expo/vector-icons';
 const ForgotPass = ({ navigation }) => {
+  // email, errorMessage, resetSent are state variables, 
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [resetSent, setResetSent] = useState(false);

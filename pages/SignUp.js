@@ -16,6 +16,8 @@ import { CheckBox } from 'react-native-elements';
 
 
 const SignUp = ({ navigation }) => {
+
+  // Define the state for the name, email, password, confirm password, and error message
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

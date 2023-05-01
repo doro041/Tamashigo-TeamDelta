@@ -6,17 +6,16 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
 const Login = ({ navigation }) => {
-  console.log('Login component rendered');
+// email, password, user, isLoading are state variables
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+// auth is a variable that stores the authentication object
   const auth = getAuth();
-
+// useEffect is a hook that runs when the component is mounted
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (loggedInUser) => {
-      console.log('onAuthStateChanged triggered', loggedInUser);
       if (loggedInUser) {
         // Store the user in AsyncStorage
         try {
@@ -38,7 +37,7 @@ const Login = ({ navigation }) => {
       unsubscribe();
     };
   }, []);
-
+// check user is a function that checks if the user is logged in
   useEffect(() => {
     const checkUser = async () => {
       try {
@@ -58,7 +57,6 @@ const Login = ({ navigation }) => {
     try {
       // Check if the user is already logged in
       if (user) {
-        console.log('User is already logged in');
         navigation.navigate('EggHatchAnimation');
         return;
       }
@@ -73,7 +71,6 @@ const Login = ({ navigation }) => {
       // Update the local user state
       setUser(loggedInUser);
 
-      console.log('User logged in successfully');
       navigation.replace("EggHatchAnimation");
     } catch (error) {
       console.log(error);

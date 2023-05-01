@@ -18,6 +18,7 @@ const items = [
 ];
 
 const Shop = () => {
+  // Define state variables: selected elements, task items, deadlines, value list, categories list, number of days, item location, updated items, and current level
   const [selectedItem, setSelectedItem] = useState(null);
   const [taskItems, setTaskItems] = useState([]);
   const [deadlines, setDeadlines] = useState([]);
@@ -41,6 +42,7 @@ const Shop = () => {
     console.log("Current Level USEEFFECT: ", currentLevel)
   }, []);
 
+// Load data from AsyncStorage
   const getData = async (key, setter) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
@@ -51,12 +53,14 @@ const Shop = () => {
       console.log('Error getting data:', error);
     }
   };
-  
+  // Save data to AsyncStorage
   useEffect(() => {
     getData('currentLevel', setCurrentLevel);
     console.log("Current Level USEEFFECT: ", currentLevel)
   }, []);
 
+
+  // Load data from AsyncStorage
   const loadData = async () => {
     try {
       const storedTaskItems = await AsyncStorage.getItem("taskItems");
@@ -167,6 +171,7 @@ const Shop = () => {
       console.error("Error saving selected shop item:", error);
     }
   };
+
 
 
   return (

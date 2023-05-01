@@ -6,7 +6,7 @@ import TaskItem from '../components/TaskItem';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-
+//An object that contains colors for different categories.
 const selectedCategoryColors = {
   'Productivity': '#dce4ef',
   'Health': '#94bfa2',
@@ -14,6 +14,8 @@ const selectedCategoryColors = {
   'Hobbies': '#f9dede',
 };
 
+
+// An object that contains icons for different categories.
 const priorities = ['Low', 'Medium', 'High', 'Critical'];
 
 const priorityValues = [
@@ -23,10 +25,15 @@ const priorityValues = [
   {index: 3, label: priorities[3], value: <Feather name="zap" size={24} color="black" />},
 ];
 
+
+// get the year and month for the current date
 const currentYear = new Date().getFullYear();
 const years = [currentYear];
 
 
+
+
+// months 
 
 
 const months = [
@@ -45,6 +52,8 @@ const months = [
 
   
 ];
+
+// get the number of days in the current month
 
 const generateDays = (numDays, tasks, taskDates, priorities, categories) => {
   let result = [];
@@ -72,7 +81,7 @@ const generateDays = (numDays, tasks, taskDates, priorities, categories) => {
       currentMonth++;
       currentDate = 1;
     }
-
+// get the date string in the format "dd/mm/yyyy"
     const date = currentDate.toString();
     const day = new Date(year, currentMonth, currentDate).toLocaleDateString('en-GB', { weekday: 'short' });
     const dateString = new Date(year, currentMonth, currentDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' });
@@ -110,7 +119,7 @@ const generateDays = (numDays, tasks, taskDates, priorities, categories) => {
 
 
 
-
+// styles for the calendar view
 const CalendarItem = ({ date, day, tasks }) => {
   const itemHeight = 100 + tasks.length * 60; // Calculate item height based on number of tasks
 
@@ -137,9 +146,11 @@ const CalendarItem = ({ date, day, tasks }) => {
 
 
 
-
+// styles for the calendar view
 const VerticalCalendar = ({ route }) => {
+  // Get the tasks, task dates, priorities and categories from the route params
   const {tasks, taskDates, priorities, categories } = route.params;
+  // Generate the days for the calendar
   const days = generateDays(14, tasks, taskDates, priorities, categories);
 
   return (

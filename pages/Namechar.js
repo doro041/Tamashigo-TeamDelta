@@ -7,18 +7,20 @@ import { doc, setDoc } from 'firebase/firestore'
 
 
 const NameChar = () => {
+  // name, navigation are state variables
   const [name, setName] = useState('');
   const navigation = useNavigation();
  
+  // onPress function to navigate to Home page
   const onPress = async () => {
     const auth = getAuth()
-
+// store in the cloud firestore
     const ref = doc(firestore, 'tamashigoNames', auth.currentUser.uid)
 
     await setDoc(ref, {
       name: name
     })
-
+// navigate to Home page
     navigation.navigate('Home', { name, onboarding: true });
   };
 

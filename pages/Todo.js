@@ -16,6 +16,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import { getAuth } from 'firebase/auth';
 
+// Import necessary components and functions
 
 const Todo = ({route}) => {
   console.log("Start of Todo")
@@ -46,10 +47,12 @@ const Todo = ({route}) => {
   const [backgroundImage, setBackgroundImage] = useState(null);
   let [tasksCompleted, setTasksCompleted] = useState(0);
   const [infoVisible, setInfoVisible] = useState(false);
+
+  // handleSelectCategory 
   const handleSelectCategory = (item) => {
     setSelectedCategory(item);
   };
-
+// useEffect to load data from async storage
   useEffect( () => {
     const auth = getAuth()
     const ref = doc(firestore, 'coins', auth.currentUser.uid)
@@ -62,6 +65,8 @@ const Todo = ({route}) => {
     })
   }, [])
 
+
+  // useEffect to load data from async storage
   const changeBackgroundImage = (category) => {
     let newBackgroundImage;
     switch (category) {
@@ -83,7 +88,7 @@ const Todo = ({route}) => {
     setBackgroundImage(newBackgroundImage);
   };
   
- 
+ // filterTasks 
 
   const filterTasks = (category) => {
     if (selectedCategory === category) {
@@ -100,7 +105,7 @@ const Todo = ({route}) => {
     }
   };
   
-
+// handleSelectPriority
   const handleSelectPriority = (item) => {
     console.log('handleSelectPriority')
     setSelectedPriority(item);
@@ -176,7 +181,7 @@ const Todo = ({route}) => {
       console.error('Error loading data:', error);
     }
   };
-
+// priorityValues 
 const priorityValues= [
   {index: 0, label: priorities[0], value: <MaterialCommunityIcons name="snail" size={24} color="black" />}, 
     {index: 1, label: priorities[1], value: <Feather name="alert-circle" size={24} color="black" />},

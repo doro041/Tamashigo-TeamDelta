@@ -1,92 +1,119 @@
-import React, { useRef, useEffect,useState } from 'react';	
-import { StyleSheet, View, Text, TouchableOpacity, Image, Animated,ImageBackground } from 'react-native';	
-import { useNavigation } from '@react-navigation/native';	
-import { FontAwesome } from 'react-native-vector-icons';
+import React, { useRef, useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  View,
+  Image,
+  Animated,
+  ImageBackground,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
 
-const EggHatchAnimation = () => {	
-  const navigation = useNavigation();	
-  const handlePandaPress = () => {	
-    navigation.navigate('NameChar');	
-  };	
-  const [isMounted, setIsMounted] = useState(true); // This is the state variable	
-  const shakeAnim = useRef(new Animated.Value(0)).current;	
-  const openAnim = useRef(new Animated.Value(0)).current;	
-  const scaleAnim = useRef(new Animated.Value(0)).current;	
-  const fadeOutAnim = useRef(new Animated.Value(1)).current;	
-  const shaking = () => {	
-   	
-      Animated.loop(	
-          Animated.sequence([	
-              Animated.timing(shakeAnim, { toValue: 1, duration: 100, delay: 100 }),	
-              Animated.timing(shakeAnim, { toValue: -1, duration: 100, delay: 100 }),	
-              Animated.timing(shakeAnim, { toValue: 0, duration: 100 }),	
-          ]),	
-          { iterations: 6 }	
-      ).start();	
-  };	
-  const interpolateRotation = shakeAnim.interpolate({	
-    inputRange: [-1, 1],	
-    outputRange: ['-10deg', '10deg'],	
-  });	
-  
+const EggHatchAnimation = () => {
+  const navigation = useNavigation();
 
+  // state variable to check if the component is mounted
+  const [isMounted, setIsMounted] = useState(true);
+
+  // create four Animated.Value instances using useRef()
+  const shakeAnim = useRef(new Animated.Value(0)).current;
+  const openAnim = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useRef(new Animated.Value(0)).current;
+  const fadeOutAnim = useRef(new Animated.Value(1)).current;
+
+  // shaking animation
+  const shaking = () => {
+    // use Animated.loop and Animated.sequence to create a shaking animation
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(shakeAnim, { toValue: 1, duration: 100, delay: 100 }),
+        Animated.timing(shakeAnim, { toValue: -1, duration: 100, delay: 100 }),
+        Animated.timing(shakeAnim, { toValue: 0, duration: 100 }),
+      ]),
+      { iterations: 6 }
+    ).start();
+  };
+
+  // interpolate the shake animation to create rotation
+  const interpolateRotation = shakeAnim.interpolate({
+    inputRange: [-1, 1],
+    outputRange: ['-10deg', '10deg'],
+  });
+
+  // opening animation
   const opening = () => {
+    // use Animated.timing to create an opening animation
     Animated.timing(openAnim, {
-        toValue: 1,
-        duration: 3000,
-        delay: 5000,
+      toValue: 1,
+      duration: 3000,
+      delay: 5000,
     }).start();
-};
-const interpolateOpen = openAnim.interpolate({
-  inputRange: [0, 1],
-  outputRange: ['0deg', '-90deg'],
-});
+  };
 
-const interpolateTransTopOpen = openAnim.interpolate({
+  // interpolate the opening animation to create rotation and translation
+  const interpolateOpen = openAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '-90deg'],
+  });
+
+  const interpolateTransTopOpen = openAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [0, -2],
-});
-const interpolateTransBotOpen = openAnim.interpolate({
+  });
+
+  const interpolateTransBotOpen = openAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [0, 10],
-});
+  });
 
-
-const pandaScaling = () => {
+  // panda scaling animation
+  const pandaScaling = () => {
+    // use Animated.timing to create a scaling animation
     Animated.timing(scaleAnim, {
-        toValue: 1,
-        duration: 10000,
+      toValue: 1,
+      duration: 10000,
     }).start();
-};
-const interpolatePandaScale = scaleAnim.interpolate({
+  };
+
+  // interpolate the panda scaling animation to create scale
+  const interpolatePandaScale = scaleAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [-2, 3],
   });
-const fadeOut = () => {
-    Animated.timing(fadeOutAnim, {
-        toValue: 0,
-        delay: 5000,
-        duration: 3000,
-    }).start();
-  };	
 
-  const interpolateFadeOut = fadeOutAnim.interpolate({	
-    inputRange: [0, 1],	
-    outputRange: [0, 150],	
+  // fade out animation
+  const fadeOut = () => {
+    // use Animated.timing to create a fade out animation
+    Animated.timing(fadeOutAnim, {
+      toValue: 0,
+      delay: 5000,
+      duration: 3000,
+    }).start();
+  };
+
+  // interpolate the fade out animation to create opacity
+  const interpolateFadeOut = fadeOutAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 150],
   });
 
-useEffect(() => {
+  // useEffect() to run animations when the component mounts
+  useEffect(() => {
     if (isMounted) {
+      // run all the animations here
       shaking();
       opening();
       fadeOut();
       pandaScaling();
     }
-  }, []); 
 
 
+    // clean up function to set isMounted to false
+    return () => setIsMounted(false);
+    }, []);
+
+    
 
 
 
@@ -94,7 +121,7 @@ useEffect(() => {
   return (	
     <View style={styles.container}>	
    <ImageBackground source={require('../assets/PartsLog.png')} style={styles.backgroundImage}/>
-
+ 
         <Animated.View	
             style={{	
                 flex: 1, transform: [{ translateX: shakeAnim }, { rotate: interpolateRotation }]	
@@ -130,7 +157,8 @@ useEffect(() => {
 
     </View >	
 );	
-};	
+};
+
 const styles = StyleSheet.create({	
     container: {
         flex: 1,
