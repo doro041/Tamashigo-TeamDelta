@@ -242,7 +242,7 @@ const SignUp = ({ navigation }) => {
         name={rightIcon}
         size={24}
         color="black"
-        style={{ position: 'absolute', top: '29%', right: '5%', cursor: 'pointer', padding: 10 }}
+        style={{ position: 'absolute', top: '0%', right: '5%', cursor: 'pointer', padding: 10 }}
         onPress={togglePasswordVisibility}
       />
     </View>
@@ -260,7 +260,7 @@ const SignUp = ({ navigation }) => {
         name={rightIcon}
         size={24}
         color="black"
-        style={{ position: 'absolute', top: '30%', right: '5%', cursor: 'pointer', padding: 10 }}
+        style={{ position: 'absolute', top: '0%', right: '5%', cursor: 'pointer', padding: 10 }}
         onPress={togglePasswordVisibility}
       />
     </View>
