@@ -15,6 +15,23 @@ const Home = ({ route }) => {
 
   // Initialize the name state with a fallback value
   const [name, setName] = useState('');
+
+
+  const [showPlusTooltip, setShowPlusTooltip] = useState(false);
+  const [showFooterTooltip, setShowFooterTooltip] = useState(false);
+  const [showHeaderTooltip, setShowHeaderTooltip] = useState(false);
+  const [showPandaTooltip, setShowPandaTooltip] = useState(false);
+  const [taskItems, setTaskItems] = useState([]);
+  const [deadlines, setDeadlines] = useState([]);
+  const [valueList, setValueList] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [itemLocation, setItemLocation] = useState({});
+  const [pandaImage, setPandaImage] = useState(require('../assets/Panda.png'));
+  const [timer, setTimer] = useState(0);
+  const [clickCount, setClickCount] = useState(0);
+  const [showOnboarding, setShowOnboarding] = useState(false); 
+
   // Update the name state when route.params change
   useEffect(() => {
     if (route.params && route.params.name) {
@@ -27,6 +44,7 @@ const Home = ({ route }) => {
 
 
   const onboardingPages = [
+    // The pages that will be displayed in the onboarding screen
     {
       backgroundColor: '#FE6B8B',
       image: <Image source={require('../assets/Panda.png')} 
@@ -40,8 +58,8 @@ const Home = ({ route }) => {
         <Image
           source={require('../assets/screenymeeny.png')}
           style={{
-            width: 250, // Set the width of the image
-            height: 520, // Set the height of the image
+            width: 250, 
+            height: 520, 
             marginTop: -100,
           }}
         />
@@ -62,15 +80,10 @@ const Home = ({ route }) => {
 
 
 
-
-  const [showOnboarding, setShowOnboarding] = useState(false);
-
-
-
-
   const navigation = useNavigation();
   const [taskPrompt, setTaskPrompt] = useState('');
   const taskPrompts = [
+    //prompts that appear when you click the Panda
     "Don't forget to take a break!",
     "Remember to drink water!",
     "Stretch your legs!",
@@ -122,26 +135,11 @@ const Home = ({ route }) => {
     "Stay true to your values and beliefs!",
     "Take a moment to appreciate the power"  
   ];
-  
-  const [showPlusTooltip, setShowPlusTooltip] = useState(false);
-  const [showFooterTooltip, setShowFooterTooltip] = useState(false);
-  const [showHeaderTooltip, setShowHeaderTooltip] = useState(false);
-  const [showPandaTooltip, setShowPandaTooltip] = useState(false);
-  
-  const [taskItems, setTaskItems] = useState([]);
-  const [deadlines, setDeadlines] = useState([]);
-  const [valueList, setValueList] = useState([]);
-  const [categoriesList, setCategoriesList] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [itemLocation, setItemLocation] = useState({});
-  const [pandaImage, setPandaImage] = useState(require('../assets/Panda.png'));
-  const [timer, setTimer] = useState(0);
-  const [clickCount, setClickCount] = useState(0);
-  const [showTaskPrompts, setShowTaskPrompts] = useState(false);
 
 
   
-  const handlePromptChange = () => {
+  const handlePromptChange = () => { 
+    //function that changes the prompt to a new one randomly when you click the Panda
     setClickCount((prevCount) => prevCount + 1);
   
     if (clickCount >= 1) {
@@ -160,6 +158,7 @@ const Home = ({ route }) => {
     }, [])
   );
   useEffect(() => {
+    //updates the state of the panda image based on the timer
     const updateTimer = () => {
       console.log('Timer:', timer)
       if (timer >= 100000 && timer < 200000) {
@@ -182,6 +181,7 @@ const Home = ({ route }) => {
   
   
   const loadSelectedItem = async () => {
+    //loads the selected item from the shop onto the home screen
     try {
       const storedSelectedItem = await AsyncStorage.getItem("selectedShopItem");
   
@@ -232,6 +232,7 @@ const Home = ({ route }) => {
   
   
   const resetTimer = () => {
+    //resets the timer to 0 when a task is completed
     setTimer(0);
   };
   
@@ -273,9 +274,6 @@ const Home = ({ route }) => {
         console.error('Error loading data:', error);
       }
     };
-   
-const [startTooltip, setStartTooltip] = useState(false);
-
 
     return (	
       <View style={{ flex: 1 }}>	
@@ -314,10 +312,6 @@ const [startTooltip, setStartTooltip] = useState(false);
   <Text style={{ position: 'absolute', textAlign: 'center', bottom: 30, color: 'black',fontWeight:'bold' }}>{level}</Text>
 </View>
 
-          {/* <Text style={{ position: 'absolute', bottom:30, right: 45 }}>  
-          <TouchableOpacity onPress={handleLevelUp}>	
-        <Text style={{fontSize:20,fontWeight:'bold'}}>{level}</Text>	
-      </TouchableOpacity></Text>	 */}
         </View>	
         <View style={{ marginBottom: 10, justifyContent: 'flex-start', height: 100 }}>	
           <Image source={require('../assets/Wallet.png')} style={{ width: 85, height: '100%', resizeMode: 'contain', alignSelf: 'flex-start',position:'absolute', bottom:110,left:0 }} />	
@@ -330,7 +324,8 @@ const [startTooltip, setStartTooltip] = useState(false);
     contentStyle = {{width: '100%'}}
     onClose={() => {setShowPandaTooltip(false); setShowPlusTooltip(true);}}
     allowChildInteraction={false}>
-    {level >=2 ? (    
+    {level >=2 ? (   
+      // upon level up to 2, the panda will change to another panda image
     <TouchableOpacity onPress={handlePromptChange}>    
       <Image source={require('../assets/bigpanda.png')} style={{ width: 200, height: 300, resizeMode: 'contain' }} />    
     </TouchableOpacity>    

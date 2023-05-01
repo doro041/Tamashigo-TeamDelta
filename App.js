@@ -2,11 +2,9 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import StackNavigator from "./StackNavigator";
-import { StatusBar } from 'react-native';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { firebaseConfig } from './firebase.js';
 
 const App = () => {
   const [user, setUser] = useState(null);

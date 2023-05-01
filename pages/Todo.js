@@ -140,7 +140,6 @@ const Todo = ({route}) => {
         const loadedFinanceLevel = await AsyncStorage.getItem('financeLevel');
         const loadedHobbyLevel = await AsyncStorage.getItem('hobbyLevel');
         const loadedCompletedTask = await AsyncStorage.getItem('completedTask');
-        const loadedProductivityCoins = await AsyncStorage.getItem('productivityCoins');
 
         if (loadedProductivityLevel !== null) setProductivityLevel(JSON.parse(loadedProductivityLevel));
         if (loadedHealthLevel !== null) setHealthLevel(JSON.parse(loadedHealthLevel));
@@ -313,7 +312,7 @@ const getFilteredTasks = () => {
             storeData('financeLevel', financeLevel);
             storeData('hobbyLevel', hobbyLevel);
             storeData('tasksCompleted', tasksCompleted);
-            resetTimer();
+            resetTimer(); // Reset the timer for pet being hungry when a task is completed
             console.log("Completed Tasks: ", tasksCompleted)
             console.log(healthCoins, financeCoins, hobbyCoins, productivityCoins);
            },
@@ -416,7 +415,7 @@ const getFilteredTasks = () => {
   renderDropdownIcon={() => (
     <MaterialIcons name='arrow-drop-down' size={24} color='#78B1C3' />
   )}
-  renderCustomizedRowChild={(item, index) => (
+  renderCustomizedRowChild={(item) => (
     <View style={{
       backgroundColor: selectedCategoryColors[item],
       padding: 10,

@@ -102,6 +102,7 @@ const Timer = ({ deadline }) => {
   const [time, setTime] = useState(parsedDeadline - Date.now());
 
   useEffect(() => {
+    // Update the timer every second until the deadline is reached
     const interval = setInterval(() => setTime(parsedDeadline - Date.now()), 1000);
 
     return () => clearInterval(interval);
@@ -139,11 +140,13 @@ const Timer = ({ deadline }) => {
     <View style={{ marginBottom: 10 }}>
       {timePassedPercent >= 0.8 && (
         <View style={styles.warningContainer}>
+          
           <Text>80% of the time has passed</Text>
         </View>
       )}
       <View style={styles.timerContainer}>
       {labels.map(([label, value]) => (
+        
   <View style  key={label} >
     <View style={{ flexDirection: 'row', alignItems: 'center', }}>
       <Text style={styles.value}>{`${Math.floor(value)}`.padStart(2, "0")}</Text>

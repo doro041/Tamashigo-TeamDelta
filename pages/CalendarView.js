@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text, FlatList, ScrollView, StyleSheet } from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';

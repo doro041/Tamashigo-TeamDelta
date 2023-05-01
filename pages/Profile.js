@@ -7,7 +7,7 @@ import Coins from '../components/Coins';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { CommonActions } from '@react-navigation/native';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 
 const Profile = () => {
@@ -198,12 +198,10 @@ const styles = StyleSheet.create({
   title: {
       fontSize: 30,
       fontWeight: 'bold',
-      //marginBottom: 12,
   },
   subtitle: {
       fontSize: 24,
       fontWeight: 'bold',
-      //marginBottom: 12,
   },
   content: {
     flex: 1,

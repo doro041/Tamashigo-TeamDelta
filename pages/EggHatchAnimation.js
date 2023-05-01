@@ -6,13 +6,10 @@ import {
   Animated,
   ImageBackground,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 
 
 const EggHatchAnimation = () => {
-  const navigation = useNavigation();
-
   // state variable to check if the component is mounted
   const [isMounted, setIsMounted] = useState(true);
 

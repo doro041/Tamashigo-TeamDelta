@@ -1,14 +1,59 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Footer from '../components/Footer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect } from 'react';
 
 
 
 const Settings = ({navigation}) => {
+  const [taskItems, setTaskItems] = useState([]);
+  const [deadlines, setDeadlines] = useState([]);
+  const [valueList, setValueList] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([]);
 
+  useEffect(() => {
+      loadData();
+    }, []);
+
+  const loadData = async () => {
+      try {
+        const storedTaskItems = await AsyncStorage.getItem("taskItems");
+        const storedValueList = await AsyncStorage.getItem("valueList");
+        const storedCategoriesList = await AsyncStorage.getItem("categoriesList");
+        const storedDeadlines = await AsyncStorage.getItem("deadlines");
+    
+        let parsedTaskItems = [];
+        let parsedValueList = [];
+        let parsedCategoriesList = [];
+        let parsedDeadlines = [];
+    
+        if (storedTaskItems) {
+          parsedTaskItems = JSON.parse(storedTaskItems);
+        }
+    
+        if (storedValueList) {
+          parsedValueList = JSON.parse(storedValueList);
+        } else {
+          console.warn('No value list found');}
+    
+        if (storedCategoriesList) {
+          parsedCategoriesList = JSON.parse(storedCategoriesList);
+        }
+    
+        if (storedDeadlines) {
+          parsedDeadlines = JSON.parse(storedDeadlines).map(dateString => new Date(dateString));
+        }
+        console.log('Loaded data:', parsedTaskItems, parsedValueList, parsedCategoriesList, parsedDeadlines)
+        setDeadlines(parsedDeadlines);
+        setTaskItems(parsedTaskItems);
+        setValueList(parsedValueList);
+        setCategoriesList(parsedCategoriesList);
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
 
 
   //styling for the settings page 
@@ -52,7 +97,13 @@ const Settings = ({navigation}) => {
         <Text style={styles.settingText}>About</Text>
         <Feather name="chevron-right" size={24} color="black" />
       </TouchableOpacity>
-      <Footer/>
+      <Footer
+      
+       taskItems={taskItems}
+       deadlines={deadlines}
+       valueList={valueList}
+       categoriesList={categoriesList}
+      />
      
     </View>
   );

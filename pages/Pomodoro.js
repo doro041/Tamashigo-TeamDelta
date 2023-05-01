@@ -17,9 +17,9 @@ const Pomodoro = () => {
     const [valueList, setValueList] = useState([]);
     const [categoriesList, setCategoriesList] = useState([]);
     const [pomodoroCount, setPomodoroCount] = useState(0);
-    const [todaysPomodoros, setTodaysPomodoros] = useState([]);
     const [message, setMessage] = useState("");
-    const showAlert = () => {
+    
+    const showAlert = () => {//this is the alert that pops up when the timer is done
       Alert.alert(
         'Time is up!',
         '',
@@ -53,29 +53,11 @@ const Pomodoro = () => {
       );
     };
 
-    const loadCounts = async () => {
-        try {
-            const storedPomodoroCount = await AsyncStorage.getItem('pomodoroCount');
-            const storedTodaysPomodoros = await AsyncStorage.getItem('todaysPomodoros');
-            if (storedPomodoroCount) {
-                setPomodoroCount(parseInt(storedPomodoroCount));
-            }
-            if (storedTodaysPomodoros) {
-                setTodaysPomodoros(JSON.parse(storedTodaysPomodoros));
-            }
-        } catch (error) {
-            console.error('Error loading counts:', error);
-        }
-    };
-    
-    useEffect(() => {
-        loadCounts();
-    }, []);
+
     
     const startCount = () => {
         setStart(!start);
         if (!start) {
-            setTodaysPomodoros([...todaysPomodoros, new Date()]);
             setPomodoroCount(pomodoroCount + 1);
             
         }
@@ -94,7 +76,6 @@ const Pomodoro = () => {
                         clearInterval(interval);
                         showAlert();
                         setPomodoroCount(pomodoroCount + 1);
-                        setTodaysPomodoros([...todaysPomodoros, new Date()]);
                         shortBreak();
                     }
                 }
@@ -103,7 +84,7 @@ const Pomodoro = () => {
                 clearInterval(interval);
             };
         }
-    }, [currentSeconds, currentMinute, start, pomodoroCount, todaysPomodoros]);
+    }, [currentSeconds, currentMinute, start, pomodoroCount]);
     
     const minuteString = currentMinute.toString().padStart(2, "0");
     const secondString = currentSeconds.toString().padStart(2, "0");
@@ -114,7 +95,7 @@ const Pomodoro = () => {
         loadData();
     }, []);
     
-      useEffect(() => {
+      useEffect(() => {// hook for the motivational messages
         const messages = [      "You're doing great! Keep it up!",      "Stay focused and keep working!",      "You got this! Keep pushing forward!",      "Remember why you started. You can do it!",      "Stay determined and keep going!",    ];
         const interval = setInterval(() => {
           const randomIndex = Math.floor(Math.random() * messages.length);
@@ -167,7 +148,7 @@ const Pomodoro = () => {
       const [shortBreakStyle, setShortBreakStyle] = useState(styles.currentOption);
       const [focusStyle, setFocusStyle] = useState(styles.breakIcon);
       const [longBreakStyle, setLongBreakStyle] = useState(styles.breakIcon);
-      const focus = () => {
+      const focus = () => {//the button for Pomodoro focus
           setStart(false);
           setBackgroundStyle(require('../assets/LightGreen.png'));
           setFocusStyle(styles.currentOption);
@@ -176,7 +157,7 @@ const Pomodoro = () => {
           setCurrentMinute(25);
           setCurrentSecond(0);
       }
-      const shortBreak = () => {
+      const shortBreak = () => { //the button for a short break
           setStart(false);
           setBackgroundStyle(require('../assets/GreenBackground.png'));
           setShortBreakStyle(styles.currentOption);
@@ -185,7 +166,7 @@ const Pomodoro = () => {
           setCurrentMinute(5);
           setCurrentSecond(0);
       }
-      const longBreak = () => {
+      const longBreak = () => { //the button for a long break
           setStart(false);
           setBackgroundStyle(require('../assets/BlueBackground.png'));
           setLongBreakStyle(styles.currentOption);

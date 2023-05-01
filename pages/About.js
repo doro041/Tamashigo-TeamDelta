@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const About = ({navigation}) => {
@@ -7,10 +7,7 @@ const About = ({navigation}) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        {/* <Image
-          source={require('./assets/picture.jpeg')}
-          style={styles.photo}
-        /> */}
+        
         <Text style={styles.title}>Welcome to Tamashigo!</Text>
         <View style={styles.section}>
           <Text style={styles.subtitle}>Our Story</Text>
@@ -33,45 +30,27 @@ const About = ({navigation}) => {
           <Text style={styles.subtitle}>Our Team</Text>
           <View style={styles.team}>
             <View style={styles.profile}>
-              {/* <Image
-                source={require('./assets/picture.jpeg')}
-                style={styles.profilePhoto}
-              /> */}
+              
               <Text style={styles.name}>Camille Vang</Text>
             </View>
             <View style={styles.profile}>
-              {/* <Image
-                source={require('./assets/picture.jpeg')}
-                style={styles.profilePhoto}
-              /> */}
+              
               <Text style={styles.name}>Doroteya Stoyanova</Text>
             </View>
             <View style={styles.profile}>
-              {/* <Image
-                source={require('./assets/picture.jpeg')}
-                style={styles.profilePhoto}
-              /> */}
+              
               <Text style={styles.name}>Kirsty Ross</Text>
             </View>
             <View style={styles.profile}>
-              {/* <Image
-                source={require('./assets/picture.jpeg')}
-                style={styles.profilePhoto}
-              /> */}
+              
               <Text style={styles.name}>Margarita Radeva</Text>
             </View>
             <View style={styles.profile}>
-              {/* <Image
-                source={require('./assets/picture.jpeg')}
-                style={styles.profilePhoto}
-              /> */}
+              
               <Text style={styles.name}>Julien Acker</Text>
             </View>
             <View style={styles.profile}>
-              {/* <Image
-                source={require('./assets/picture.jpeg')}
-                style={styles.profilePhoto}
-              /> */}
+              
               <Text style={styles.name}>Zahary Kwidzynski</Text>
             </View>
           </View>
